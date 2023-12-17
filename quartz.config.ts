@@ -3,13 +3,14 @@ import * as Plugin from "./quartz/plugins"
 
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "🪴 Quartz 4.0",
+    pageTitle: "Stu.art Johnson",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
-      provider: "plausible",
+      provider: "umami",
+      websiteId: "1aeb32f8-db30-4a76-bfa8-86b86c06e3b0"
     },
-    baseUrl: "quartz.jzhao.xyz",
+    baseUrl: "thestu.art",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "created",
     theme: {
@@ -20,14 +21,14 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
-          lightgray: "#e5e5e5",
-          gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
-          dark: "#2b2b2b",
-          secondary: "#284b63",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
+          light: "#F7F4F1",
+          lightgray: "#E8E9E9",
+          gray: "#D3D3D1",
+          darkgray: "#343635",
+          dark: "#343635",
+          secondary: "#3b6b79",
+          tertiary: "#448fa4",
+          highlight: "rgba(172,193,204,0.15)",
         },
         darkMode: {
           light: "#161618",
