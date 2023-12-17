@@ -3,7 +3,7 @@ import * as Plugin from "./quartz/plugins"
 
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Stu.art Johnson",
+    pageTitle: "thestu.art",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
@@ -22,23 +22,23 @@ const config: QuartzConfig = {
       colors: {
         lightMode: {
           light: "#F7F4F1",
-          lightgray: "#E8E9E9",
-          gray: "#D3D3D1",
-          darkgray: "#343635",
-          dark: "#343635",
-          secondary: "#3b6b79",
-          tertiary: "#448fa4",
-          highlight: "rgba(172,193,204,0.15)",
+          lightgray: "#e9e9e8",
+          gray: "#d3d2d1",
+          darkgray: "#363534",
+          dark: "#363534",
+          secondary: "#E85530",
+          tertiary: "#f66f4e",
+          highlight: "rgba(232,85,48,0.15)",
         },
         darkMode: {
-          light: "#161618",
-          lightgray: "#393639",
-          gray: "#646464",
-          darkgray: "#d4d4d4",
-          dark: "#ebebec",
-          secondary: "#7b97aa",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
+          light: "#F7F4F1",
+          lightgray: "#e9e9e8",
+          gray: "#d3d2d1",
+          darkgray: "#363534",
+          dark: "#363534",
+          secondary: "#E85530",
+          tertiary: "#f66f4e",
+          highlight: "rgba(232,85,48,0.15)",
         },
       },
     },
