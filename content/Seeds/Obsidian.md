@@ -1,14 +1,17 @@
-# Obsidian
 #seed
+# Obsidian
+
+I use Obsidian because the interface is astonishingly good. This is how I operate, and has some helpful tidbits for anyone else reading.
 
 ## Essential plugins
 - **Templater** - Run javascript in templates.
 - **Dataview** - Queries.
 - **Tasks** - Save tasks anywhere in any note by just writing a checkbox.
 - **Homepage** - Self explanatory.
-- **Image Toolkit** - Click to zoom on images. Should already be a thing.
+- **Image Toolkit** - Click to zoom on images. Should already be a core feature.
 - **QuickAdd** - Bind creating new templates to macros/hotkeys/the command palette.
 - **Folder Note + Waypoint** - Create self-updating folder indexes that make the graph view nicer to look at.
+- **Commander** - Interface customisation, especially the left ribbon. I am the kind of person to open a billion tabs and never close any, so it's very satisfying to have a pinned command to kill all tabs except my current one and have the icon be a skull.
 
 ## Personal cheatsheet
 

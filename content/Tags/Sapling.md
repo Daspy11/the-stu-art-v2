@@ -1,1 +1,1 @@
-More developed [[Seed |Seeds]] that I keep updated on an evergreen basis.
+More developed [[seed|Seeds]] that I keep updated on an evergreen basis.

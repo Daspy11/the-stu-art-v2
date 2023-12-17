@@ -1,3 +1,4 @@
+#seed
 # Spot Health
 
 [Spot](https://spotdx.com) is a helps make diagnostics more accessible. I started working at Spot in September 2022 after moving on from my last startup, [[Seeds/Simple Construction Software|Simple Construction Software]]. It was funded by [[Seeds/Y Combinator|Y Combinator]] in the W22 batch.
