@@ -1,5 +1,5 @@
 # Reasons that people found startups
-#essay #showerthought #seed
+#essay #showerthought 
 
 I was talking to a good friend of mine recently who remarked that people who found startups often tend to exclusively socialise with other people in startups. My immediate response was that although this is true in many cases, it depends on why they founded the startup in the first place. Reflecting, I think there are a number of different archetypes of founder as far as motivations go. 
 

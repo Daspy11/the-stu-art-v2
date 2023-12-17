@@ -99,8 +99,10 @@ I think voice commands are coming back big-time. Alexa and Google home fell off 
 
 But these guesses are ephemeral and I'm not married to them. What I think I know is:
 
-1. Artists will lose the intellectual property war
+1. Artists will lose the intellectual property war.
 2. In fiction, the capabilities of large language models will overtake that of human creatives very shortly. The author profession as we know it is dead. Initially, this will look like a massive wave of democratisation as the work requirement to produce books decreases and ultimately surpasses the best human writers in terms of appeal. Eventually, that democratisation will be captured at scale by a few large companies that provide personalised fiction, likely with interactive elements, at scale.
 3. In the same vein, the days of static fiction are numbered. The video game genre will grow to consume both TV shows and fiction books, both of which will become relics, like silent movies.
 4. The video games of the 2030s and 2040s are going to be unimaginably cool. Not only will large, open-world, triple A titles continue to grow in scale, I think the best gains to be had are in the micro - every guard and fisherman and mercenary has their own story. 
-6. Special pleading about how language models just predict and therefore can't be intelligent will be killed in the same way that the scientific method killed God - it doesn't defeat him, but pushes back the scope of his capabilities tremendously. 
+5. Special pleading about how language models just predict and therefore can't be intelligent will be killed in the same way that the scientific method killed God - it doesn't defeat him, but pushes back the scope of his capabilities tremendously. 
+
+But who knows. Sure not me.
