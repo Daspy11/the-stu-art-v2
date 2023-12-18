@@ -14,3 +14,5 @@ I was talking to a good friend of mine recently who remarked that people who fou
 5. **The representative** desires to serve their in-group - typically their family, geography, identity group, or hobby community. This can be achieved in a diversity of ways to a diversity of ends, but the reason success is important to them is the ramifications success would have on those they care about. This can sometimes look like startups for some kind of social good, but not always - some founders just seek permanent financial security for their family as a foremost concern.
    
 6. **The unvalidated** desires to feel good enough. Starting a startup is the ultimate challenge, with the ultimate difficulty, and the ultimate payoff. A lot of startup founders in my experience are hiding from never feeling good enough in childhood. Starting a successful startup is important to reassure themselves foremost that they are competent and deserving of happiness.
+
+We're all a mixture of these things. What is my composition? Who knows.
