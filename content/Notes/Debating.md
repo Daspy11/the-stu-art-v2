@@ -3,8 +3,8 @@ aliases:
   - BP debate
   - British Parliamentary
 ---
-# Debating
 #sapling
+# Debating
 
 Starting in January 2020, I've regularly competed in debating competitions in the British Parliamentary (BP) format. In BP format, 8 speakers are divided into four teams of two - opening government, opening opposition, closing government, and closing opposition. Motions are released only 15 minutes before the debate starts and internet research is not allowed. Although judging is subjective, there are relatively consistent and agreed upon metrics to judge debates.
 
