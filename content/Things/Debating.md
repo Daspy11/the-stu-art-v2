@@ -19,21 +19,24 @@ To "break" in a debating competition means being a top performer in the "in-roun
 As of the time of writing, I have **24 breaks** consisting of **9 judge breaks** and **15 speaking breaks**.
 ### Judge Breaks
 
-|Event|Year|Role|Details|Comments|
-|---|---|---|---|---|
-|Imperial Novices|2022|Gold final panelist|9 rooms||
-|Imperial Schools|2023|Novice final panelist|9 rooms||
-|Welsh Novices|2021|DCA|4 rooms||
-|Welsh Nationals|2023||2 rooms||
-|UCL President's Cup|2023|Non-schools finals chair|10 rooms||
-|LSE x Imperial Novices|2023|Novice finals panelist|10 rooms||
-|Merseyside Schools|2023|Novice finals chair|4 rooms||
-|Pop Culture Grand Prix III|2023|Semi-finals chair|10 rooms|3v3 format|
-|Welsh Novices|2023||5 rooms|
+| Event                      | Year | Role                     | Details  | Comments   |
+|----------------------------|------|--------------------------|----------|------------|
+| Imperial Novices           | 2022 | Gold final panelist      | 9 rooms  ||
+| Imperial Schools           | 2023 | Novice final panelist    | 9 rooms  ||
+| Welsh Novices              | 2021 | DCA                      | 4 rooms  ||
+| Welsh Nationals            | 2023 || 2 rooms                  ||
+| UCL President's Cup        | 2023 | Non-schools finals chair | 10 rooms ||
+| LSE x Imperial Novices     | 2023 | Novice finals panelist   | 10 rooms ||
+| Merseyside Schools         | 2023 | Novice finals chair      | 4 rooms  ||
+| Pop Culture Grand Prix III | 2023 | Semi-finals chair        | 10 rooms | 3v3 format |
+| Welsh Novices              | 2023 || 5 rooms                  |
+
+
+
 ### Speaking Breaks
 
 | Event                                | Year | Achievement                          | Details                  | Comments                  |
-| ------------------------------------ | ---- | ------------------------------------ | ------------------------ | ------------------------- |
+|--------------------------------------|------|--------------------------------------|--------------------------|---------------------------|
 | Severn Cup                           | 2019 | Finalist                             | 6 rooms                  | Speaking with Ed Mason    |
 | Welsh Nationals                      | 2020 | Breakist                             | 7th best speaker         | Ironpersoned              |
 | Europe Queer Open                    | 2020 | Pro-Am Finalist                      | 6 rooms                  | Spoke with Michael Conway |
