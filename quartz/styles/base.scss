@@ -67,7 +67,8 @@ a {
   &.internal {
     text-decoration: none;
     background-color: var(--highlight);
-    padding: 0 0.1rem;
+    padding: 0 0.3rem;
+    margin: 0 2px;
     border-radius: 5px;
 
     &:has(> img) {
