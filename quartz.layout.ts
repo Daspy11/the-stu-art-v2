@@ -22,7 +22,10 @@ export const defaultContentPageLayout: PageLayout = {
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
-    Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.RecentNotes({
+      title: "Recent thoughts",
+      linkToMore: "Thoughts",
+    })),
   ],
   right: [
     Component.Graph(),
@@ -38,7 +41,6 @@ export const defaultListPageLayout: PageLayout = {
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
-    Component.Darkmode(),
   ],
   right: [],
 }
