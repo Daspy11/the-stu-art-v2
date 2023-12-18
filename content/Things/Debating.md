@@ -29,7 +29,7 @@ As of the time of writing, I have **24 breaks** consisting of **9 judge breaks**
 | LSE x Imperial Novices     | 2023 | Novice finals panelist   | 10 rooms ||
 | Merseyside Schools         | 2023 | Novice finals chair      | 4 rooms  ||
 | Pop Culture Grand Prix III | 2023 | Semi-finals chair        | 10 rooms | 3v3 format |
-| Welsh Novices              | 2023 || 5 rooms                  |
+| Welsh Novices              | 2023 || 5 rooms                  ||
 
 
 
@@ -49,6 +49,6 @@ As of the time of writing, I have **24 breaks** consisting of **9 judge breaks**
 | 2oo IV                               | 2022 | Silver Finalist, 10th best speaker   | 6 rooms                  |                           |
 | Random Pro-am                        | 2023 | Grand finalist, 6th best speaker     | 9 rooms, break to semis  |                           |
 | UCL IV                               | 2023 | Grand finalist                       | 10 rooms, break to semis | Spoke with Matthew Hamer  |
-| Aberystyth Open                      | 2023 | Open break, 3rd best speaker         | 5 rooms                  | Spoke with Michael Conway |
+| Aberystwyth Open                     | 2023 | Open break, 3rd best speaker         | 5 rooms                  | Spoke with Michael Conway |
 | Imperial IV                          | 2023 | Open Break                           | 8 rooms                  | Spoke with Craig McDonald |
-| Amsterdam Open                       | 2023 | Semi-finalist                        | 17 rooms                 | Spoke with Dominic Ferris |                         |
+| Amsterdam Open                       | 2023 | Semi-finalist                        | 17 rooms                 | Spoke with Dominic Ferris |                         
