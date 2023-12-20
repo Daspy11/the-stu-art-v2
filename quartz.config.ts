@@ -12,7 +12,7 @@ const config: QuartzConfig = {
     },
     baseUrl: "thestu.art",
     ignorePatterns: ["private", "templates", ".obsidian"],
-    defaultDateType: "published",
+    defaultDateType: "modified",
     theme: {
       typography: {
         header: "Lora",
