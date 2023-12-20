@@ -107,8 +107,6 @@ Eventually, large language models will be ubiquitous, like the mouse or touchscr
 
 While there are gains to be made in terms of capabilities which can only come from hard science and the hard logistics of scaling GPU racks and datacenters, I think there's a wealth of short term gains in ergonomics that aren't being focused on enough.
 
-## V.
-
 I think ChatGPT is like the skeuomorphism of the early 2000s. In the days where digitisation was new, a common philosophy amongst designers was to rely on making digital technology look similar to tools we use in the real world. The earliest way to realise "clickability" (how intuitive it is that an element is an interaction target) was simply to model the the visual appearance of the object based on a real-world object with the same utility. The notepad looked like a notepad, so that means it functions like a notepad.
 
 It's easy to write off current design norms for everyday activities as being either obviously the best approach and already at a global maxima, or simply a subjective meta in a sprawling sea of forms - a fashion. I think both of these things are normally wrong. 
@@ -121,7 +119,7 @@ But never forget that it wasn't possible to create a document without a fixed pa
 
 Big idea. Always possible. Lots of ergonomics advantages. Took 30 years from the mainstream adoption of digital word processing to be realised. Evolving beyond our natural skeuomorphic tendencies takes time.
 
-## VI.
+## V.
 
 A lot of people more mathematically inclined than me are going to do a lot of clever work on advancing AI models, but I think there's underappreciated work to be done advancing new LLM interaction modalities that go beyond the skeuomorphic approach of replicating a conversational experience. 
 
@@ -130,8 +128,6 @@ In addition to betting against LLM skeptics, I'm also betting against any system
 These are crude, primitive tools which will not be looked back on fondly. Don't get me wrong, language models *will* replace educators and call centres, but they won't do so as imitations. Even near-perfect replication isn't enough to outdo the uncanny valley. 
 
 The conversation modality will continue to have relevance as roleplaying tools for leisure and may have niche pedagogic utility as a way to introduce fun into education, but it's not how the future is going to look.
-
-## VII.
 
 Smartphones became a physical extension of our bodies that we're anxious and often unable to function without. They give us incredible superpowers. Perfect knowledge of direction and the logistics required to get to any place. Instant communication with anyone, anywhere in the world. Any kind of information, immediately.
 
@@ -143,7 +139,7 @@ I think this capability only came about because autocomplete was already a norm 
 
 I have no doubt that there's a bounty of interaction styles left undiscovered. Most of the obvious skeuomorphic approaches are already being tried, but there's no shortage of novel additions to bring. I expect that much like word processing, many of the coolest and most groundbreaking approaches won't be tried successfully for another decade or three. Maybe the language models can help design their own interfaces, but I doubt it given the deeply human nature of optimising technology ergonomics.
 
-## VIII.
+## VI.
 
 It's easy to dance around and either make big sweeping gestures at everything so vaguely that no meaning can be derived, or poke tiny holes in something so small that nothing can be generalised. This is my attempt at a time capsule. If I didn't make any specific, pointed guesses about the future, it wouldn't lock me in to an early 2020s conception of futurism tightly enough to be interesting to revisit in the future.
 
@@ -156,8 +152,6 @@ So in the spirit of boldness, here's where I venture into unknown territory and 
 3. The current golden age of word processing technology is not over yet. Notion brought block-based content styling and the elimination of pages to the scene. Autocomplete is the first step, but isn't mature yet. I'm absolutely sure there's more to come here. 
 
 4. There's a crucial tipping point of trust that I'm sure will occur at some point in the next 20 years where people let AI agents make meaningful decisions on their behalf. Some people think of the agent in this case essentially as a robotic executive assistant or therapist or consultant, but that's a skeuomorphic way of thinking about things modelled around the idea of a persona which I think is unnecessary. I think a much more realistic alternative is essentially fine-tuning a language model on somebody's preferences to such a degree that it's like a second brain for them and not an assistant. I have conversations with myself in my brain all the time, but these are fundamentally different kinds of conversations than I would have with another person. When I try to figure out what I want to do in a certain situation, I'm not *advising* myself, or asking myself for help, I'm trying to work out *what I already think*. I'm nowhere close to conceptualising what this would look like in reality, but I think I'll know it when I see it.
-
-## IX.
 
 In the short term though, language models are not going anywhere, and large swathes of the population are about to get a very serious reminder that it's not possible to close the Pandora's Box of a new technology once it's opened. 
 
@@ -187,7 +181,7 @@ The way we socialise is likely to become significantly worse before it gets bett
 
 It's probable that someone will invent some kind of meat-based verification system to make sure everyone is real. Once the problem gets severe enough, regulatory attitudes, the product management incentives and online trust norms probably all meet in the middle and probably put an genuinely quite impressive dent in the current trend of fake accounts pushing fake content.
 
-## X.
+# VII.
 
 In the end, I find myself optimistic about large language models and skeptical of the idea of the singularity occurring in all modes at once and rapidly accelerating. 
 
