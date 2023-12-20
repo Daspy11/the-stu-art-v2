@@ -10,11 +10,12 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 601px) and (max-width: 1024px) {
   li.section-li {
     > .section {
       > .tags {
-        position: static;
+        position: static !important;
+        width: auto;
       }
     }
   }
@@ -29,8 +30,7 @@ li.section-li {
       flex-wrap: wrap;
       padding: 0;
       list-style-type: none;
-      position: relative;
-      left: 170px;
+      width: 250px;
     }
 
     > .meta {
