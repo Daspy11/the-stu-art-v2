@@ -4,7 +4,7 @@ export function pluralize(count: number, s: string): string {
     return count === 1 ? "is" : "are"
   }
 
-  return count === 1 ? s : s + "s"
+  return count === 1 ? `1 ${s}` : `${count} ${s}s`
 }
 
 export function capitalize(s: string): string {

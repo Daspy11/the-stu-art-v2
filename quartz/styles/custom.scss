@@ -4,7 +4,7 @@
   li.section-li {
     > .section {
       > .tags {
-        display: none;
+        display: none !important;
       }
     }
   }
@@ -15,8 +15,8 @@
     > .section {
       > .tags {
         position: static !important;
-        width: auto;
-        padding-left: 15px;
+        width: auto !important;
+        padding-left: 15px !important;
       }
     }
   }
