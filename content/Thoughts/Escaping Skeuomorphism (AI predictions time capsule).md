@@ -181,7 +181,7 @@ The way we socialise is likely to become significantly worse before it gets bett
 
 It's probable that someone will invent some kind of meat-based verification system to make sure everyone is real. Once the problem gets severe enough, regulatory attitudes, the product management incentives and online trust norms probably all meet in the middle and probably put an genuinely quite impressive dent in the current trend of fake accounts pushing fake content.
 
-# VII.
+## VII.
 
 In the end, I find myself optimistic about large language models and skeptical of the idea of the singularity occurring in all modes at once and rapidly accelerating. 
 
