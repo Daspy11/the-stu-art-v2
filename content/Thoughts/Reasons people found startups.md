@@ -1,3 +1,8 @@
+---
+date: 2023-12-17
+updated: 2023-12-17
+---
+
 # Reasons that people found startups
 #essay #showerthought 
 

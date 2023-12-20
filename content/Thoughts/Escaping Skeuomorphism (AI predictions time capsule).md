@@ -2,6 +2,8 @@
 series: 
 aliases:
   - Large language models
+date: 2023-12-20
+updated: 2023-12-20
 ---
 
 #essay 
