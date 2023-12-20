@@ -115,7 +115,7 @@ It's easy to write off current design norms for everyday activities as being eit
 
 One type of technical accomplishment I hold in the absolute highest esteem is ergonomic advancements to things that seemed obviously solved.
 
-The best example I have of this in recent times is word processing in the last decade. It has been a *phenomenal* decade for tools to write text on a page and share it. Notion cracked open one of the last remaining skeletons of skeuomorphic, the idea that a document is essentially a big piece of paper. Even Google took heed and have been leaning into "smart chips" and "pageless mode" for Google docs recently. 
+The best example I have of this in recent times is word processing in the last decade. It has been a *phenomenal* decade for tools to write text on a page and share it. Notion cracked open one of the last remaining skeletons of skeuomorphism - the idea that a document is essentially a big piece of paper. Even Google took heed and have been leaning into "smart chips" and "pageless mode" for Google docs recently. 
 
 But never forget that it wasn't possible to create a document without a fixed page size in Google Docs until 2022. 
 
