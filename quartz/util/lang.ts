@@ -1,9 +1,10 @@
 export function pluralize(count: number, s: string): string {
-  if (count === 1) {
-    return `1 ${s}`
-  } else {
-    return `${count} ${s}s`
+  const sLower = s.toLowerCase()
+  if (sLower === "is" || sLower === "are") {
+    return count === 1 ? "is" : "are"
   }
+
+  return count === 1 ? s : s + "s"
 }
 
 export function capitalize(s: string): string {
