@@ -7,6 +7,11 @@
         display: none !important;
       }
     }
+
+    & > .section {
+      display: grid;
+      grid-template-columns: 6em 3fr !important;
+    }
   }
 }
 
@@ -18,6 +23,10 @@
         width: auto !important;
         padding-left: 15px !important;
       }
+    }
+
+    & > .section {
+      grid-template-columns: 6em 3fr 10em !important;
     }
   }
 }

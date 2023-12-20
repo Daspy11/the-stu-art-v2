@@ -36,8 +36,7 @@ function FolderContent(props: QuartzComponentProps) {
         <p>{content}</p>
       </article>
       <p>
-        Currently, there {pluralize(allPagesInFolder.length, "is")} {pluralize(allPagesInFolder.length, "item")}
-        in this list.
+        Currently, there {pluralize(allPagesInFolder.length, "is")} {pluralize(allPagesInFolder.length, "item")} in this list.
       </p>
       <div>
         <PageList {...listProps} />
