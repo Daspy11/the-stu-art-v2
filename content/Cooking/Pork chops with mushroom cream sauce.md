@@ -11,7 +11,9 @@ Ingredients:
   - Chilli
   - Pork chops
   - Mushroom
-Added: 2023-11-27
+created: 2023-11-27
+updated: 2023-11-27
+datePublished: 2023-12-20
 ---
 #recipe
 # Pork chops with mushroom cream sauce recipe

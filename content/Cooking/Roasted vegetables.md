@@ -10,9 +10,12 @@ Course: Side
 Servings: 
 Ingredients:
   - Any vegetable
+created: 2023-12-20
+updated: 2023-12-20
+datePublished: 2023-12-20
 ---
 #side #recipe 
-# Roasted vegetable
+# Roasted vegetables
 
 ## Ingredients Needed
 - Vegetable
