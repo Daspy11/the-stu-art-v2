@@ -17,13 +17,8 @@ The solution to the agency problem is incentive alignment. This can take many fo
 - **Punishment** - if it is recognised post-hoc that you did not fulfil your duty, something will be taken away from you.
 - **Ideology** - everyone has an incentive to act in accordance with their own set of morals. If you teach people (usually children) competently that failing to uphold a particular duty is inherently wrong, they'll continue to do so because it feels bad to do otherwise. 
 - **Shared outcome** - make someone involved in the result of their actions. For example, by giving salespeople a commission, you incentivise them to create more sales. By paying people to report tax evasion, you get more reports of it occurring.
-- **Path of least resistance** - make it convenient to do the right thing. Music streaming mostly killed music piracy because it was easier.
+- **Path of least resistance** - make it convenient to do the right thing. Music streaming mostly killed music piracy because it was easier. Frequent waste disposal points reduces littering.
 
-Incentive alignment becomes increasingly difficult as the number of actors in a system increases. It become especially difficult once you have enough multiple layers of management, each with their own layered incentives. Making all of those incentives meet at the point of incentivising actual value creation is *incredibly* difficult and shouldn't be underestimated.
+Incentive alignment becomes increasingly difficult as the number of actors in a system increases. It become especially difficult once you have enough multiple layers of management, each with their own layered incentives. Making all of those incentives meet at the point of actual value creation is *incredibly* difficult. 
 
-One of the worst arguments I think it's easy to fall for naively about incentive alignment is an excessive appeal to shared outcome in big groups. Rational motivation for shared outcome only generally works in small groups where there's a feedback loop because your impact is tangible. 
-
-Ideological are the strongest and sneak
-
-
-In my experience, surface level "incentive" arguments in conversations about macroeconomics are almost always naive to the point of being useless. 
+I think most political ideologies should live and die on their ability to solve the agent-actor problem and other incentive challenges.

@@ -15,23 +15,6 @@ I use Obsidian because the interface is astonishingly good. This is how I operat
 
 ## Personal cheatsheet
 
-#### List Callouts
-
-[[https://github.com/mgmeyers/obsidian-list-callouts|List Callouts Plugin - Github]]
-- !  - `!` - Caution, danger
-- ?? - `??` - Confusion, don't understand
-- ? - `?` - Idea, maybe?
-- $ - `$` Shopping list item (usually formatted as a task)
-- q - `q` Quote
-
-###### Debating
-- rog - `rog` - Response to OG
-- rcg - `rcg` - Response to CG
-- roo - `roo` - Response to OO
-- rco `rco` - Response to CO
-- rg - `rg` - Response to Government
-- ro - `ro` - Response to Opposition
-
 #### Hotkeys
 - `⌘ + P` - Command palette - add Person, Meeting, etc
 - `⌘ + O` - Quick file switcher

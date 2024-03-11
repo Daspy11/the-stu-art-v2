@@ -12,43 +12,49 @@ This leads to an intense competitive experience which I find electrifying.
 
 ![[British Parliamentary Debating Structure.png]]
 
-To "break" in a debating competition means being a top performer in the "in-rounds" - a fixed number of rounds which all teams and judges participate in before they are cut down to around the top 25% of participants. Judges are selected based on feedback from other judges, from observation by experienced "chief adjudicators" who also set motions, and from feedback given by speakers based on the "oral adjudication" in which the chair judge of each debate explains how the panel reached their result. 
+To "break" in a debating competition means to be a top performer in the "in-rounds" - a fixed number of rounds which all teams and judges participate in before they are cut down to around the top 25% of participants. Judges are selected based on feedback from other judges, from observation by experienced "chief adjudicators" who also set motions, and from feedback given by speakers based on the "oral adjudication" in which the chair judge of each debate explains how the panel reached their result. 
 
 ## My Breaks
 
-As of the time of writing, I have **24 breaks** consisting of **9 judge breaks** and **15 speaking breaks**.
+As of the time of writing, I have **30 breaks** consisting of **15 judge breaks** and **15 speaking breaks**. I've ordered these approximately by prestige.
 ### Judge Breaks
 
-| Event                      | Year | Role                     | Details  | Comments   |
-|----------------------------|------|--------------------------|----------|------------|
-| Imperial Novices           | 2022 | Gold final panelist      | 9 rooms  ||
-| Imperial Schools           | 2023 | Novice final panelist    | 9 rooms  ||
-| Welsh Novices              | 2021 | DCA                      | 4 rooms  ||
-| Welsh Nationals            | 2023 || 2 rooms                  ||
-| UCL President's Cup        | 2023 | Non-schools finals chair | 10 rooms ||
-| LSE x Imperial Novices     | 2023 | Novice finals panelist   | 10 rooms ||
-| Merseyside Schools         | 2023 | Novice finals chair      | 4 rooms  ||
-| Pop Culture Grand Prix III | 2023 | Semi-finals chair        | 10 rooms | 3v3 format |
-| Welsh Novices              | 2023 || 5 rooms                  ||
-
-
+| Event                      | Year | Rooms    | Role                         | Format |
+| -------------------------- | ---- | -------- | ---------------------------- | ------ |
+| LSE Open                   | 2024 | 80 teams | ESL final panel              | BP     |
+| Trinity IV                 | 2024 | 48 teams | Semi-final panel             | BP     |
+| Exeter Open                | 2024 | 20 teams | Pro-am final chair (clashed) | BP     |
+| Hypothetical Open 2        | 2024 | 36 teams | Gold final panel             | BP     |
+| UCL President's Cup        | 2023 | 40 teams | Non-schools final chair      | BP     |
+| Pop Culture Grand Prix III | 2023 | 20 teams | Semi-final chair             | 3v3    |
+| Imperial Novices           | 2022 | 36 teams | Gold final panel             | BP     |
+| Welsh Novices              | 2021 | 16 teams | DCA                          | BP     |
+| Merseyside Schools         | 2023 | 16 teams | Novice final chair           | BP     |
+| Imperial Schools           | 2024 | 32 teams | Gold final panel             | BP     |
+| UCL Schools                | 2023 | 40 teams | Silver final panel           | BP     |
+| LSE x Imperial Novices     | 2023 | 40 teams | Novice final panelist        | BP     |
+| Imperial Schools           | 2023 | 36 teams | Novice final panel           | BP     |
+| Welsh Novices              | 2023 | 20 teams | Shadow break                 | BP     |
+| Welsh Nationals            | 2023 | 8 teams  | Shadow break                 | BP     |
 
 ### Speaking Breaks
 
-| Event                                | Year | Achievement                          | Details                  | Comments                  |
-|--------------------------------------|------|--------------------------------------|--------------------------|---------------------------|
-| Severn Cup                           | 2019 | Finalist                             | 6 rooms                  | Speaking with Ed Mason    |
-| Welsh Nationals                      | 2020 | Breakist                             | 7th best speaker         | Ironpersoned              |
-| Europe Queer Open                    | 2020 | Pro-Am Finalist                      | 6 rooms                  | Spoke with Michael Conway |
-| Liverpool Invitational               | 2020 | Finalist and 6th speaker             | 6 rooms                  | Spoke with Alex McCreadie |
-| Welsh Novices                        | 2020 | Finalist and 2nd Best Speaker        | 4 rooms                  |                           |
-| Aberystwyth Mini                     | 2020 | Pro-Am Finalist and 6th best speaker |                          | Spoke with Shaun Ng       |
-| Aberystwyth Alternative Motions Open | 2020 | Pro-Am Final Winner                  |                          | Spoke with Liv Mistowt    |
-| Cardiff Open                         | 2021 | 9th best speaker                     | 6 rooms                  | Spoke with Ed Mason       |
-| Helsinki Pro-Am                      | 2021 | Finalist and 2nd best speaker        | 4 rooms                  |                           |
-| 2oo IV                               | 2022 | Silver Finalist, 10th best speaker   | 6 rooms                  |                           |
-| Random Pro-am                        | 2023 | Grand finalist, 6th best speaker     | 9 rooms, break to semis  |                           |
-| UCL IV                               | 2023 | Grand finalist                       | 10 rooms, break to semis | Spoke with Matthew Hamer  |
-| Aberystwyth Open                     | 2023 | Open break, 3rd best speaker         | 5 rooms                  | Spoke with Michael Conway |
-| Imperial IV                          | 2023 | Open Break                           | 8 rooms                  | Spoke with Craig McDonald |
-| Amsterdam Open                       | 2023 | Semi-finalist                        | 17 rooms                 | Spoke with Dominic Ferris |                         
+| Event                                | Year | Achievement           | Speaker rank      | Details  |
+| ------------------------------------ | ---- | --------------------- | ----------------- | -------- |
+| Amsterdam Open                       | 2023 | Open semi-final       |                   | 68 teams |
+| UCL IV                               | 2023 | Open grand final      |                   | 40 teams |
+| Imperial IV                          | 2023 | Open semi-final       |                   | 32 teams |
+| Aberystwyth Open                     | 2023 | Open final            | 3rd best speaker  | 20 teams |
+| 2oo IV                               | 2022 | Open silver final     | 10th best speaker | 24 teams |
+| Liverpool Invitational               | 2020 | Open final            | 6th best speaker  | 24 teams |
+| Aberystwyth Alternative Motions Open | 2020 | Pro-Am Final Winner   |                   |          |
+| Europe Queer Open                    | 2020 | Pro-Am Final          |                   | 24 teams |
+| Aberystwyth Mini                     | 2020 | Pro-Am Final          | 6th best speaker  |          |
+| Random Pro-am                        | 2023 | Grand final           | 6th best speaker  | 36 teams |
+| Severn Cup                           | 2019 | Final                 |                   | 24 teams |
+| Welsh Novices                        | 2020 | Final                 | 2nd best speaker  | 16 teams |
+| Helsinki Pro-Am                      | 2021 | Final                 | 2nd best speaker  | 16 teams |
+| Welsh Nationals                      | 2020 | Breakist (ineligible) | 7th best speaker  | 16 teams |
+| Cardiff Open                         | 2021 | No break :(           | 9th best speaker  | 24 teams |
+| Severn Cup                           | 2023 | No break :(           | 3rd best speaker  | 20 teams |
+| Bristol Pro-am                       | 2023 | Bronze final          |                   | 48 teams |

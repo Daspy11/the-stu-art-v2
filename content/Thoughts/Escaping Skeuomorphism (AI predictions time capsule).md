@@ -4,6 +4,7 @@ aliases:
   - Large language models
 date: 2023-12-20
 updated: 2023-12-20
+status: Published
 ---
 
 #essay 
@@ -25,11 +26,11 @@ The same people who seemed very excited by this were the same people who'd backe
 
 All over the place, the biggest minds were dropping billions of dollars on ventures that just... didn't make sense to me. 
 
-And then Terra Luna collapsed, [[https://www.businessinsider.com/terra-luna-cryptocurrency-crash-stablegains-2022-6?r=US&IR=T|taking StableGains with it]], and StableGains' customers lost >$40M. The Terra Luna collapse also took out Three Arrows, which indirectly ended up taking out FTX, and now we're here. NFTs increasingly look as if they'll be remembered like Dutch tulip mania. 
+And then Terra Luna collapsed, [taking StableGains with it](https://www.businessinsider.com/terra-luna-cryptocurrency-crash-stablegains-2022-6?r=US&IR=T), and StableGains' customers lost >$40M. The Terra Luna collapse also took out Three Arrows, which indirectly ended up taking out FTX, and now we're here. NFTs increasingly look as if they'll be remembered like Dutch tulip mania. 
 
 ## II.
 
-Some of this is inevitable. Novel technology has a hype cycle, and inflated expectations are a normal and expected part of that hype cycle. Inflated expectations inevitably come with a deflation down the road. Usually, that deflation looks like [[https://www.businessinsider.com/meta-layoffs-ceo-mark-zuckerberg-moves-away-from-metaverse-ai-2023-3?r=US&IR=T|Meta's quiet walk away from the Metaverse]] and not the spontaneous implosion and prosecution of everyone all at once.
+Some of this is inevitable. Novel technology has a hype cycle, and inflated expectations are a normal and expected part of that hype cycle. Inflated expectations inevitably come with a deflation down the road. Usually, that deflation looks like [Meta's quiet walk away from the Metaverse](https://www.businessinsider.com/meta-layoffs-ceo-mark-zuckerberg-moves-away-from-metaverse-ai-2023-3?r=US&IR=T) and not the spontaneous implosion and prosecution of everyone all at once.
 
 
 That was then.
@@ -133,7 +134,7 @@ The conversation modality will continue to have relevance as roleplaying tools f
 
 Smartphones became a physical extension of our bodies that we're anxious and often unable to function without. They give us incredible superpowers. Perfect knowledge of direction and the logistics required to get to any place. Instant communication with anyone, anywhere in the world. Any kind of information, immediately.
 
-There have been some hamfisted attempts to replicate this experience with glasses, headsets, or most recently [[https://www.theverge.com/2023/11/9/23953901/humane-ai-pin-launch-date-price-openai|badges]], but they don't *quite work* for reasons that are nuanced and hard to anticipate theoretically. It was famously cited that it felt rude to be talking to a Google glass user as they looked up at their notifications. This glaring social deficit was deadly out of the gate but hard to anticipate, even if you're a motivated and capable interaction designer. I'll reserve judgement on Apple's latest attempts at goggles for now. 
+There have been some hamfisted attempts to replicate this experience with glasses, headsets, or most recently [badges](https://www.theverge.com/2023/11/9/23953901/humane-ai-pin-launch-date-price-openai), but they don't *quite work* for reasons that are nuanced and hard to anticipate theoretically. It was famously cited that it felt rude to be talking to a Google glass user as they looked up at their notifications. This glaring social deficit was deadly out of the gate but hard to anticipate, even if you're a motivated and capable interaction designer. I'll reserve judgement on Apple's latest attempts at goggles for now. 
 
 The closest thing to language models becoming an extension of the body so far I think has been felt by software engineers interacting with LLM-powered autocomplete for code. There are many times where, like magic, AI just wrote a whole block of code I was about to bash out piece by piece. That didn't feel like I was using a tool, it felt like my own capabilities were being extended. There's no doubt in my mind that autocomplete will win. 
 
@@ -175,7 +176,7 @@ I think an underappreciated but *tremendous* upside I haven't heard many people 
 
 The strongest naysaying argument I've seen against this is the idea that human interaction in first point of contact healthcare is fundamental and essential and we couldn't possibly ever do without it, but I think a lot of people said similar things about text messaging and social media and yet here we are. 
 
-And I'm glad to be hoping that they're wrong, because I think the upside here is probably measured in billions of additional years of [[https://dictionary.cambridge.org/dictionary/english/healthspan|healthspan]].
+And I'm glad to be hoping that they're wrong, because I think the upside here is probably measured in billions of additional years of [healthspan](https://dictionary.cambridge.org/dictionary/english/healthspan).
 
 ---
 
