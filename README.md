@@ -1,6 +1,6 @@
 [![Deploy Quartz site to GitHub Pages](https://github.com/Daspy11/the-stu-art-v2/actions/workflows/deploy.yaml/badge.svg)](https://github.com/Daspy11/the-stu-art-v2/actions/workflows/deploy.yaml) [![Build and Test](https://github.com/Daspy11/the-stu-art-v2/actions/workflows/ci.yaml/badge.svg)](https://github.com/Daspy11/the-stu-art-v2/actions/workflows/ci.yaml)
 
-I'm Stuart. This is my digital garden.
+I'm Stuart Johnson. This is my digital garden.
 
 It's...
 
