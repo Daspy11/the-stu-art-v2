@@ -48,6 +48,7 @@ As of the time of writing, I have **30 breaks** consisting of **15 judge breaks*
 | 2oo IV                               | 2022 | Open silver final     | 10th best speaker | 24 teams |
 | Liverpool Invitational               | 2020 | Open final            | 6th best speaker  | 24 teams |
 | Aberystwyth Alternative Motions Open | 2020 | Pro-Am Final Winner   |                   |          |
+| Bristol Pro-am                       | 2023 | Bronze final          |                   | 48 teams |
 | Europe Queer Open                    | 2020 | Pro-Am Final          |                   | 24 teams |
 | Aberystwyth Mini                     | 2020 | Pro-Am Final          | 6th best speaker  |          |
 | Random Pro-am                        | 2023 | Grand final           | 6th best speaker  | 36 teams |
@@ -57,4 +58,3 @@ As of the time of writing, I have **30 breaks** consisting of **15 judge breaks*
 | Welsh Nationals                      | 2020 | Breakist (ineligible) | 7th best speaker  | 16 teams |
 | Cardiff Open                         | 2021 | No break :(           | 9th best speaker  | 24 teams |
 | Severn Cup                           | 2023 | No break :(           | 3rd best speaker  | 20 teams |
-| Bristol Pro-am                       | 2023 | Bronze final          |                   | 48 teams |
