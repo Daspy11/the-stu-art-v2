@@ -22,7 +22,14 @@ Underappreciated niches, missed opportunities, and things I think would benefit 
 	- What a solution should look like
 		- SPEEDY and BEAUTIFUL websites.
 		- Get CMS functionality for free - extend to a marketing function without requiring git access.
-- **Internal tools as documents**
+- **Documents as internal tools**
 	- Documents are the lifeblood of enterprise - forms, templates, policies. 
-	- HTML is just a document
-	- Notion 
+	- HTML is just a document.
+	- ReTool & Co. are really hard to use because they don't rely on familiar interaction modes.
+	- Someone should build a tool where you either drag and drop elements into a stateful document (like Notion), or uses a spreadsheet grid with formula-like constructs to add functionality.
+	- Kind of like a souped-up form builder had a baby with Zapier.
+- **Automatic mistake/typo detection for websites**
+	- It seems like low hanging fruit - a cursory review of even unicorn companies turns up multiple formatting errors within a few minutes.
+	- I messaged the founders of some series B companies that will go unnamed out of respect pointing out some errors and they all got fixed very quickly.
+	- Existing optimisation tools seem like they haven't moved on since 2010
+- 

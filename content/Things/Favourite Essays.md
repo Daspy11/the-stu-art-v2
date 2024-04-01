@@ -1,4 +1,3 @@
-
 #seed #evergreen
 # Favourite Essays
 

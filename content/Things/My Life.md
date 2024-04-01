@@ -19,7 +19,7 @@
 
 **September 2019** - I scrape through my A-levels, earning an underwhelming B in mathematics, B in computer science, and D in further mathematics. Consequently, I was [[Failure CV|rejected]] from my first choice university - [Loughborough University](https://en.wikipedia.org/wiki/Loughborough_University). Whether due to good marks in my Extended Project Qualification, good luck, or just declining standards, my second choice, [Cardiff University](https://en.wikipedia.org/wiki/Cardiff_University), accepted me to study computer science. Also in September, I founded [[Wutzu]], and would begin work on it during my first year of study.
 
-**January 2020** - A girl I'd been on a few dates with let me down gently, but invited me to attend Cardiff's [[debating]] society. I'd had a rather sad and isolated first semester due from a combination of remaining low mood from the last 2 years, my continued feverous work on Wutzu, and my bad habit for unintentionally avoiding people. I decided to attend, and made fast friends within the odd group of eclectic nerds. 
+**January 2020** - A girl I'd been on a few dates with invited me to attend Cardiff's [[debating]] society. I'd had a rather isolated first semester stemming from my continued feverous work on [[Wutzu]], and my bad habit for unintentionally avoiding people. I decided to attend, and made fast friends within the odd group of eclectic nerds. 
 
 **March 2020** - Wutzu launches just as the COVID-19 pandemic hits the country and all students are told to return home.
 
@@ -29,7 +29,7 @@
 
 **March 2020** - I leave Modernbanc to found another startup. I try to start a productised service for B2B landing page maintenance that I call PageKnight.
 
-**August 2020** - PageKnight doesn't scale, I shut it down and re-apply to Entrepreneur First and am accepted.
+**August 2020** - I build some landing pages for some [[YC|Y Combinator]] companies, but PageKnight ultimately doesn't scale. I shut it down and re-apply to Entrepreneur First and am accepted.
 
 **October 2020** - At Entrepreneur First I co-found [[Simple Construction Software]], a document workflow automation tool for the construction industry.
 

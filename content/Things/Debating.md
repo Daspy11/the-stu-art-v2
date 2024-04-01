@@ -16,11 +16,12 @@ To "break" in a debating competition means to be a top performer in the "in-roun
 
 ## My Breaks
 
-As of the time of writing, I have **30 breaks** consisting of **15 judge breaks** and **15 speaking breaks**. I've ordered these approximately by prestige.
+As of the time of writing, I have **30 breaks** consisting of **16 judge breaks** and **15 speaking breaks**. I've ordered these approximately by prestige.
 ### Judge Breaks
 
 | Event                      | Year | Rooms    | Role                         | Format |
 | -------------------------- | ---- | -------- | ---------------------------- | ------ |
+| Leiden Open                | 2024 | 56 teams | Grand final panel            | BP     |
 | LSE Open                   | 2024 | 80 teams | ESL final panel              | BP     |
 | Trinity IV                 | 2024 | 48 teams | Semi-final panel             | BP     |
 | Exeter Open                | 2024 | 20 teams | Pro-am final chair (clashed) | BP     |
