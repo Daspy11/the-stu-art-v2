@@ -15,7 +15,7 @@ created: 2023-12-20
 updated: 2023-12-20
 datePublished: 2023-12-20
 ---
-
+#recipe 
 # Baked bean shakshuka
 Shakshuka is a North African dish consisting of eggs poached in a spiced tomato sauce. I find that this is a tastier alternative to a much simpler British classic - fried egg and beans on toast. It also creates very little mess and is actually quite good for you. This makes a hearty meal for one or a regular breakfast for 2.
 

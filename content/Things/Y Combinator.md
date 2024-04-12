@@ -1,6 +1,8 @@
 ---
 datePublished: 
-updated:
+updated: 
+aliases:
+  - YC
 ---
 
 

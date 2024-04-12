@@ -9,7 +9,7 @@ In 2018, when I was 17, my father quit his comfortable desk job to found a start
 
 In 2019, on-demand grocery delivery apps were popping all over the place. Hevar's family moved to the UK from Iraq when he was a toddler. He'd noticed that most of these apps exclusively catered to western tastes, and that there was a missing piece for delivery services targeted the strong immigrant community present in big cities.
 
-[Hevar](https://www.linkedin.com/in/hevar-abrihem-a81957176/) and another fellow who shall go unnamed (although I hold no ill will towards him) originally reached out to me via the [r/startups](https://www.reddit.com/r/startups/) Discord server. At the time, I was heading to Cardiff University to study computer science and was tinkering with a few of my own side projects. I decided to treat Wutzu as a learning experience. We had a little team of three and so over the course of my first semester I built while the other two sold.
+[Hevar](https://www.linkedin.com/in/hevar-abrihem-a81957176/) and another fellow who shall go unnamed originally reached out to me via the [r/startups](https://www.reddit.com/r/startups/) Discord server. At the time, I was heading to Cardiff University to study computer science and was tinkering with a few of my own side projects. I decided to treat Wutzu as a learning experience. We had a little team of three and so over the course of my first semester I built while the other two sold.
 
 There was a lot wrong with Wutzu in the early days. None of us really knew what we were doing. Arguments were frequent. It turns out if you take a couple of 18 year old misfits with no clue, they make a lot of mistakes. Wutzu was also a terrible name since no one could spell it, but it *did* mean nobody had registered wutzu.com. Great success.
 
@@ -35,13 +35,13 @@ Nevertheless, cracks appeared.
 
 Our lack of experience or a guiding hand meant we often walked ourselves into trouble. 
 
-We didn't have a particularly good understanding of what was and was not appropriate behaviour from an angel investor. Looking back, he wasn't a particularly nice or professional fellow. He would often loudly berate his employees, dock their pay over trivialities, and was often pretty rude to me in particular. As founders, our personal relationships frayed. Conversations became often disrespectful at best. I lacked the backbone to stand up for myself properly, and the wisdom to correct the company's course.
+We didn't have a particularly good understanding of what was and was not appropriate behaviour from an angel investor. Looking back, he wasn't a particularly nice or professional fellow. He would often loudly berate his employees, dock their pay over trivialities, and was often pretty rude to me in particular. As founders, our personal relationships frayed. I lacked the backbone to stand up for myself properly, and between us we all lacked knowledge of financial modelling and how to raise from venture capital.
 
-Oftentimes, interpersonal rumblings in business are symptomatic of a more important underlying commercial anxiety. 
+Oftentimes though, interpersonal rumblings in business are symptomatic of a more important underlying commercial anxiety. 
 
-Wutzu had an incentives problem. 
+The underlying challenge we were facing was one of [[Incentives|incentives]]. We'd assumed that lack of capability was the main reason that our intended customers hadn't yet digitised. It became clearer to us over time that the lack of paperwork in many of these businesses was part of the design, not a defect. Paperwork means taxes, and the stark reality is that many of these stores struggle to keep their head above the water as it is. We naively thought that these financial anxieties would make stores more willing to embrace technology, but as is all too often the case, financial problems are usually responded to with frantic cost cutting and battening down of hatches. 
 
 ## III.
 
-I resigned from Wutzu at the start of September 2020, just over one year from 
+I resigned from Wutzu at the start of September 2020, just over one year from when I started work on it. I think it was the right time to go, in retrospect. A friend told me he knew someone trying to hire people like me to work at his shiny new Fintech. The interview went swimmingly and I began working at [[Modernbanc]].
 
