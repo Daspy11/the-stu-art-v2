@@ -1,1 +1,1 @@
-A side dish for a [[recipe]].
+A side dish for a [[./recipe|recipe]].
