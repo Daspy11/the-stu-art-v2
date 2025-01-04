@@ -1,4 +1,10 @@
+---
+created: 2025-01-04
+updated: 2025-01-04
+share: true
+---
 #seed 
+
 # My Personal Website
 
 This is a more technical description of how this website runs. For the philosophy, see [[./Digital Gardening|Digital Gardening]].
