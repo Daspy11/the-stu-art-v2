@@ -1,4 +1,10 @@
+---
+created: 2025-01-04
+updated: 2025-01-04
+share: true
+---
 #seed #evergreen 
+
 # Books
 
 ### My reading list

@@ -1,3 +1,10 @@
+---
+created: 2025-01-04
+updated: 2025-01-04
+share: true
+---
+#seed
+
 # Caffeine
 
 > *I cannot be stopped, I'm a caffiend!*

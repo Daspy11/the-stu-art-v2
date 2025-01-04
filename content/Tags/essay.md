@@ -1,1 +1,0 @@
-A longer, end-to-end thought which is both complete and tied to my thoughts at a particular time and place.

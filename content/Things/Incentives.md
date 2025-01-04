@@ -3,8 +3,12 @@ aliases:
   - Incentive
   - Agency problem
   - Principal-agent problem
+created: 2025-01-04
+updated: 2025-01-04
+share: true
 ---
 #seed
+
 # Incentives
 
 An incentive is something that motivates an actor to do something. Two actors are said to have aligned incentives if they are most benefitted by the same action or outcome. 

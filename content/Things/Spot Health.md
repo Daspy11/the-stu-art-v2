@@ -1,7 +1,13 @@
+---
+created: 2025-01-04
+updated: 2025-01-04
+share: true
+---
 #seed
+
 # Spot Health
 
-[Spot](https://spotdx.com) is a diagnostics-as-a-service startup that helps makes diagnostics cheaper and faster. It was funded by [[./Y Combinator|Y Combinator]] in the W22 batch. 
+[Spot](https://spotdx.com) is a diagnostics-as-a-service startup that helps makes diagnostics cheaper and faster. It was funded by [[../../Y Combinator|Y Combinator]] in the W22 batch. 
 
 Spot assembles its own at-home collection kits and aggregates multiple labs for testing. The result is moving faster, cheaper testing, and a much bigger testing menu than competitors.
 
