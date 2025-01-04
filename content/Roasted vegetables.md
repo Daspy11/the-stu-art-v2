@@ -14,9 +14,8 @@ created: 2023-12-20
 updated: 2023-12-20
 datePublished: 2023-12-20
 ---
-#recipe 
+#side #recipe 
 # Roasted vegetables
-Essential side dish, requiring almost no resources except oil and the vegetable you want to cook.
 
 ## Ingredients Needed
 - Vegetable
