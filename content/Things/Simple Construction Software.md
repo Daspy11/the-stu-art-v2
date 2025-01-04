@@ -1,8 +1,12 @@
 ---
 aliases:
   - Simple Construction
+created: 2025-01-04
+updated: 2025-01-04
+share: true
 ---
 #seed 
+
 # Simple Construction Software
 
 ## I.
@@ -15,9 +19,9 @@ The process is often very messy. Communication is fragmented across dozens of Wh
 We were attempting to fix the problem by turning change processes into big static JSON definitions for what were essentially a combination of a form builder and a state machine.
 
 Process definitions would then be visualised like this:
-![[Simple Construction Software - Workflows Screenshot.png|Simple Construction Software - Workflows Screenshot.png]]
+![[../Assets/simple-construction-software-workflow.png|simple-construction-software-workflow.png]]
 
-We ended up being funded by both EF and Brick & Mortar ventures in the early days, but our attempts to raise a seed round faltered. On paper, I think we were a great team, but a combination of our own mistakes and some environmental headwinds proved too much to overcome.
+We ended up being funded by both [EF](https://joinef.com) and [Brick & Mortar](https://brickmortar.vc/) ventures in the early days, but our attempts to raise a seed round faltered. On paper, I think we were a great team, but a combination of our own mistakes and some environmental headwinds proved too much to overcome.
 
 We applied to the YC S22 batch and were invited to interview. Our application is [here](https://docs.google.com/document/d/18Nmau-CYf8Fj_josgYZNpDPLG-pCOdZtxl4pUnmMNvs/edit?usp=sharing) if you care. YC interviews are fucking terrifying. 10 minutes to convince a wall of massive names to give you 500k, and the short version is that we didn't make the cut.
 
@@ -40,7 +44,7 @@ We didn't know it yet, but rates of startup funding had halved since we started 
 
 We then tried to raise in what has come to be the worst quarter since COVID-19 recovery started.
 
-![[Fundraising history.png|Fundraising history.png]]
+![[../Assets/simple-construction-software-fundraising.png|simple-construction-software-fundraising.png]]
 
 ### Mistake 2 - Priced round
 We tried to do a priced round when in retrospect SAFEs were almost unanimous amongst founders in our position. This wasn't a major thing that stabbed us, but it made the effects of mistake #1 much more intense - SAFEs allow you to take in funds on a continuous basis rather than in one go - a rolling close.  
@@ -78,5 +82,5 @@ I do think there were some things we did right. I'm biased, but feedback about o
 After leaving Simple Construction Software in September of 2022, I was texting a founder friend of mine about the blues of having another failed startup under my belt. He offered me a job leading the tech team at his startup. That friend was [Andrew Jajack](https://www.linkedin.com/in/ajajack/), and the company was [[./Spot Health|Spot Health]]. The journey continued.
 
 
-![[Simple Construction Software - Salesforce Building.png|Simple Construction Software - Salesforce Building.png]]
-![[Simple Construction Software - BuiltWorlds Pitch.png|Simple Construction Software - BuiltWorlds Pitch.png]]
+![[../Assets/simple-construction-software-salesforce-tower.png|simple-construction-software-salesforce-tower.png]]
+![[../Assets/simple-construction-software-pitch.png|simple-construction-software-pitch.png]]
