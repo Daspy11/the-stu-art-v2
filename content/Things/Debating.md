@@ -10,7 +10,7 @@ Starting in January 2020, I've regularly competed in debating competitions in th
 
 This leads to an intense competitive experience which I find electrifying. 
 
-![[../assets/british parliamentary debating structure.png|British Parliamentary Debating Structure.png]]
+![[../Assets/British Parliamentary Debating Structure.png|British Parliamentary Debating Structure.png]]
 
 To "break" in a debating competition means to be a top performer in the "in-rounds" - a fixed number of rounds which all teams and judges participate in before they are cut down to around the top 25% of participants. Judges are selected based on feedback from other judges, from observation by experienced "chief adjudicators" who also set motions, and from feedback given by speakers based on the "oral adjudication" in which the chair judge of each debate explains how the panel reached their result. 
 

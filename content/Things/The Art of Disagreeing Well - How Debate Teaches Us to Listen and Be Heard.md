@@ -7,7 +7,7 @@ dateRead: 2024-03-15
 
 *Written by Bo Seo*
 
-Bo Seo is a name usually spoken about in hushed whispers by [[./debating|competitive debaters]]. His speech at the grand finals of the World University Debating Championships 2016 has memetic cultural value, and is frequently referred to in jokes a decade later across the competitive circuit. 
+Bo Seo is a name usually spoken about in hushed whispers by [[./Debating|competitive debaters]]. His speech at the grand finals of the World University Debating Championships 2016 has memetic cultural value, and is frequently referred to in jokes a decade later across the competitive circuit. 
 
 *The Art of Disagreeing Well* is a memoir disguised as a thesis about the role that debate plays in society, told through the lens of Seo's progression through elementary, middle, high school and eventually university debate. 
 

@@ -6,7 +6,7 @@ aliases:
 # Simple Construction Software
 
 ## I.
-Simple Construction was a no-code tool for automating contract changes in construction and was my second startup, which I founded after leaving [[./modernbanc|Modernbanc]] to join the next [[./entrepreneur first|Entrepreneur First]] cohort in London. 
+Simple Construction was a no-code tool for automating contract changes in construction and was my second startup, which I founded after leaving [[./Modernbanc|Modernbanc]] to join the next [[./Entrepreneur First|Entrepreneur First]] cohort in London. 
 
 Before a construction project can begin, a signed contract describing project scope, schedule and costs is required. Included are detailed communication procedures to compliantly handle changes to scope, schedule and costs during the project. 
 
@@ -21,7 +21,7 @@ We ended up being funded by both EF and Brick & Mortar ventures in the early day
 
 We applied to the YC S22 batch and were invited to interview. Our application is [here](https://docs.google.com/document/d/18Nmau-CYf8Fj_josgYZNpDPLG-pCOdZtxl4pUnmMNvs/edit?usp=sharing) if you care. YC interviews are fucking terrifying. 10 minutes to convince a wall of massive names to give you 500k, and the short version is that we didn't make the cut.
 
-I think the rejection reason given really did cut to the bone of our problem - tricky tricky [[./incentives|incentive alignment]].
+I think the rejection reason given really did cut to the bone of our problem - tricky tricky [[./Incentives|incentive alignment]].
 
 > Hi Stuart and Andrius,  
 > 
@@ -75,7 +75,7 @@ All I can say is that I tried my best, and that my best at that time was not eno
 
 I do think there were some things we did right. I'm biased, but feedback about our interface design was pretty universally positive, which I'm proud of. To his credit, Andrius was really good at getting busy people working jobs that probably don't excite them all that much to spend time talking to us about those jobs. 
 
-After leaving Simple Construction Software in September of 2022, I was texting a founder friend of mine about the blues of having another failed startup under my belt. He offered me a job leading the tech team at his startup. That friend was [Andrew Jajack](https://www.linkedin.com/in/ajajack/), and the company was [[./spot health|Spot Health]]. The journey continued.
+After leaving Simple Construction Software in September of 2022, I was texting a founder friend of mine about the blues of having another failed startup under my belt. He offered me a job leading the tech team at his startup. That friend was [Andrew Jajack](https://www.linkedin.com/in/ajajack/), and the company was [[./Spot Health|Spot Health]]. The journey continued.
 
 
 ![[Simple Construction Software - Salesforce Building.png|Simple Construction Software - Salesforce Building.png]]
