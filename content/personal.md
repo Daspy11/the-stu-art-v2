@@ -1,1 +1,0 @@
-Something intimate, exclusively about me, and likely only of interest to those in my inner circle.
