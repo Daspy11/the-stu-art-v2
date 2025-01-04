@@ -6,7 +6,7 @@ aliases:
 # Simple Construction Software
 
 ## I.
-Simple Construction was a no-code tool for automating contract changes in construction and was my second startup, which I founded after leaving [[Things/Modernbanc|Modernbanc]] to join the next [[Things/Entrepreneur First|Entrepreneur First]] cohort in London. 
+Simple Construction was a no-code tool for automating contract changes in construction and was my second startup, which I founded after leaving [[./Modernbanc|Modernbanc]] to join the next [[./Entrepreneur First|Entrepreneur First]] cohort in London. 
 
 Before a construction project can begin, a signed contract describing project scope, schedule and costs is required. Included are detailed communication procedures to compliantly handle changes to scope, schedule and costs during the project. 
 
@@ -15,13 +15,13 @@ The process is often very messy. Communication is fragmented across dozens of Wh
 We were attempting to fix the problem by turning change processes into big static JSON definitions for what were essentially a combination of a form builder and a state machine.
 
 Process definitions would then be visualised like this:
-![[Simple Construction Software - Workflows Screenshot.png]]
+![[Simple Construction Software - Workflows Screenshot.png|Simple Construction Software - Workflows Screenshot.png]]
 
 We ended up being funded by both EF and Brick & Mortar ventures in the early days, but our attempts to raise a seed round faltered. On paper, I think we were a great team, but a combination of our own mistakes and some environmental headwinds proved too much to overcome.
 
 We applied to the YC S22 batch and were invited to interview. Our application is [here](https://docs.google.com/document/d/18Nmau-CYf8Fj_josgYZNpDPLG-pCOdZtxl4pUnmMNvs/edit?usp=sharing) if you care. YC interviews are fucking terrifying. 10 minutes to convince a wall of massive names to give you 500k, and the short version is that we didn't make the cut.
 
-I think the rejection reason given really did cut to the bone of our problem - tricky tricky [[Incentives|incentive alignment]].
+I think the rejection reason given really did cut to the bone of our problem - tricky tricky [[./Incentives|incentive alignment]].
 
 > Hi Stuart and Andrius,  
 > 
@@ -40,7 +40,7 @@ We didn't know it yet, but rates of startup funding had halved since we started 
 
 We then tried to raise in what has come to be the worst quarter since COVID-19 recovery started.
 
-![[Fundraising history.png]]
+![[Fundraising history.png|Fundraising history.png]]
 
 ### Mistake 2 - Priced round
 We tried to do a priced round when in retrospect SAFEs were almost unanimous amongst founders in our position. This wasn't a major thing that stabbed us, but it made the effects of mistake #1 much more intense - SAFEs allow you to take in funds on a continuous basis rather than in one go - a rolling close.  
@@ -75,8 +75,8 @@ All I can say is that I tried my best, and that my best at that time was not eno
 
 I do think there were some things we did right. I'm biased, but feedback about our interface design was pretty universally positive, which I'm proud of. To his credit, Andrius was really good at getting busy people working jobs that probably don't excite them all that much to spend time talking to us about those jobs. 
 
-After leaving Simple Construction Software in September of 2022, I was texting a founder friend of mine about the blues of having another failed startup under my belt. He offered me a job leading the tech team at his startup. That friend was [Andrew Jajack](https://www.linkedin.com/in/ajajack/), and the company was [[Things/Spot Health|Spot Health]]. The journey continued.
+After leaving Simple Construction Software in September of 2022, I was texting a founder friend of mine about the blues of having another failed startup under my belt. He offered me a job leading the tech team at his startup. That friend was [Andrew Jajack](https://www.linkedin.com/in/ajajack/), and the company was [[./Spot Health|Spot Health]]. The journey continued.
 
 
-![[Simple Construction Software - Salesforce Building.png]]
-![[Simple Construction Software - BuiltWorlds Pitch.png]]
+![[Simple Construction Software - Salesforce Building.png|Simple Construction Software - Salesforce Building.png]]
+![[Simple Construction Software - BuiltWorlds Pitch.png|Simple Construction Software - BuiltWorlds Pitch.png]]

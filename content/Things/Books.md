@@ -7,4 +7,4 @@
 - The Law of Peoples - John Rawls
 
 ### Books I've Read
-* [[The Art of Disagreeing Well - How Debate Teaches Us to Listen and Be Heard|The Art of Disagreeing Well - Bo Seo]]
+* [[./The Art of Disagreeing Well - How Debate Teaches Us to Listen and Be Heard|The Art of Disagreeing Well - Bo Seo]]
