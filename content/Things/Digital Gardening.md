@@ -1,9 +1,12 @@
 ---
 aliases:
   - Digital garden
+created: 2025-01-04
+updated: 2025-01-04
+share: true
 ---
-
 #seed
+
 # Digital Gardening
 
 I never quite understood the appeal of gardening. I'm a monster who kills a lot of plants, and having a lawn to mow regularly just seemed like taking on a pointless additional obligation for no real benefit.
