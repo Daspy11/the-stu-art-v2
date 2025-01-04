@@ -1,3 +1,10 @@
+---
+share: true
+created: 2025-01-04
+updated: 2025-01-04
+---
+#seed 
+
 # American Civil War
 The American Civil War lasted from 12 Apr 1861 – 9 Apr 1865. 
 
