@@ -53,7 +53,13 @@ export function slugifyFilePath(fp: FilePath, excludeExt?: boolean): FullSlug {
 
   let slug = withoutFileExt
     .split("/")
-    .map((segment) => segment.replace(/\s/g, "-").replace(/%/g, "-percent").replace(/\?/g, "-q")) // slugify all segments
+    .map((segment) => 
+      segment
+        .toLowerCase() // convert to lowercase
+        .replace(/\s/g, "-")
+        .replace(/%/g, "-percent")
+        .replace(/\?/g, "-q")
+    ) // slugify all segments
     .join("/") // always use / as sep
     .replace(/\/$/, "") // remove trailing slash
 
