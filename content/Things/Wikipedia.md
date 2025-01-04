@@ -1,4 +1,10 @@
+---
+created: 2025-01-04
+updated: 2025-01-04
+share: true
+---
 #sapling
+
 # Wikipedia
 
 [Wikipedia](https://wikipedia.org) is a big, magical website full of lots of information about everything. Writing things on Wikipedia was where I acquired my enjoyment of [[./Digital Gardening|digital gardening]] back in 2022.
