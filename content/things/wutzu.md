@@ -27,9 +27,9 @@ I think that lack of an anchor - an external mediator to help us avoid obvious s
 
 We went to work in the basement of a grocery store on Edgware road as our office. It was prime real estate for hitting all the local grocery stores in the area. The shop used to sell antiques, so we sat amongst old candlesticks, curtains and discarded mannequins as we built the Next Big Thing.
 
-![[../Wutzu-office.png|Wutzu office.png]]
+![[../assets/wutzu office.png|Wutzu office.png]]
 
-![[../Wutzu-delivery van - cropped.png|Wutzu delivery van - cropped.png]]
+![[../assets/wutzu delivery van - cropped.png|Wutzu delivery van - cropped.png]]
 
 Nevertheless, cracks appeared. 
 
@@ -39,9 +39,9 @@ We didn't have a particularly good understanding of what was and was not appropr
 
 Oftentimes though, interpersonal rumblings in business are symptomatic of a more important underlying commercial anxiety. 
 
-The underlying challenge we were facing was one of [[./Incentives|incentives]]. We'd assumed that lack of capability was the main reason that our intended customers hadn't yet digitised. It became clearer to us over time that the lack of paperwork in many of these businesses was part of the design, not a defect. Paperwork means taxes, and the stark reality is that many of these stores struggle to keep their head above the water as it is. We naively thought that these financial anxieties would make stores more willing to embrace technology, but as is all too often the case, financial problems are usually responded to with frantic cost cutting and battening down of hatches. 
+The underlying challenge we were facing was one of [[./incentives|incentives]]. We'd assumed that lack of capability was the main reason that our intended customers hadn't yet digitised. It became clearer to us over time that the lack of paperwork in many of these businesses was part of the design, not a defect. Paperwork means taxes, and the stark reality is that many of these stores struggle to keep their head above the water as it is. We naively thought that these financial anxieties would make stores more willing to embrace technology, but as is all too often the case, financial problems are usually responded to with frantic cost cutting and battening down of hatches. 
 
 ## III.
 
-I resigned from Wutzu at the start of September 2020, just over one year from when I started work on it. I think it was the right time to go, in retrospect. A friend told me he knew someone trying to hire people like me to work at his shiny new Fintech. The interview went swimmingly and I began working at [[./Modernbanc|Modernbanc]].
+I resigned from Wutzu at the start of September 2020, just over one year from when I started work on it. I think it was the right time to go, in retrospect. A friend told me he knew someone trying to hire people like me to work at his shiny new Fintech. The interview went swimmingly and I began working at [[./modernbanc|Modernbanc]].
 

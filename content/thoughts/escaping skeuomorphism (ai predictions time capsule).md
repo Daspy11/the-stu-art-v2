@@ -76,7 +76,7 @@ When Apple invented the mouse, consumers didn't automatically know how to use it
 
 But this was the first Apple mouse.
 
-![[../First-Apple mouse.png|First Apple mouse.png]]
+![[../assets/first apple mouse.png|First Apple mouse.png]]
 
 In both cases, although a new kind of input had been created, it took much longer for optimal ergonomics to develop. 40 years on, I think it's unlikely a mouse will ever release that is a substantial advance on ergonomics invented in the early 2010s - the Logitech G502 comes to mind. I think if you held an early mouse from any manufacturer, you'd feel that this is not the final form immediately.
 
