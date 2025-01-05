@@ -3,7 +3,7 @@ aliases:
   - BP debate
   - British Parliamentary
 created: 2025-01-04
-updated: 2025-01-04
+updated: 2025-01-05
 share: true
 ---
 #sapling
@@ -20,7 +20,7 @@ To "break" in a debating competition means to be a top performer in the "in-roun
 
 ## My Breaks
 
-As of the time of writing, I have **30 breaks** consisting of **16 judge breaks** and **15 speaking breaks**. I've ordered these approximately by prestige.
+As of the time of writing, I have **30 breaks** consisting of **16 judge breaks** and **15 speaking breaks**. 
 ### Judge Breaks
 
 | Event                      | Year | Rooms    | Role                         | Format |

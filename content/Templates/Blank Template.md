@@ -1,11 +1,29 @@
 ---
-updated: 2025-01-04
+updated: <% tp.date.now() %>
 created: <% tp.date.now() %>
-share: true
+share: false
 ---
-#seed 
+#seed
 
-# <% tp.file.title %>
+<%*
+const title = await tp.system.prompt("Enter the title");
 
+async function tryRename(filename) {
+    try {
+        await tp.file.rename(filename);
+    } catch (error) {
+        const newFilename = await tp.system.prompt(
+            `Error: ${error.message}\nPlease enter a different filename:`
+        );
+        if (newFilename) {
+            return await tryRename(newFilename);
+        }
+    }
+}
 
-<% tp.file.cursor(1) %>
+await tryRename(title);
+%>
+
+# <% title %>
+
+<% tp.file.cursor(0) %>
