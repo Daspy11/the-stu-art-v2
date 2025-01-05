@@ -1,6 +1,6 @@
 ---
 created: 2025-01-04
-updated: 2025-01-04
+updated: 2025-01-05
 share: true
 ---
 #sapling 
@@ -38,19 +38,19 @@ EF helped me have a great time, learn an absolute ton, and successfully kick off
 
 ### Some of my favourite moments
 
-![[../Assets/entrepreneur-first-day-1.png|entrepreneur-first-day-1.png]]
+![[entrepreneur-first-day-1.png|entrepreneur-first-day-1.png]]
 Excited before heading out for the first day of the EF program. 
 
 
-![[../Assets/entrepreneur-first-group.png|entrepreneur-first-group.png]]
+![[entrepreneur-first-group.png|entrepreneur-first-group.png]]
 The exceptionally tall guy in the middle is Andrius, my commercial co-founder for Simple Construction. He's even taller in person.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/8uz7AM_znSw?si=Ie9ZnALcYeMVEmrX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/8uz7AM_znSw?si=Ie9ZnALcYeMVEmrX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 The stupid ideas hackathon was an icebreaker competition to pitch the worst possible startup idea. We pitched CityTrapper - a route planning service that would make your journey longer, more expensive, and harder so that you could explore, invest, and self-develop respectively. 2nd place!
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/W-8pYSRpPKg?si=tROP1yREMJso8_ur" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/W-8pYSRpPKg?si=tROP1yREMJso8_ur" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Our pitch for [[./Simple Construction Software|Simple Construction]] on the 8th of October 2021, around 2 weeks after first conceptualising the company. We didn't even have a name at this point. Every week at EF we would pitch our startup for feedback.
