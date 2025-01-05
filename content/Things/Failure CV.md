@@ -12,6 +12,6 @@ share: true
 - **September 2020** - Leave startup #1, [[./Wutzu|Wutzu]], following a lack of funds or route to profitability.
 - **October 2020** - Rejected by [[./Entrepreneur First|Entrepreneur First]] post-interview.
 - **July 2021** - Shut down my first attempt at startup #2, PageKnight, because I couldn't find a way to make it scale.
-- **May 2023** - Rejected by [[../../Y Combinator|Y Combinator]] post-interview.
-- **September 2023** - Leave startup #2, [[./Simple Construction Software|Simple Construction Software]].
-
+- **May 2022** - Rejected by [[../../Y Combinator|Y Combinator]] post-interview.
+- **September 2022** - Leave startup #2, [[./Simple Construction Software|Simple Construction Software]].
+- **December 2024** - Return to [[./Entrepreneur First|Entrepreneur First]], leave without founding a company.
