@@ -2,8 +2,10 @@
 created: 2025-01-04
 updated: 2025-01-04
 share: true
+aliases:
+  - Periodontal disease
 ---
-
+#sapling 
 # Gum disease
 
 Gum disease, also known as periodontal disease, is a set of inflammatory conditions that affect the tissues surrounding and supporting the teeth. A periodontist is a dentist who specializes in the prevention, diagnosis, and treatment of gum disease.
@@ -14,6 +16,8 @@ Gum disease, also known as periodontal disease, is a set of inflammatory conditi
 - Lab developed test - Salivary hemoglobin A1C + lactate dehydrogenase
 - Lab developed test - Salivary bacterial endotoxin detection
 - Ultrasound - acoustic bone vibration
+
+![[../assets/gum-disease-2024-diagnostics-progress.png|Assets/gum-disease-2024-diagnostics-progress.png]]
 
 ---
 
@@ -26,8 +30,6 @@ Plaque is a layer of microorganisms that grows on surfaces within the mouth. It 
 3. Potential destruction of gum tissue, cementum, alveolar bone, and periodontal ligaments
 
 # Types of gum disease
-
-
 
 ### 🟡 Gingivitis
 
@@ -44,7 +46,7 @@ Plaque is a layer of microorganisms that grows on surfaces within the mouth. It 
 
 # Diagnosis
 
-There are 4 levels, 1-2 is reversible, 3-4 can only be stabilised, there’s no way to regain bone without bone graft surgery
+There are 4 levels, 1-2 is reversible, 3-4 can only be stabilised, there’s no way to regain bone without bone graft surgery.
 
 ## History
 
@@ -53,19 +55,18 @@ There are 4 levels, 1-2 is reversible, 3-4 can only be stabilised, there’s no 
 ## In-person with a dentist
 
 1. **Visual Inspection**: Visually inspect the gums for signs of inflammation such as redness, swelling, bleeding, receding gums, and pockets between the teeth and gums.
-2. **Periodontal Probing**: A periodontal probe is used to measure the depth of the pockets between the teeth and gums. Healthy gums typically have pocket depths of 1 to 3 millimeters, while depths of 4 millimeters or more may indicate gum disease. 4-5mm is Gingivitis, >5mm is periodontistryThe deeper the probe goes, the more severe the gum disease. Designed to check for bone loss.
-3. **Xray:**
+2. **Periodontal Probing**: A periodontal probe is used to measure the depth of the pockets between the teeth and gums. Healthy gums typically have pocket depths of 1 to 3 millimeters, while depths of 4 millimeters or more may indicate gum disease. 4-5mm is Gingivitis, >5mm is periodontitis. The deeper the probe goes, the more severe the gum disease. Designed to check for bone loss.
+3. **Xray:** Standard radiography with visual inspection.
 
+Manual periodontal probe:
 ![[../Assets/gum-disease-periodontal-probe.png|gum-disease-periodontal-probe.png]]
 
-Periodontal probe
-Periodontal probe
 
 # Technology Review
 
 ---
 
-### **2023: Celebrating breakthrough in dental diagnostics: FDA approval of an AI model for diagnosis of periodontal diseases: A correspondence**
+### 2023: Celebrating breakthrough in dental diagnostics: FDA approval of an AI model for diagnosis of periodontal diseases: A correspondence
 
 [Celebrating breakthrough in dental diagnostics: FDA approval of an AI model for diagnosis of periodontal diseases: A correspondence](https://pmc.ncbi.nlm.nih.gov/articles/PMC10507281/)
 
@@ -84,7 +85,7 @@ Periodontal probe
 - Goal is to sell you probiotic for bad breath.
 - Dubious efficacy.
 
-### **2022: Salivary Tests: A New Personalized Approach for the Early Diagnosis of Oral and Periodontal Diseases**
+### 2022: Salivary Tests: A New Personalized Approach for the Early Diagnosis of Oral and Periodontal Diseases
 
 [Salivary Tests: A New Personalized Approach for the Early Diagnosis of Oral and Periodontal Diseases](https://pmc.ncbi.nlm.nih.gov/articles/PMC9604671/#:~:text=POC%20testing%2C%20also%20known%20as,periodontal%20health%20of%20their%20patients)
 
@@ -100,29 +101,28 @@ Periodontal probe
 
 - “This paper presents ToMoBrush, a dental health sensing system that explores using off-the-shelf sonic toothbrushes for dental condition detection. Our solution leverages the fact that a sonic toothbrush produces rich acoustic signals when in contact with teeth, which contain important information about each tooth's status.”
 
-### **2018: Photoacoustic imaging for monitoring periodontal health: A first human study**
+### 2018: Photoacoustic imaging for monitoring periodontal health: A first human study
 
 [Photoacoustic imaging for monitoring periodontal health: A first human study](https://pmc.ncbi.nlm.nih.gov/articles/PMC6226559/)
 
 - “The gold-standard periodontal probe is an aging tool that can detect periodontitis and monitor gingival health but is highly error-prone, does not fully characterize the periodontal pocket, and causes pain.”
 - “A 40 MHz ultrasound frequency could spatially resolve the periodontal anatomy, including tooth, gum, gingival margin, and gingival thickness of tooth numbers 7–10 and 22–27. The photoacoustic-ultrasound measurements were more precise (0.01 mm) than those taken with physical probes by a dental hygienist. Furthermore, the full geometry of the pockets could be visualized with relative standard deviations of 10% (n = 5).
 
-### **2022: Is tele-diagnosis of dental conditions reliable during COVID-19 pandemic? Agreement between tentative diagnosis via synchronous audioconferencing and definitive clinical diagnosis**
+### 2022: Is tele-diagnosis of dental conditions reliable during COVID-19 pandemic? Agreement between tentative diagnosis via synchronous audioconferencing and definitive clinical diagnosis
 
-[](https://www.sciencedirect.com/science/article/pii/S0300571222002007)
+[Is tele-diagnosis of dental conditions reliable during COVID-19 pandemic? Agreement between tentative diagnosis via synchronous audioconferencing and definitive clinical diagnosis](https://www.sciencedirect.com/science/article/pii/S0300571222002007)
 
 - “Remote tentative diagnosis using synchronous audioconferencing teledentistry/ audio-dentistry is safe and reliable.”
-- ## “Audio-dentistry diagnosis of pulpitis and periodontitis exhibited the most frequent disagreements with definitive clinical face-to-face diagnosis.”
-    
+- “Audio-dentistry diagnosis of pulpitis and periodontitis exhibited the most frequent disagreements with definitive clinical face-to-face diagnosis.”
 
 ### 2020: Comparison Between Hand and Sonic/ Ultrasonic Instruments for Periodontal Treatment: Systematic Review with Meta-Analysis
 
-[NCBI - WWW Error Blocked Diagnostic](https://pubmed.ncbi.nlm.nih.gov/32980832/)
+[Comparison Between Hand and Sonic/ Ultrasonic Instruments for Periodontal Treatment: Systematic Review with Meta-Analysis](https://pubmed.ncbi.nlm.nih.gov/32980832/)
 
-### **2020: Digital scanning is more accurate than using a periodontal probe to measure the keratinized tissue width**
+### 2020: Digital scanning is more accurate than using a periodontal probe to measure the keratinized tissue width
 
 [Digital scanning is more accurate than using a periodontal probe to measure the keratinized tissue width](https://www.nature.com/articles/s41598-020-60291-0)
 
-### **2021: Optical coherence tomography’s current clinical medical and dental applications: a review**
+### 2021: Optical coherence tomography’s current clinical medical and dental applications: a review
 
 [Optical coherence tomography’s current clinical medical and dental applications: a review](https://pmc.ncbi.nlm.nih.gov/articles/PMC8086034/)

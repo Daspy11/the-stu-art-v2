@@ -2,8 +2,8 @@
 updated: 2025-01-04
 created: 2025-01-04
 share: true
+title: Things
 ---
-#seed 
 
 Atomic concepts I've written about.
 

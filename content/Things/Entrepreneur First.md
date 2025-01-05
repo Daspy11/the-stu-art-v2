@@ -7,6 +7,8 @@ share: true
 
 # Entrepreneur First
 
+# 1st Cohort - 2021
+
 [Entrepreneur First](https://joinef.com) is a startup accelerator for talented people who want to start a company but don't have a team or idea. I was a member of LD17 (its 17th London cohort) in 2021 where I went on to co-found [[./Simple Construction Software|Simple Construction Software]] with someone I met on the cohort.
 
 My time on Entrepreneur First was absolutely awesome. The first 8 weeks of the cohort were probably the wildest and most dynamic 8 weeks of my life until that point. There, I met [Andrius](https://www.linkedin.com/in/andrius-sutas), a Lithuanian fintech veteran who'd already done EF nearly a decade prior. The company he founded there had deployed their anti-fraud product in a bunch of household name banks, [raised a Series A successfully](https://techcrunch.com/2017/06/19/aimbrain/), and got Andrius and his co-founder in the 30 Under 30.
@@ -36,11 +38,11 @@ EF helped me have a great time, learn an absolute ton, and successfully kick off
 
 ### Some of my favourite moments
 
-[[../Assets/entrepreneur-first-day-1.png|entrepreneur-first-day-1.png]]
+![[../Assets/entrepreneur-first-day-1.png|entrepreneur-first-day-1.png]]
 Excited before heading out for the first day of the EF program. 
 
 
-[[../Assets/entrepreneur-first-group.png|entrepreneur-first-group.png]]
+![[../Assets/entrepreneur-first-group.png|entrepreneur-first-group.png]]
 The exceptionally tall guy in the middle is Andrius, my commercial co-founder for Simple Construction. He's even taller in person.
 
 

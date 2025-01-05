@@ -9,7 +9,7 @@ share: true
 
 # Digital Gardening
 
-I never quite understood the appeal of gardening. I'm a monster who kills a lot of plants, and having a lawn to mow regularly just seemed like taking on a pointless additional obligation for no real benefit.
+I never understood the appeal of conventional gardening. I'm a monster who kills too many plants, and having a lawn to mow seems pointless.
 
 A while ago, I noticed that the [metaverse article on Wikipedia](https://en.wikipedia.org/wiki/Metaverse) was in a dire state of disrepair. I did a significant amount of work fixing up the article, and it brought me an odd sort of pleasure I didn't quite understand at that point. Later, while exploring via the random article feature, I later stumbled across [some sneaky paid reputation management work](https://en.wikipedia.org/wiki/Wikipedia:Conflict_of_interest/Noticeboard/Archive_182#Louis_B._Rosenberg_%26_Zoe_Rosenberg_%26_Unanimous_A.I.) being done and did my best to reverse it.
 
@@ -22,5 +22,3 @@ Traditional meditation never quite hit the spot for me. Being alone with my thou
 - [Wikipedia](https://wikipedia.**org**) - the biggest garden of all.
 - [Jacky Zhao](https://jzhao.xyz/)
 - [Maggie Appleton](https://maggieappleton.com/)
-- [This big list of neat digital garden projects](https://github.com/lyz-code/best-of-digital-gardens?tab=readme-ov-file)
-- [Another big list of public second brains](https://github.com/KasperZutterman/Second-Brain)
