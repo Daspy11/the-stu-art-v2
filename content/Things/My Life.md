@@ -32,17 +32,17 @@ share: true
 
 **May 2020** - I move to London following Wutzu's first angel investment.
 
-**September 2020** - Wutzu struggles to compete with the sheer scale of growth capital being dumped into its competitors (literally [hundreds of millions of dollars](https://techcrunch.com/2020/10/08/gopuff-funding/)) and has no fast road to profitability. I apply to [[./Entrepreneur First|Entrepreneur First]] and am [[./Failure CV|rejected]]. I instead start working at [[./Modernbanc|Modernbanc]], a [[YC|YC]]-backed fintech startup as its first employee.
+**September 2020** - Wutzu struggles to compete with the sheer scale of growth capital being dumped into its competitors (literally [hundreds of millions of dollars](https://techcrunch.com/2020/10/08/gopuff-funding/)) and has no fast road to profitability. I apply to [[./Entrepreneur First|Entrepreneur First]] and am [[./Failure CV|rejected]]. I instead start working at [[./Modernbanc|Modernbanc]], a [[Y Combinator|YC]]-backed fintech startup as its first employee.
 
 **March 2020** - I leave Modernbanc to found another startup. I try to start a productised service for B2B landing page maintenance that I call PageKnight.
 
-**August 2020** - I build some landing pages for fellow [[YC|Y Combinator]] companies, but PageKnight ultimately doesn't scale. I shut it down and re-apply to Entrepreneur First and this time am accepted.
+**August 2020** - I build some landing pages for fellow [[Y Combinator|YC]] companies, but PageKnight ultimately doesn't scale. I shut it down and re-apply to Entrepreneur First and this time am accepted.
 
 **September 2021** - At Entrepreneur First I co-found [[./Simple Construction Software|Simple Construction Software]], a document workflow automation tool for the construction industry.
 
 **January 2022** - Simple Construction Software passes Entrepreneur First's investment committee with strong recommendations to invest from all panelists.
 
-**September 2022** - After a year of working on Simple Construction, we're not able to get the buy-in we need to achieve rollout on whole construction projects. We interview for [[./Y Combinator|Y Combinator]] but are [[rejected|rejected]]. I step away and begin leading the engineering team at [[./Spot Health|Spot Health]].
+**September 2022** - After a year of working on Simple Construction, we're not able to get the buy-in we need to achieve rollout on whole construction projects. We interview for [[./Y Combinator|Y Combinator]] but are [[Failure CV|rejected]]. I step away and begin leading the engineering team at [[./Spot Health|Spot Health]].
 
 
 

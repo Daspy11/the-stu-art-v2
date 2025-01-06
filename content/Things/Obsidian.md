@@ -99,8 +99,8 @@ li.plugin-tasks-list-item .tasks-edit {
 ### Dashboards
 Add the dashboard class to a page and it will rearrange itself into multiple columns to create a navigational aid.
 
-- *[[https://archive.is/LkWRV|Dashboard++ — a simple organization and navigation method for Obsidian Vaults - Medium]]*
-- [[https://github.com/TfTHacker/DashboardPlusPlus/blob/master/.obsidian/snippets/dashboard.css|Github Snippet]]
+- *[Dashboard++ — a simple organization and navigation method for Obsidian Vaults - Medium](https://archive.is/LkWRV)*
+- [Github Snippet](https://github.com/TfTHacker/DashboardPlusPlus/blob/master/.obsidian/snippets/dashboard.css)
 
 To create a dashboard, just implement a nested list.
 

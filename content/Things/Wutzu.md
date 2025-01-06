@@ -32,9 +32,8 @@ I think that lack of an anchor - an external mediator to help us avoid obvious s
 
 We went to work in the basement of a grocery store on Edgware road as our office. It was prime real estate for hitting all the local grocery stores in the area. The shop used to sell antiques, so we sat amongst old candlesticks, curtains and discarded mannequins as we built the Next Big Thing.
 
-![[../Assets/Wutzu office.png|Wutzu office.png]]
-
-![[../Assets/Wutzu delivery van - cropped.png|Wutzu delivery van - cropped.png]]
+![[wutzu-office.png]]
+![[wutzu-delivery-van.png]]
 
 Nevertheless, cracks appeared. 
 

@@ -19,7 +19,7 @@ Traditional meditation never quite hit the spot for me. Being alone with my thou
 
 #### Digital gardens that inspire me
 
-- [Wikipedia](https://wikipedia.**org**) - the biggest garden of all.
+- [Wikipedia](https://wikipedia.org) - the biggest garden of all.
 - [Jacky Zhao](https://jzhao.xyz/)
 - [Maggie Appleton](https://maggieappleton.com/)
 - [This big list of neat digital garden projects](https://github.com/lyz-code/best-of-digital-gardens?tab=readme-ov-file)
