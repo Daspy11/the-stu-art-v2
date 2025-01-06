@@ -46,10 +46,27 @@
     }
 
     &[data-content-type*="image"] {
-      img {
+      p {
         margin: 0;
-        border-radius: 0;
-        display: block;
+        
+        img {
+          margin: 0;
+          border-radius: 0;
+          display: block;
+        }
+
+        &:has(img) {
+          display: flex;
+          flex-direction: column;
+          
+          &::after {
+            content: attr(data-caption);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--darkgray);
+          }
+        }
       }
     }
 
@@ -58,6 +75,14 @@
         width: 100%;
       }
     }
+  }
+
+  iframe[src*="youtube"] {
+    border-radius: 15px;
+    width: 100%;
+    aspect-ratio: 16/9;
+    max-width: 600px;
+    margin: 1rem 0;
   }
 
   h1 {

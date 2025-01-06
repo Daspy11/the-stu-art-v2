@@ -10,3 +10,22 @@ It's...
 - Live at https://thestu.art
 
 Everything is available under an MIT license. Feel free to take this and do whatever you want with it.
+
+---
+
+## Development
+
+**[Documentation](https://quartz.jzhao.xyz/)**
+
+1. Clone the repo, then run `npm i`
+2. To run locally, run `npx quartz build --serve`
+
+## Modifications made
+
+Ways I've changed Quartz's default behavior:
+
+- Modified path resolution behavior in `util/path.ts` to convert all URLs to lowercase
+- Fixed a bug in `util/path.ts joinSegments` that allowed double slashes to resolve in URLs
+- Modified `Breadcrumbs.tsx` to capitalize the first letter of each word in each crumb
+- Added CSS rules for Youtube videos in `popover.scss`
+- Fixed a bug with CSS rules for images in `popover.scss` that caused images with text as part of the same paragraph to display inline.
