@@ -52,6 +52,8 @@ function sluggify(s: string): string {
     .split("/")
     .map((segment) =>
       segment
+        .toLowerCase()
+        .replace(/\s-\s/g, "-")
         .replace(/\s/g, "-")
         .replace(/&/g, "-and-")
         .replace(/%/g, "-percent")
@@ -235,15 +237,18 @@ export function transformLink(src: FullSlug, target: string, opts: TransformOpti
       const matchingFileNames = opts.allSlugs.filter((slug) => {
         const parts = slug.split("/")
         const fileName = parts.at(-1)
-        return fileName === targetCanonical
+        return targetCanonical === fileName
       })
 
+      // only match, just use it
       if (matchingFileNames.length === 1) {
-        return (matchingFileNames[0] + folderTail + targetAnchor) as RelativeURL
+        const targetSlug = matchingFileNames[0]
+        return (resolveRelative(src, targetSlug) + targetAnchor) as RelativeURL
       }
     }
 
-    return (canonicalSlug + folderTail) as RelativeURL
+    // if it's not unique, then it's the absolute path from the vault root
+    return (joinSegments(pathToRoot(src), canonicalSlug) + folderTail) as RelativeURL
   }
 }
 
