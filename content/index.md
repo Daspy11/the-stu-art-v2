@@ -2,6 +2,7 @@
 title: thestu.art
 created: 2025-01-06
 updated: 2025-01-06
+share: true
 ---
 
 
