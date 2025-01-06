@@ -1,11 +1,12 @@
 ---
 created: 2025-01-04
-updated: 2025-01-04
+updated: 2025-01-06
 share: true
 aliases:
   - Periodontal disease
 ---
 #sapling 
+
 # Gum disease
 
 Gum disease, also known as periodontal disease, is a set of inflammatory conditions that affect the tissues surrounding and supporting the teeth. A periodontist is a dentist who specializes in the prevention, diagnosis, and treatment of gum disease.
@@ -17,7 +18,7 @@ Gum disease, also known as periodontal disease, is a set of inflammatory conditi
 - Lab developed test - Salivary bacterial endotoxin detection
 - Ultrasound - acoustic bone vibration
 
-![[../assets/gum-disease-2024-diagnostics-progress.png|Assets/gum-disease-2024-diagnostics-progress.png]]
+![[Assets/gum-disease-2024-diagnostics-progress.png|Assets/gum-disease-2024-diagnostics-progress.png]]
 
 ---
 
@@ -59,7 +60,9 @@ There are 4 levels, 1-2 is reversible, 3-4 can only be stabilised, there’s no 
 3. **Xray:** Standard radiography with visual inspection.
 
 Manual periodontal probe:
-![[../Assets/gum-disease-periodontal-probe.png|gum-disease-periodontal-probe.png]]
+![[gum-disease-periodontal-probe.png|gum-disease-periodontal-probe.png]]
+
+See also: [[Toothbrush innovation|Toothbrush innovation]]
 
 
 # Technology Review
