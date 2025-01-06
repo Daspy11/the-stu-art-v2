@@ -5,8 +5,8 @@ I'm Stuart Johnson. This is my digital garden.
 It's...
 
 - Edited with [Obsidian](https://obsidian.md/)
-- Built with [quartz](https://github.com/jackyzha0/quartz)
+- Built with [Quartz v4](https://quartz.jzhao.xyz/)
 - Hosted with Github Pages
 - Live at https://thestu.art
 
-Everything is available under an MIT license. Feel free to take this and do whatever you want with it. 
+Everything is available under an MIT license. Feel free to take this and do whatever you want with it.
