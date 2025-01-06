@@ -190,22 +190,19 @@ export function joinSegments(...args: string[]): string {
     return ""
   }
 
-  let joined = args
-    .filter((segment) => segment !== "")
-    .map((segment) => stripSlashes(segment))
+  // Remember if we need leading/trailing slashes
+  const needsLeadingSlash = args[0].startsWith("/")
+  const needsTrailingSlash = args[args.length - 1].endsWith("/")
+
+  // Clean and join segments
+  const cleaned = args
+    .filter(segment => segment !== "")
+    .map(segment => segment.replace(/^\/+|\/+$/g, ""))
+    .filter(segment => segment !== "")
     .join("/")
 
-  // if the first segment starts with a slash, add it back
-  if (args[0].startsWith("/")) {
-    joined = "/" + joined
-  }
-
-  // if the last segment is a folder, add a trailing slash
-  if (args[args.length - 1].endsWith("/")) {
-    joined = joined + "/"
-  }
-
-  return joined
+  // Add back needed slashes
+  return (needsLeadingSlash ? "/" : "") + cleaned + (needsTrailingSlash ? "/" : "")
 }
 
 export function getAllSegmentPrefixes(tags: string): string[] {
