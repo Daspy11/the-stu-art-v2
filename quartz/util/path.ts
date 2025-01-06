@@ -52,11 +52,15 @@ function sluggify(s: string): string {
     .split("/")
     .map((segment) =>
       segment
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "") // remove punctuation 
+        .replace(/\s+/g, " ") // collapse multiple spaces
+        .trim()
         .replace(/\s/g, "-")
         .replace(/&/g, "-and-")
         .replace(/%/g, "-percent")
         .replace(/\?/g, "")
-        .replace(/#/g, ""),
+        .replace(/#/g, "")
     )
     .join("/") // always use / as sep
     .replace(/\/$/, "")
