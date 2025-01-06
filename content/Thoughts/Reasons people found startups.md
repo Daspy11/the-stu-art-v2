@@ -2,6 +2,7 @@
 date: 2023-12-17
 updated: 2025-01-06
 created: 2025-01-06
+share: true
 ---
 
 # Reasons that people found startups
