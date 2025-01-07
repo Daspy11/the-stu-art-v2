@@ -1,7 +1,7 @@
 ---
 dateRead: 2024-03-15
 created: 2025-01-06
-updated: 2025-01-06
+updated: 2025-01-07
 share: true
 ---
 
@@ -30,6 +30,6 @@ Nevertheless, I think the book is at its best when focusing on a retrospective t
 
 ---
 
-As a random, useless aside, I wore a custom t-shirt covered in Bo Seo's face at the European University Debate Championships in Glasgow in 2024.
+As a random, useless aside, I wore a custom t-shirt covered in Bo Seo's face at the European University Debate Championships in Glasgow in 2024. Photo courtesy of Rob Barrie.
 
 ![[the-art-of-disagreeing-well-how-debate-teaches-us-to-listen-and-be-heard-bo-seo-tshirt.png]]
