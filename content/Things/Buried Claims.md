@@ -1,7 +1,7 @@
 ---
 updated: 2025-01-11
 created: 2025-01-11
-share: false
+share: true
 ---
 #seed
 # Buried Claims
