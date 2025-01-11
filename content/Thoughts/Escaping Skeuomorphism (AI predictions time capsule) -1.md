@@ -3,7 +3,7 @@ series:
 aliases:
   - Large language models
 date: 2023-12-20
-updated: 2025-01-06
+updated: 2025-01-11
 status: Published
 created: 2025-01-06
 share: true
