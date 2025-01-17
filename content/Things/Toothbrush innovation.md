@@ -1,5 +1,5 @@
 ---
-updated: 2025-01-06
+updated: 2025-01-16
 created: 2025-01-04
 share: true
 aliases:
@@ -38,7 +38,7 @@ Despite not being a U-shaped toothbrush, I must give an honorable mention to Sur
 
 To cut a long story short, the reason we didn't go ahead is a combination of [[Gum Disease|the tech]] not quite being ready yet, learning a large number of customer interviews that individuals motivated to change their brushing habits are mostly poor adherents, and Feno being just too far ahead on R&D to compete for the relatively small biohacking market.
 
-My favorite discovery of the whole experience was without a doubt the bizarre [Blizzbrush](https://youtu.be/cceO0rx2dqo?t=122) whose eclectic founder [angrily responds](https://www.trustpilot.com/reviews/6494c99663ca0cbc3923de03) to negative comments on Trustpilot and [Reddit](https://www.reddit.com/r/Dentistry/comments/aco59q/product_review_research_blizzident/egitqs0/?context=2). Despite looking totally, it seems to actually work quite well from a mechanical perspective. I'll leave the question of trapped bacteria and hygeine up to you.
+My favorite discovery of the whole experience was without a doubt the bizarre [Blizzbrush](https://youtu.be/cceO0rx2dqo?t=122) whose eclectic founder [angrily responds](https://www.trustpilot.com/reviews/6494c99663ca0cbc3923de03) to negative comments on Trustpilot and [Reddit](https://www.reddit.com/r/Dentistry/comments/aco59q/product_review_research_blizzident/egitqs0/?context=2). Despite looking totally bizarre, it seems to actually work quite well from a mechanical perspective. I'll leave the question of trapped bacteria and hygeine up to you.
 
 ## List of toothbrush startups
 
