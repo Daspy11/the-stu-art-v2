@@ -1,0 +1,68 @@
+---
+title: Interactive MDX Demo
+tags:
+  - test
+  - mdx
+share: true
+---
+
+# Interactive MDX Components
+
+This page demonstrates **interactive MDX components** in Quartz!
+
+## Counter Component
+
+Here's an interactive counter - click the buttons to change the value:
+
+<Counter initial={5} />
+
+## Alert Components
+
+Different types of alerts:
+
+<Alert type="info" title="Information">
+  This is an informational alert. It's useful for tips and notes.
+</Alert>
+
+<Alert type="warning" title="Warning">
+  Be careful! This is a warning message.
+</Alert>
+
+<Alert type="success" title="Success">
+  Great job! Something worked correctly.
+</Alert>
+
+## Collapsible Section
+
+Click to expand and collapse:
+
+<Collapsible title="Click to reveal hidden content">
+  <p>This content was hidden! You can put anything here:</p>
+  <ul>
+    <li>Lists</li>
+    <li>More components</li>
+    <li>Any JSX content</li>
+  </ul>
+</Collapsible>
+
+## Regular Markdown Still Works
+
+- Bullet points
+- **Bold text**
+- *Italic text*
+- [Links](/things)
+
+```javascript
+// Code blocks too!
+const message = "Hello from MDX!"
+console.log(message)
+```
+
+## How It Works
+
+These components are:
+1. **Server-rendered** at build time for fast initial load
+2. **Hydrated** on the client for interactivity
+3. **Fully typed** with TypeScript
+
+You can add your own components in `quartz/mdx/components.tsx`!

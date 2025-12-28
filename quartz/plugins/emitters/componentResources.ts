@@ -5,15 +5,16 @@ import { QuartzEmitterPlugin } from "../types"
 import spaRouterScript from "../../components/scripts/spa.inline"
 // @ts-ignore
 import popoverScript from "../../components/scripts/popover.inline"
-import styles from "../../styles/custom.scss"
-import popoverStyle from "../../components/styles/popover.scss"
+import styles from "../../styles/styles.css"
+import popoverStyle from "../../components/styles/popover.css"
 import { BuildCtx } from "../../util/ctx"
 import { QuartzComponent } from "../../components/types"
 import { googleFontHref, joinStyles } from "../../util/theme"
 import { Features, transform } from "lightningcss"
-import { transform as transpile } from "esbuild"
+import { transform as transpile, build as esbuild } from "esbuild"
 import { write } from "./helpers"
 import DepGraph from "../../depgraph"
+import path from "path"
 
 type ComponentResources = {
   css: string[]
@@ -283,6 +284,34 @@ export const ComponentResources: QuartzEmitterPlugin = () => {
           content: postscript,
         }),
       )
+
+      // Build MDX hydration bundle
+      try {
+        const mdxBundleResult = await esbuild({
+          entryPoints: ["./quartz/mdx/hydrate.inline.ts"],
+          bundle: true,
+          minify: true,
+          platform: "browser",
+          format: "iife",
+          write: false,
+          jsx: "automatic",
+          jsxImportSource: "preact",
+          external: [], // Bundle everything
+        })
+
+        if (mdxBundleResult.outputFiles && mdxBundleResult.outputFiles.length > 0) {
+          promises.push(
+            write({
+              ctx,
+              slug: "static/mdx-hydrate" as FullSlug,
+              ext: ".js",
+              content: mdxBundleResult.outputFiles[0].text,
+            }),
+          )
+        }
+      } catch (err) {
+        console.warn("Failed to build MDX hydration bundle:", err)
+      }
 
       return await Promise.all(promises)
     },

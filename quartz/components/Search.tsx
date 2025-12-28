@@ -1,5 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import style from "./styles/search.scss"
+import style from "./styles/search.css"
 // @ts-ignore
 import script from "./scripts/search.inline"
 import { classNames } from "../util/lang"

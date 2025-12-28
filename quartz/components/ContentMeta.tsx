@@ -4,7 +4,7 @@ import readingTime from "reading-time"
 import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 import { JSX } from "preact"
-import style from "./styles/contentMeta.scss"
+import style from "./styles/contentMeta.css"
 
 interface ContentMetaOptions {
   /**
@@ -43,7 +43,7 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       }
 
       return (
-        <p show-comma={options.showComma} class={classNames(displayClass, "content-meta")}>
+        <p class={classNames(displayClass, "content-meta")} show-comma={options.showComma}>
           {segments}
         </p>
       )
@@ -53,6 +53,5 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
   }
 
   ContentMetadata.css = style
-
   return ContentMetadata
 }) satisfies QuartzComponentConstructor

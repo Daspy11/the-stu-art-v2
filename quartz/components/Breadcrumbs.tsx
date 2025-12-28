@@ -1,5 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import breadcrumbsStyle from "./styles/breadcrumbs.scss"
+import style from "./styles/breadcrumbs.css"
 import { FullSlug, SimpleSlug, joinSegments, resolveRelative } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
 import { classNames } from "../util/lang"
@@ -137,7 +137,7 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
       </nav>
     )
   }
-  Breadcrumbs.css = breadcrumbsStyle
 
+  Breadcrumbs.css = style
   return Breadcrumbs
 }) satisfies QuartzComponentConstructor

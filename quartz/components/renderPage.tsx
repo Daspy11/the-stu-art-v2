@@ -10,7 +10,7 @@ import { GlobalConfiguration } from "../cfg"
 import { i18n } from "../i18n"
 // @ts-ignore
 import mermaidScript from "./scripts/mermaid.inline"
-import mermaidStyle from "./styles/mermaid.inline.scss"
+import mermaidStyle from "./styles/mermaid.inline.css"
 import { QuartzPluginData } from "../plugins/vfile"
 
 interface RenderComponents {
@@ -64,6 +64,16 @@ export function pageResources(
       contentType: "inline",
     })
     resources.css.push({ content: mermaidStyle, inline: true })
+  }
+
+  // Add MDX hydration script for MDX pages with interactive components
+  if ((fileData as any).isMdx && (fileData as any).mdxComponents?.length > 0) {
+    resources.js.push({
+      src: joinSegments(baseDir, "static/mdx-hydrate.js"),
+      loadTime: "afterDOMReady",
+      moduleType: "module",
+      contentType: "external",
+    })
   }
 
   // NOTE: we have to put this last to make sure spa.inline.ts is the last item.

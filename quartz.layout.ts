@@ -40,7 +40,6 @@ export const defaultContentPageLayout: PageLayout = {
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
-    Component.DesktopOnly(Component.Explorer()),
   ],
   right: [
     Component.Graph({
@@ -51,6 +50,7 @@ export const defaultContentPageLayout: PageLayout = {
         showTags: false,
       },
     }),
+    Component.TableOfContents(),
     Component.Backlinks(),
   ],
 }
@@ -62,7 +62,6 @@ export const defaultListPageLayout: PageLayout = {
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
-    Component.DesktopOnly(Component.Explorer()),
   ],
   right: [],
 }

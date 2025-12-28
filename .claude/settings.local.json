@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(grep:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm run quartz:*)",
+      "Bash(node:*)",
+      "Bash(rm:*)",
+      "Bash(lsof:*)",
+      "Bash(npx quartz build:*)",
+      "Bash(kill:*)",
+      "Bash(xargs kill -9)",
+      "Bash(npx tsc:*)"
+    ],
+    "deny": []
+  }
+}

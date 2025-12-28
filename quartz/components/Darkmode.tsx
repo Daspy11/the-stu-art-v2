@@ -2,8 +2,8 @@
 // modules are automatically deferred and we don't want that to happen for critical beforeDOMLoads
 // see: https://v8.dev/features/modules#defer
 import darkmodeScript from "./scripts/darkmode.inline"
-import styles from "./styles/darkmode.scss"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import style from "./styles/darkmode.css"
 import { i18n } from "../i18n"
 import { classNames } from "../util/lang"
 
@@ -45,6 +45,6 @@ const Darkmode: QuartzComponent = ({ displayClass, cfg }: QuartzComponentProps) 
 }
 
 Darkmode.beforeDOMLoaded = darkmodeScript
-Darkmode.css = styles
+Darkmode.css = style
 
 export default (() => Darkmode) satisfies QuartzComponentConstructor

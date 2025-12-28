@@ -39,7 +39,7 @@ export type RelativeURL = SlugLike<"relative">
 export function isRelativeURL(s: string): s is RelativeURL {
   const validStart = /^\.{1,2}/.test(s)
   const validEnding = !endsWith(s, "index")
-  return validStart && validEnding && ![".md", ".html"].includes(_getFileExtension(s) ?? "")
+  return validStart && validEnding && ![".md", ".mdx", ".html"].includes(_getFileExtension(s) ?? "")
 }
 
 export function getFullSlug(window: Window): FullSlug {
@@ -68,7 +68,7 @@ export function slugifyFilePath(fp: FilePath, excludeExt?: boolean): FullSlug {
   fp = stripSlashes(fp) as FilePath
   let ext = _getFileExtension(fp)
   const withoutFileExt = fp.replace(new RegExp(ext + "$"), "")
-  if (excludeExt || [".md", ".html", undefined].includes(ext)) {
+  if (excludeExt || [".md", ".mdx", ".html", undefined].includes(ext)) {
     ext = ""
   }
 
@@ -255,6 +255,7 @@ function isFolderPath(fplike: string): boolean {
     fplike.endsWith("/") ||
     endsWith(fplike, "index") ||
     endsWith(fplike, "index.md") ||
+    endsWith(fplike, "index.mdx") ||
     endsWith(fplike, "index.html")
   )
 }

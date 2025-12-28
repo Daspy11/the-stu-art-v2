@@ -1,0 +1,12 @@
+.content-meta {
+  margin-top: 0;
+  color: var(--gray);
+}
+
+.content-meta[show-comma="true"] > *:not(:last-child) {
+  margin-right: 8px;
+}
+
+.content-meta[show-comma="true"] > *:not(:last-child)::after {
+  content: ",";
+}

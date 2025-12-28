@@ -1,0 +1,101 @@
+@keyframes dropin {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  1% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.popover {
+  z-index: 999;
+  position: absolute;
+  overflow: visible;
+  padding: 1rem;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.popover > .popover-inner {
+  position: relative;
+  width: 30rem;
+  max-height: 20rem;
+  padding: 0 1rem 1rem 1rem;
+  font-weight: initial;
+  font-style: initial;
+  line-height: normal;
+  font-size: initial;
+  font-family: var(--bodyFont);
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  box-shadow: 6px 6px 36px 0 rgba(0, 0, 0, 0.25);
+  overflow: auto;
+  white-space: normal;
+}
+
+.popover > .popover-inner[data-content-type*="pdf"],
+.popover > .popover-inner[data-content-type*="image"] {
+  padding: 0;
+  max-height: 100%;
+}
+
+.popover > .popover-inner[data-content-type*="image"] p {
+  margin: 0;
+}
+
+.popover > .popover-inner[data-content-type*="image"] p img {
+  margin: 0;
+  border-radius: 0;
+  display: block;
+}
+
+.popover > .popover-inner[data-content-type*="image"] p:has(img) {
+  display: flex;
+  flex-direction: column;
+}
+
+.popover > .popover-inner[data-content-type*="image"] p:has(img)::after {
+  content: attr(data-caption);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--darkgray);
+}
+
+.popover > .popover-inner[data-content-type*="pdf"] iframe {
+  width: 100%;
+}
+
+.popover iframe[src*="youtube"] {
+  border-radius: 15px;
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-width: 600px;
+  margin: 1rem 0;
+}
+
+.popover h1 {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 800px) {
+  .popover {
+    display: none !important;
+  }
+}
+
+a:hover .popover,
+.popover:hover {
+  animation: dropin 0.3s ease;
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
+}

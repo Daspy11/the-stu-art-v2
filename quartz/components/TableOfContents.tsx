@@ -1,6 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import legacyStyle from "./styles/legacyToc.scss"
-import modernStyle from "./styles/toc.scss"
+import legacyStyle from "./styles/legacyToc.css"
+import modernStyle from "./styles/toc.css"
 import { classNames } from "../util/lang"
 
 // @ts-ignore
@@ -51,13 +51,15 @@ const TableOfContents: QuartzComponent = ({
       </button>
       <div id="toc-content" class={fileData.collapseToc ? "collapsed" : ""}>
         <ul class="overflow">
-          {fileData.toc.map((tocEntry) => (
-            <li key={tocEntry.slug} class={`depth-${tocEntry.depth}`}>
-              <a href={`#${tocEntry.slug}`} data-for={tocEntry.slug}>
-                {tocEntry.text}
-              </a>
-            </li>
-          ))}
+          {fileData.toc
+            .filter((tocEntry) => tocEntry.depth > 0)
+            .map((tocEntry) => (
+              <li key={tocEntry.slug} class={`depth-${tocEntry.depth}`}>
+                <a href={`#${tocEntry.slug}`} data-for={tocEntry.slug}>
+                  {tocEntry.text}
+                </a>
+              </li>
+            ))}
         </ul>
       </div>
     </div>

@@ -38,6 +38,13 @@ type BuildData = {
 
 type FileEvent = "add" | "change" | "delete"
 
+// Content file extensions that should be processed
+const CONTENT_EXTENSIONS = [".md", ".mdx"]
+function isContentFile(fp: string): boolean {
+  const ext = path.extname(fp)
+  return CONTENT_EXTENSIONS.includes(ext)
+}
+
 function newBuildId() {
   return Math.random().toString(36).substring(2, 8)
 }
@@ -70,7 +77,7 @@ async function buildQuartz(argv: Argv, mut: Mutex, clientRefresh: () => void) {
 
   perf.addEvent("glob")
   const allFiles = await glob("**/*.*", argv.directory, cfg.configuration.ignorePatterns)
-  const fps = allFiles.filter((fp) => fp.endsWith(".md")).sort()
+  const fps = allFiles.filter((fp) => isContentFile(fp)).sort()
   console.log(
     `Found ${fps.length} input files from \`${argv.directory}\` in ${perf.timeSince("glob")}`,
   )
@@ -210,7 +217,7 @@ async function partialRebuildFromEntrypoint(
       processedFiles.forEach(([tree, vfile]) => contentMap.set(vfile.data.filePath!, [tree, vfile]))
 
       // only content files can have added/removed dependencies because of transclusions
-      if (path.extname(fp) === ".md") {
+      if (isContentFile(fp)) {
         for (const emitter of cfg.plugins.emitters) {
           // get new dependencies from all emitters for this file
           const emitterGraph =
@@ -343,7 +350,7 @@ async function rebuildFromEntrypoint(
   // dont bother rebuilding for non-content files, just track and refresh
   fp = toPosixPath(fp)
   const filePath = joinSegments(argv.directory, fp) as FilePath
-  if (path.extname(fp) !== ".md") {
+  if (!isContentFile(fp)) {
     if (action === "add" || action === "change") {
       trackedAssets.add(filePath)
     } else if (action === "delete") {

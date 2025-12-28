@@ -13,6 +13,7 @@ import workerpool, { Promise as WorkerPromise } from "workerpool"
 import { QuartzLogger } from "../util/log"
 import { trace } from "../util/trace"
 import { BuildCtx } from "../util/ctx"
+import { parseMdxFile } from "./mdx"
 
 export type QuartzProcessor = Processor<MDRoot, MDRoot, HTMLRoot>
 export function createProcessor(ctx: BuildCtx): QuartzProcessor {
@@ -79,6 +80,15 @@ export function createFileParser(ctx: BuildCtx, fps: FilePath[]) {
     const res: ProcessedContent[] = []
     for (const fp of fps) {
       try {
+        if (fp.endsWith(".mdx")) {
+          const mdxResult = await parseMdxFile(ctx, fp)
+          if (mdxResult) {
+            res.push(mdxResult)
+          }
+          continue
+        }
+
+        // Standard Markdown processing
         const perf = new PerfTimer()
         const file = await read(fp)
 
@@ -155,6 +165,6 @@ export async function parseMarkdown(ctx: BuildCtx, fps: FilePath[]): Promise<Pro
     await pool.terminate()
   }
 
-  log.end(`Parsed ${res.length} Markdown files in ${perf.timeSince()}`)
+  log.end(`Parsed ${res.length} content files in ${perf.timeSince()}`)
   return res
 }

@@ -2,12 +2,14 @@ import { promises } from "fs"
 import path from "path"
 import esbuild from "esbuild"
 import chalk from "chalk"
-import { sassPlugin } from "esbuild-sass-plugin"
 import fs from "fs"
 import { intro, outro, select, text } from "@clack/prompts"
 import { rimraf } from "rimraf"
 import chokidar from "chokidar"
 import prettyBytes from "pretty-bytes"
+import postcss from "postcss"
+import autoprefixer from "autoprefixer"
+import tailwindcss from "@tailwindcss/postcss"
 import { execSync, spawnSync } from "child_process"
 import http from "http"
 import serveHandler from "serve-handler"
@@ -233,15 +235,65 @@ export async function handleBuild(argv) {
     sourcemap: true,
     sourcesContent: false,
     plugins: [
-      sassPlugin({
-        type: "css-text",
-        cssImports: true,
-      }),
-      sassPlugin({
-        filter: /\.inline\.scss$/,
-        type: "css",
-        cssImports: true,
-      }),
+      // CSS loader that processes imports and returns CSS as text
+      {
+        name: "css-text-loader",
+        setup(build) {
+          
+          async function processImports(cssContent, currentDir, visited = new Set()) {
+            const importRegex = /@import\s+url\(["']([^"']+)["']\);?/g
+            let result = cssContent
+            let match
+            const imports = []
+            
+            while ((match = importRegex.exec(cssContent)) !== null) {
+              const importPath = match[1]
+              const fullImportPath = path.resolve(currentDir, importPath)
+              
+              // Avoid circular imports
+              if (visited.has(fullImportPath)) continue
+              visited.add(fullImportPath)
+              
+              try {
+                let importedCSS = await promises.readFile(fullImportPath, "utf8")
+                // Recursively process imports in the imported file
+                importedCSS = await processImports(importedCSS, path.dirname(fullImportPath), visited)
+                imports.push(importedCSS)
+              } catch (err) {
+                console.warn(`Could not resolve CSS import: ${importPath}`)
+              }
+            }
+            
+            // Replace all @import statements with empty string
+            result = result.replace(importRegex, '')
+            // Prepend all imported CSS
+            result = imports.join('\n') + '\n' + result
+            
+            return result
+          }
+          
+          build.onLoad({ filter: /\.css$/ }, async (args) => {
+            let contents = await promises.readFile(args.path, "utf8")
+            
+            // Process all @import statements recursively
+            contents = await processImports(contents, path.dirname(args.path))
+            
+            // Process Tailwind directives through PostCSS if needed
+            if (contents.includes("@tailwind")) {
+              const { css } = await postcss([tailwindcss, autoprefixer]).process(contents, { 
+                from: args.path 
+              })
+              contents = css
+            }
+            
+            // Return CSS as a JavaScript module that exports the CSS text
+            return {
+              contents: `export default ${JSON.stringify(contents)};`,
+              loader: "js"
+            }
+          })
+        }
+      },
       {
         name: "inline-script-loader",
         setup(build) {

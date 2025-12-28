@@ -1,0 +1,348 @@
+.toc {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.toc.desktop-only {
+  max-height: 40%;
+}
+
+@media (min-width: 800px) {
+  .toc {
+    display: flex;
+  }
+}
+
+button#toc {
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+}
+
+button#toc h3 {
+  font-size: 1rem;
+  display: inline-block;
+  margin: 0;
+}
+
+button#toc .fold {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+  opacity: 0.8;
+}
+
+button#toc.collapsed .fold {
+  transform: rotateZ(-90deg);
+}
+
+#toc-content {
+  list-style: none;
+  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+  transition:
+    max-height 0.35s ease,
+    visibility 0s linear 0s;
+  position: relative;
+  visibility: visible;
+}
+
+#toc-content.collapsed {
+  max-height: 0;
+  transition:
+    max-height 0.35s ease,
+    visibility 0s linear 0.35s;
+  visibility: hidden;
+}
+
+#toc-content.collapsed > .overflow::after {
+  opacity: 0;
+}
+
+#toc-content ul {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+  padding-left: 0.5rem;
+  position: relative;
+}
+
+/* Timeline vertical line */
+#toc-content > ul.overflow::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--gray) 0%,
+    var(--gray) var(--progress, 0%),
+    var(--lightgray) var(--progress, 0%),
+    var(--lightgray) 100%
+  );
+  z-index: 0;
+  transition: background 0.3s ease;
+}
+
+#toc-content ul > li {
+  position: relative;
+  margin: 0.75rem 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Circle indicator for each section */
+#toc-content ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--light);
+  border: 2px solid var(--lightgray);
+  z-index: 2;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Checkmark for read sections */
+#toc-content ul > li.read::before {
+  content: "✓";
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--light);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Gray state for sections when scrolled back up past them */
+#toc-content ul > li.past::before {
+  content: "✓";
+  background-color: var(--lightgray);
+  border-color: var(--lightgray);
+  color: var(--dark);
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+/* Active/in-view section */
+#toc-content ul > li:has(> a.in-view)::before {
+  background-color: var(--tertiary);
+  border-color: var(--tertiary);
+  box-shadow: 0 0 0 4px rgba(var(--tertiary-rgb), 0.2);
+  transform: scale(1.1);
+}
+
+/* Link styling */
+#toc-content ul > li > a {
+  color: var(--dark);
+  opacity: 0.6;
+  text-decoration: none;
+  display: inline-block;
+  padding-left: 36px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#toc-content ul > li.read > a {
+  opacity: 0.75;
+  color: var(--gray);
+}
+
+#toc-content ul > li.past > a {
+  opacity: 0.5;
+  color: var(--gray);
+}
+
+#toc-content ul > li > a.in-view {
+  opacity: 1;
+  font-weight: 600;
+  color: var(--dark);
+  transform: translateX(2px);
+}
+
+#toc-content > ul.overflow {
+  max-height: none;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Indentation for nested levels - creative branching effect */
+
+#toc-content .depth-1 {
+  padding-left: 0;
+}
+
+#toc-content .depth-1::before {
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+
+#toc-content .depth-2 {
+  padding-left: 20px;
+}
+
+#toc-content .depth-2::before {
+  left: 20px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Add connecting line for nested items */
+#toc-content .depth-2::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 50%;
+  width: 18px;
+  height: 2px;
+  background-color: var(--lightgray);
+  z-index: 1;
+}
+
+#toc-content .depth-2.read::after,
+#toc-content .depth-2.past::after {
+  background-color: var(--gray);
+}
+
+#toc-content .depth-3 {
+  padding-left: 40px;
+}
+
+#toc-content .depth-3::before {
+  left: 40px;
+  width: 16px;
+  height: 16px;
+}
+
+#toc-content .depth-3::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 50%;
+  width: 38px;
+  height: 2px;
+  background-color: var(--lightgray);
+  z-index: 1;
+}
+
+#toc-content .depth-3.read::after,
+#toc-content .depth-3.past::after {
+  background-color: var(--gray);
+}
+
+#toc-content .depth-4 {
+  padding-left: 60px;
+}
+
+#toc-content .depth-4::before {
+  left: 60px;
+  width: 14px;
+  height: 14px;
+}
+
+#toc-content .depth-4::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 50%;
+  width: 58px;
+  height: 2px;
+  background-color: var(--lightgray);
+  z-index: 1;
+}
+
+#toc-content .depth-4.read::after,
+#toc-content .depth-4.past::after {
+  background-color: var(--gray);
+}
+
+#toc-content .depth-5 {
+  padding-left: 80px;
+}
+
+#toc-content .depth-5::before {
+  left: 80px;
+  width: 12px;
+  height: 12px;
+}
+
+#toc-content .depth-5::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 50%;
+  width: 78px;
+  height: 2px;
+  background-color: var(--lightgray);
+  z-index: 1;
+}
+
+#toc-content .depth-5.read::after,
+#toc-content .depth-5.past::after {
+  background-color: var(--gray);
+}
+
+#toc-content .depth-6 {
+  padding-left: 100px;
+}
+
+#toc-content .depth-6::before {
+  left: 100px;
+  width: 10px;
+  height: 10px;
+}
+
+#toc-content .depth-6::after {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 50%;
+  width: 98px;
+  height: 2px;
+  background-color: var(--lightgray);
+  z-index: 1;
+}
+
+#toc-content .depth-6.read::after,
+#toc-content .depth-6.past::after {
+  background-color: var(--gray);
+}
+
+/* Hover effects */
+#toc-content ul > li > a:hover {
+  opacity: 1;
+  color: var(--secondary);
+  transform: translateX(2px);
+}
+
+/* Small animation when marking as read */
+@keyframes checkIn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#toc-content ul > li.read::before {
+  animation: checkIn 0.3s ease;
+}

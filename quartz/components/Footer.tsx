@@ -1,5 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import style from "./styles/footer.scss"
+import style from "./styles/footer.css"
 import { version } from "../../package.json"
 import { i18n } from "../i18n"
 
@@ -12,7 +12,7 @@ export default ((opts?: Options) => {
     const year = new Date().getFullYear()
     const links = opts?.links ?? []
     return (
-      <footer class={`${displayClass ?? ""}`}>
+      <footer class={displayClass}>
         <p>
           Everything written by Stuart Johnson © {year}
         </p>
