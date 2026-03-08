@@ -194,20 +194,22 @@ function toggleToc(this: HTMLElement) {
 }
 
 function setupToc() {
-  // Get all headers
-  headers = Array.from(
-    document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]")
-  ) as HTMLElement[]
-
-  // Build map of TOC items
+  // Build map of TOC items first so we can filter headers
   tocItems.clear()
+  const tocSlugs = new Set<string>()
   document.querySelectorAll("#toc-content li").forEach((item) => {
     const link = item.querySelector("a")
     const slug = link?.getAttribute("data-for")
     if (slug) {
       tocItems.set(slug, item as HTMLElement)
+      tocSlugs.add(slug)
     }
   })
+
+  // Get only headers that have corresponding TOC entries
+  headers = (Array.from(
+    document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]")
+  ) as HTMLElement[]).filter(h => tocSlugs.has(h.id))
 
   // Reset state
   currentSection = null
