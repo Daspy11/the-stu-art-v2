@@ -775,7 +775,9 @@ function simulate() {
         // Count trunk height below
         let trunkH = 0
         for (let ty = y + 1; ty < H && getBg(x, ty) === TREE; ty++) trunkH++
-        const maxH = 12
+        // Stable per-tree max height derived from root X position
+        const rootX = x
+        const maxH = 10 + ((rootX * 2654435761 >>> 0) % 15)  // range: 10–24
 
         // Check if tree can benefit from water (can grow, sprout, or thicken)
         const canGrowUp = trunkH < maxH && getBg(x, y - 1) === EMPTY
