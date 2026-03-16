@@ -80,6 +80,8 @@
   border-radius: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   min-width: 180px;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
 }
 
 .particle-dropdown.open {
@@ -271,7 +273,8 @@
 @media (max-width: 800px) {
   #particle-toolbar {
     top: 8px;
-    left: 8px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .particle-toggle {
