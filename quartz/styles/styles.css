@@ -262,6 +262,8 @@ section {
   box-sizing: border-box;
   background-color: var(--light);
   font-family: var(--bodyFont);
+  font-size: 20px;
+  line-height: 28px;
   color: var(--darkgray);
 }
 
@@ -411,11 +413,11 @@ a.external .external-icon > path {
 
 @media (min-width: 800px) and (max-width: 1200px) {
   .page > #quartz-body {
-    grid-template-columns: var(--tablet-grid-template-columns);
-    grid-template-rows: var(--tablet-grid-template-rows);
-    column-gap: var(--tablet-grid-column-gap);
-    row-gap: var(--tablet-grid-row-gap);
-    grid-template-areas: var(--tablet-grid-template-areas);
+    grid-template-columns: var(--mobile-grid-template-columns);
+    grid-template-rows: var(--mobile-grid-template-rows);
+    column-gap: var(--mobile-grid-column-gap);
+    row-gap: var(--mobile-grid-row-gap);
+    grid-template-areas: var(--mobile-grid-template-areas);
   }
 }
 
@@ -457,7 +459,7 @@ a.external .external-icon > path {
   flex-direction: column;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
   .page > #quartz-body .sidebar.left {
     gap: 0;
     align-items: center;
@@ -540,30 +542,22 @@ a.external .external-icon > path {
 
 .page > #quartz-body .center,
 .page > #quartz-body footer {
-  max-width: 100%;
-  min-width: 100%;
+  max-width: 682px;
+  min-width: 0;
   margin-left: auto;
   margin-right: auto;
 }
 
-@media (min-width: 800px) and (max-width: 1200px) {
+@media (max-width: 1200px) {
   .page > #quartz-body .center,
   .page > #quartz-body footer {
-    margin-right: 0;
+    max-width: 682px;
+    min-width: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
-@media (max-width: 800px) {
-  .page > #quartz-body .center,
-  .page > #quartz-body footer {
-    margin-right: 0;
-    margin-left: 0;
-  }
-}
-
-.page > #quartz-body footer {
-  margin-left: 0;
-}
 
 .footnotes {
   margin-top: 2rem;
@@ -605,7 +599,9 @@ input[type="checkbox"]:checked::after {
 blockquote {
   margin: 1rem 0;
   border-left: 3px solid var(--secondary);
-  padding-left: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(255, 200, 150, 0.15);
+  border-radius: 0 0.25rem 0.25rem 0;
   transition: border-color 0.2s ease;
 }
 
@@ -618,7 +614,7 @@ h6,
 thead {
   font-family: var(--headerFont);
   color: var(--dark);
-  font-weight: revert;
+  font-weight: 600;
   margin-bottom: 0;
   text-wrap: pretty;
 }
@@ -643,9 +639,14 @@ h6[id] > a[href^="#"] {
   margin: 0 0.5rem;
   opacity: 0;
   transition: opacity 0.2s ease;
-  transform: translateY(-0.1rem);
   font-family: var(--codeFont);
   user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
 }
 
 h1[id]:hover > a,
@@ -657,31 +658,36 @@ h6[id]:hover > a {
   opacity: 1;
 }
 
-/* typography improvements */
+/* typography improvements — sizes/spacing matched to LessWrong */
 h1 {
-  font-size: 1.75rem;
-  margin-top: 2.25rem;
-  margin-bottom: 1rem;
+  font-size: 2.275rem;
+  line-height: 1.133;
+  margin-top: 1em;
+  margin-bottom: 0.25em;
 }
 
 h2 {
-  font-size: 1.45rem;
-  margin-top: 1.9rem;
-  margin-bottom: 1rem;
+  font-size: 1.625rem;
+  line-height: 1.206;
+  margin-top: 1em;
+  margin-bottom: 0.25em;
 }
 
 h3 {
-  font-size: 1.12rem;
-  margin-top: 1.62rem;
-  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  line-height: 1.206;
+  margin-top: 1em;
+  margin-bottom: 0.25em;
 }
 
 h4,
 h5,
 h6 {
-  font-size: 1.1rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.138rem;
+  line-height: 1.43;
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.25em;
 }
 
 figure[data-rehype-pretty-code-figure] {
@@ -822,14 +828,18 @@ tr:last-child {
 
 img {
   max-width: 100%;
-  border-radius: 15px;
+  border-radius: 5px;
   margin: 1rem 0;
+  border: 1px solid var(--lightgray);
   content-visibility: auto;
 }
 
 p > img + em {
   display: block;
-  transform: translateY(-1rem);
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--darkgray);
+  text-align: center;
 }
 
 hr {
@@ -899,6 +909,31 @@ iframe.pdf {
 }
 
 /* ========================================
+   LANDING PAGE — center content when sidebars are empty
+   ======================================== */
+body[data-slug="index"] .page > #quartz-body {
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "grid-center"
+    "grid-footer";
+}
+
+body[data-slug="index"] .page > #quartz-body .sidebar {
+  display: none;
+}
+
+body[data-slug="index"] .page > #quartz-body .page-header {
+  display: none;
+}
+
+body[data-slug="index"] .page > #quartz-body .center {
+  max-width: var(--page-width);
+  min-width: 0;
+  margin: 0 auto;
+  padding: var(--top-spacing) 1rem 0 1rem;
+}
+
+/* ========================================
    CUSTOM STYLES
    ======================================== */
 @media (max-width: 600px) {
@@ -956,15 +991,16 @@ iframe {
 /* Image and caption styling */
 p:has(img) {
   text-align: left;
-  margin: 1.5rem 0 3rem 0;
+  margin: 1.5rem 0;
 }
 
 p img {
   display: block;
-  margin: 1rem 0 1rem;
+  margin: 0.5rem 0 0.25rem;
   max-height: 400px;
   height: auto;
   aspect-ratio: attr(width) / attr(height);
-  border-radius: 15px;
+  border-radius: 5px;
 }
+
 

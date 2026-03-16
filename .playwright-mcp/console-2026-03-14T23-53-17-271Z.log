@@ -1,0 +1,21 @@
+[  156002ms] ReferenceError: scheduleWallUpdate is not defined
+    at Mr (http://localhost:8777/postscript.js:2:5915)
+    at pr (http://localhost:8777/postscript.js:2:1393)
+    at http://localhost:8777/postscript.js:2:7339
+    at http://localhost:8777/postscript.js:2:7500
+[  160974ms] ReferenceError: scheduleWallUpdate is not defined
+    at Mr (http://localhost:8777/postscript.js:2:5881)
+    at pr (http://localhost:8777/postscript.js:2:1393)
+    at http://localhost:8777/postscript.js:2:7305
+    at http://localhost:8777/postscript.js:2:7466
+[  166112ms] ReferenceError: updateContentWalls is not defined
+    at HTMLDocument.<anonymous> (http://localhost:8777/postscript.js:2:7271)
+    at Oe (http://localhost:8777/postscript.js:1080:144573)
+    at http://localhost:8777/postscript.js:1080:146529
+    at http://localhost:8777/postscript.js:1080:146959
+[  195541ms] ReferenceError: walls is not defined
+    at hr (http://localhost:8777/postscript.js:2:1611)
+    at Ir (http://localhost:8777/postscript.js:2:1372)
+    at http://localhost:8777/postscript.js:2:7170
+    at http://localhost:8777/postscript.js:2:7297
+[  213892ms] [ERROR] WebSocket connection to 'ws://localhost:3001/' failed:  @ http://localhost:8777/:9

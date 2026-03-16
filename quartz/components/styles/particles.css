@@ -1,0 +1,387 @@
+/* ========================================
+   PARTICLE CANVAS — transparent overlay
+   ======================================== */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+#quartz-root {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   TOOLBAR — top-left dropdown palette
+   ======================================== */
+#particle-toolbar {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  user-select: none;
+  font-family: var(--bodyFont);
+}
+
+/* Toggle button */
+.particle-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 3px;
+  box-shadow: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease;
+  line-height: 1;
+}
+
+.particle-toggle:hover {
+  border-color: var(--gray);
+}
+
+.particle-toggle .particle-dot {
+  width: 12px;
+  height: 12px;
+}
+
+.particle-toggle-label {
+  font-size: 16px;
+  color: var(--darkgray);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+.particle-toggle-arrow {
+  font-size: 9px;
+  color: var(--gray);
+  transition: transform 0.15s ease;
+  line-height: 1;
+}
+
+/* Dropdown panel */
+.particle-dropdown {
+  display: none;
+  margin-top: 4px;
+  padding: 6px 0;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  min-width: 180px;
+}
+
+.particle-dropdown.open {
+  display: block;
+}
+
+/* Materials list */
+.particle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Material item */
+.particle-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.1s ease;
+}
+
+.particle-pill:hover {
+  background: color-mix(in srgb, var(--lightgray) 80%, var(--gray) 20%);
+}
+
+.particle-pill.active {
+  background: var(--lightgray);
+}
+
+/* Color swatch */
+.particle-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.particle-pill.active .particle-swatch {
+  border-color: var(--darkgray);
+}
+
+/* Label */
+.particle-pill-label {
+  font-size: 16px;
+  color: var(--darkgray);
+  white-space: nowrap;
+  font-family: var(--bodyFont);
+  line-height: 1.2;
+}
+
+.particle-pill.active .particle-pill-label {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+/* Shared dot style (used in toggle button) */
+.particle-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  position: relative;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.particle-divider {
+  height: 1px;
+  background: var(--lightgray);
+  margin: 3px 0;
+}
+
+/* Action buttons row */
+.particle-actions {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px 0;
+}
+
+.particle-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  border: none;
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.1s ease;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.particle-btn:hover {
+  color: var(--dark);
+  background: color-mix(in srgb, var(--lightgray) 80%, var(--gray) 20%);
+}
+
+/* Speed / size slider rows */
+.particle-speed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  min-width: 0;
+}
+
+.particle-speed-slider {
+  flex: 1;
+  min-width: 60px;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--lightgray);
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+}
+
+.particle-speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--gray);
+  border: none;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.particle-speed-slider::-webkit-slider-thumb:hover {
+  background: var(--dark);
+}
+
+.particle-speed-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--gray);
+  border: none;
+  cursor: pointer;
+}
+
+.particle-speed-label {
+  font-size: 13px;
+  color: var(--darkgray);
+  min-width: 30px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--bodyFont);
+  flex-shrink: 0;
+}
+
+/* Debug checkbox row */
+.particle-debug-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--gray);
+  cursor: pointer;
+  font-family: var(--bodyFont);
+}
+
+.particle-debug-row input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* ========================================
+   MOBILE
+   ======================================== */
+@media (max-width: 800px) {
+  #particle-toolbar {
+    top: 8px;
+    left: 8px;
+  }
+
+  .particle-toggle {
+    padding: 3px 8px;
+    gap: 4px;
+  }
+
+  .particle-toggle-label {
+    font-size: 14px;
+  }
+
+  .particle-dropdown {
+    min-width: 160px;
+  }
+
+  .particle-pill {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .particle-pill-label {
+    font-size: 14px;
+  }
+
+  .particle-swatch {
+    width: 10px;
+    height: 10px;
+  }
+
+  .particle-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   INLINE INSTRUCTIONS
+   ======================================== */
+.particle-instructions {
+  display: block;
+  margin: 0.8em 0;
+  color: var(--darkgray);
+  user-select: none;
+}
+
+.particle-mouse-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
+  position: relative;
+  top: -2px;
+}
+
+.particle-inline-toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.particle-inline-toggle-wrap .particle-toggle {
+  display: inline-flex;
+  align-items: baseline;
+  vertical-align: baseline;
+  padding: 0 4px;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--gray);
+}
+
+.particle-inline-toggle-wrap .particle-toggle-label {
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-weight: inherit;
+}
+
+.particle-inline-toggle-wrap .particle-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  position: relative;
+  top: 1px;
+}
+
+.particle-inline-toggle-wrap .particle-toggle-arrow {
+  font-size: 9px;
+  color: var(--gray);
+  margin-left: 2px;
+}
+
+.particle-inline-toggle-wrap .particle-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  z-index: 200;
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  #particle-canvas {
+    opacity: 0.3;
+  }
+}

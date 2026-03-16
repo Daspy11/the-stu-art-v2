@@ -30,8 +30,10 @@ This is a Quartz v4 static site generator project - a digital garden/personal we
   - `Templates/` - Content templates
 - `/quartz/` - Core framework code
   - `components/` - Preact UI components
+  - `mdx/` - MDX component registry and hydration
   - `plugins/` - Content transformation plugins
-  - `styles/` - SCSS stylesheets
+  - `processors/` - Content parsing (Markdown and MDX)
+  - `styles/` - CSS stylesheets
 - `/public/` - Build output (gitignored)
 
 ### Plugin System
@@ -56,9 +58,27 @@ Quartz uses a three-stage plugin pipeline:
 
 ### Content Processing
 - Markdown files support Obsidian-flavored and GitHub-flavored syntax
+- MDX files (`.mdx`) support interactive Preact components
 - Frontmatter metadata is parsed and available to components
 - Internal links use [[wikilinks]] or standard Markdown links
 - Search is implemented client-side using FlexSearch
+
+### MDX Support
+The project supports MDX files with interactive components:
+
+- **Component registry**: `/quartz/mdx/components.tsx` - Define Preact components here
+- **Hydration script**: `/quartz/mdx/hydrate.inline.ts` - Client-side component mounting
+- **MDX processor**: `/quartz/processors/mdx.tsx` - Compiles MDX to HTML with hydration markers
+
+Available components: `Counter`, `Collapsible`, `Tabs`, `Alert`
+
+To add a new component:
+1. Create the component in `/quartz/mdx/components.tsx` using Preact hooks
+2. Export it from `mdxComponents` object
+3. Add it to the `components` registry in `/quartz/mdx/hydrate.inline.ts`
+4. Use in any `.mdx` file: `<YourComponent prop="value" />`
+
+MDX files require `share: true` in frontmatter to be published.
 
 ### Deployment
 The site automatically deploys to GitHub Pages when pushing to the `v4` branch via GitHub Actions.

@@ -12,6 +12,7 @@ export const sharedPageComponents: SharedLayout = {
     },
   }),
   afterBody: [
+    Component.ParticleCanvas(),
     /**
     Component.Comments({
       provider: 'giscus',
@@ -36,11 +37,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Breadcrumbs(),
     Component.ContentMeta(),
   ],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Search(),
-  ],
+  left: [],
   right: [
     Component.Graph({
       localGraph: {
@@ -50,9 +47,14 @@ export const defaultContentPageLayout: PageLayout = {
         showTags: false,
       },
     }),
-    Component.TableOfContents(),
-    Component.Backlinks(),
   ],
+}
+
+// components for the landing page (index)
+export const defaultLandingPageLayout: PageLayout = {
+  beforeBody: [],
+  left: [],
+  right: [],
 }
 
 // components for pages that display lists of pages (e.g. tags or folders)

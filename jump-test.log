@@ -1,0 +1,3335 @@
+[
+  {
+    "tick": 0,
+    "tiles": {
+      "fg": {
+        "16": 222,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "smoke": 1,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3361
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 121
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 73,
+        "y": 318,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 73,
+        "targetY": 318,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 1,
+        "x": 77,
+        "y": 314,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 77,
+        "targetY": 314,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 2,
+        "x": 76,
+        "y": 312,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 312,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      }
+    ]
+  },
+  {
+    "tick": 25,
+    "tiles": {
+      "fg": {
+        "16": 222,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3361
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 121
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 78,
+        "y": 311,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 73,
+        "targetY": 318,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 1,
+        "x": 67,
+        "y": 316,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 77,
+        "targetY": 314,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 2,
+        "x": 70,
+        "y": 318,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 312,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 50,
+    "tiles": {
+      "fg": {
+        "16": 222,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3361
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 121
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 82,
+        "y": 311,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 73,
+        "targetY": 318,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 1,
+        "x": 61,
+        "y": 319,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 77,
+        "targetY": 314,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 66,
+        "y": 317,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 312,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 75,
+    "tiles": {
+      "fg": {
+        "16": 222,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3361
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 121
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 95,
+        "y": 320,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 73,
+        "targetY": 318,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 53,
+        "y": 321,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 77,
+        "targetY": 314,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 60,
+        "y": 319,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 312,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 100,
+    "tiles": {
+      "fg": {
+        "16": 222,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3361
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 121
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 101,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 85,
+        "targetY": 316,
+        "placeX": 85,
+        "placeY": 316,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 50,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 68,
+        "targetY": 315,
+        "placeX": 68,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 52,
+        "y": 320,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 68,
+        "targetY": 315,
+        "placeX": 68,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 125,
+    "tiles": {
+      "fg": {
+        "16": 222,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3361
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 121
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 95,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 85,
+        "targetY": 316,
+        "placeX": 85,
+        "placeY": 316,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 59,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 68,
+        "targetY": 315,
+        "placeX": 68,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 58,
+        "y": 320,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 68,
+        "targetY": 315,
+        "placeX": 68,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 150,
+    "tiles": {
+      "fg": {
+        "16": 221,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3343
+      },
+      "bg": {
+        "leaf": 504,
+        "tree": 125
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 88,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 76,
+        "targetY": 315,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 67,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 74,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 66,
+        "y": 321,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 74,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 175,
+    "tiles": {
+      "fg": {
+        "16": 219,
+        "18": 1,
+        "sand": 69,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3311
+      },
+      "bg": {
+        "leaf": 505,
+        "tree": 127
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 83,
+        "y": 312,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 76,
+        "targetY": 315,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 1,
+        "x": 75,
+        "y": 317,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 71,
+        "targetY": 318,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 2,
+        "x": 74,
+        "y": 318,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 70,
+        "targetY": 317,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 200,
+    "tiles": {
+      "fg": {
+        "16": 219,
+        "18": 1,
+        "sand": 68,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 28,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3288
+      },
+      "bg": {
+        "leaf": 505,
+        "tree": 128
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 84,
+        "y": 314,
+        "job": "farm",
+        "task": "decide",
+        "carrying": "water",
+        "targetX": 86,
+        "targetY": 316,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "idle"
+      },
+      {
+        "id": 1,
+        "x": 73,
+        "y": 316,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 71,
+        "targetY": 318,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 2,
+        "x": 64,
+        "y": 320,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 70,
+        "targetY": 317,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 225,
+    "tiles": {
+      "fg": {
+        "16": 219,
+        "18": 1,
+        "sand": 68,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 28,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3270
+      },
+      "bg": {
+        "leaf": 505,
+        "tree": 128
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 73,
+        "y": 316,
+        "job": "farm",
+        "task": "pour_water",
+        "carrying": "water",
+        "targetX": 76,
+        "targetY": 315,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 1,
+        "x": 75,
+        "y": 316,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 71,
+        "targetY": 318,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 2,
+        "x": 56,
+        "y": 321,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 70,
+        "targetY": 317,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 250,
+    "tiles": {
+      "fg": {
+        "16": 219,
+        "18": 1,
+        "sand": 68,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3246
+      },
+      "bg": {
+        "leaf": 508,
+        "tree": 129
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 76,
+        "y": 315,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 315,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 1,
+        "x": 89,
+        "y": 319,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 71,
+        "targetY": 318,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 2,
+        "x": 50,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 79,
+        "targetY": 313,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 4,
+        "terraformClears": 6,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 36,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 275,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 68,
+        "stone": 5944,
+        "mud": 3736,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3239
+      },
+      "bg": {
+        "leaf": 513,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 79,
+        "y": 311,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 315,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 1,
+        "x": 91,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 83,
+        "targetY": 314,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 1,
+        "terraformClears": 1,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 57,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 79,
+        "targetY": 313,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 4,
+        "terraformClears": 6,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 36,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 300,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 67,
+        "stone": 5944,
+        "mud": 3736,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3235
+      },
+      "bg": {
+        "leaf": 515,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 91,
+        "y": 320,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 76,
+        "targetY": 315,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 78,
+        "y": 312,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 2,
+        "x": 65,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 79,
+        "targetY": 313,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 4,
+        "terraformClears": 6,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 38,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 325,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 65,
+        "stone": 5944,
+        "mud": 3736,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3235
+      },
+      "bg": {
+        "leaf": 516,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 99,
+        "y": 321,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 86,
+        "targetY": 317,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 1,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 72,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 2,
+        "x": 75,
+        "y": 316,
+        "job": "build",
+        "task": "decide",
+        "carrying": null,
+        "targetX": 80,
+        "targetY": 312,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 2,
+        "terraformClears": 3,
+        "state": "idle"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 40,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 350,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 63,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3232
+      },
+      "bg": {
+        "leaf": 518,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 103,
+        "y": 321,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 86,
+        "targetY": 317,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 1,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 68,
+        "y": 320,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      },
+      {
+        "id": 2,
+        "x": 84,
+        "y": 314,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 82,
+        "targetY": 313,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 2,
+        "terraformClears": 0,
+        "state": "walk"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "water",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 375,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 63,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3226
+      },
+      "bg": {
+        "leaf": 519,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 94,
+        "y": 321,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 86,
+        "targetY": 317,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 1,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 58,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 94,
+        "y": 319,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 82,
+        "targetY": 313,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 2,
+        "terraformClears": 0,
+        "state": "fall"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 400,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 63,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3221
+      },
+      "bg": {
+        "leaf": 519,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 83,
+        "y": 316,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 84,
+        "targetY": 314,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "idle"
+      },
+      {
+        "id": 1,
+        "x": 51,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 102,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 82,
+        "targetY": 313,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 71,
+        "kilnY": 318,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 2,
+        "terraformClears": 0,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 71,
+        "kilnY": 318,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "water"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 425,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 63,
+        "stone": 5944,
+        "mud": 3737,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3218
+      },
+      "bg": {
+        "leaf": 519,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 91,
+        "y": 320,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 84,
+        "targetY": 314,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 1,
+        "x": 53,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 107,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 84,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 84,
+        "kilnY": 316,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 0,
+        "terraformClears": 3,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 84,
+        "kilnY": 316,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 450,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 62,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3213
+      },
+      "bg": {
+        "leaf": 520,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 100,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 84,
+        "targetY": 314,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 60,
+        "y": 321,
+        "job": "wanderer",
+        "task": "decide",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 99,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 84,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 84,
+        "kilnY": 316,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 0,
+        "terraformClears": 3,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 84,
+        "kilnY": 316,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 475,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 62,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3209
+      },
+      "bg": {
+        "leaf": 520,
+        "tree": 130
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 108,
+        "y": 321,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 304,
+        "targetY": 290,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 68,
+        "y": 321,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 2,
+        "x": 91,
+        "y": 321,
+        "job": "build",
+        "task": "terraform",
+        "carrying": null,
+        "targetX": 84,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 84,
+        "kilnY": 316,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 0,
+        "terraformClears": 3,
+        "state": "swim"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 84,
+        "kilnY": 316,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 500,
+    "tiles": {
+      "fg": {
+        "16": 220,
+        "18": 1,
+        "sand": 61,
+        "stone": 5944,
+        "mud": 3738,
+        "brick": 11,
+        "seed": 27,
+        "kiln_stone": 30,
+        "kiln_fire": 1,
+        "water": 3203
+      },
+      "bg": {
+        "leaf": 524,
+        "tree": 129
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 118,
+        "y": 321,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 304,
+        "targetY": 290,
+        "placeX": 76,
+        "placeY": 315,
+        "placeType": 9,
+        "kilnX": 82,
+        "kilnY": 314,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim"
+      },
+      {
+        "id": 1,
+        "x": 80,
+        "y": 312,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 85,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 83,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall"
+      },
+      {
+        "id": 2,
+        "x": 81,
+        "y": 314,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 157,
+        "targetY": 315,
+        "placeX": 74,
+        "placeY": 317,
+        "placeType": 9,
+        "kilnX": 84,
+        "kilnY": 316,
+        "buildX": 76,
+        "buildY": 314,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk"
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 82,
+        "kilnY": 314,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 83,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "sand"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      },
+      {
+        "kilnX": 84,
+        "kilnY": 316,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 76,
+        "buildY": 314,
+        "placed": 41,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  }
+]

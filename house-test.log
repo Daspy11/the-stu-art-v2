@@ -1,0 +1,4284 @@
+[
+  {
+    "tick": 0,
+    "tiles": {
+      "fg": {
+        "16": 258,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 30,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 191
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 13,
+        "y": 320,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 13,
+        "targetY": 320,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 214,
+        "y": 305,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 214,
+        "targetY": 305,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 0
+      },
+      {
+        "id": 2,
+        "x": 214,
+        "y": 306,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 214,
+        "targetY": 306,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 0
+      },
+      {
+        "id": 3,
+        "x": 197,
+        "y": 304,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 197,
+        "targetY": 304,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 0
+      },
+      {
+        "id": 4,
+        "x": 218,
+        "y": 305,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 218,
+        "targetY": 305,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 0
+      },
+      {
+        "id": 5,
+        "x": 219,
+        "y": 306,
+        "job": "farm",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 219,
+        "targetY": 306,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 0
+      }
+    ]
+  },
+  {
+    "tick": 150,
+    "tiles": {
+      "fg": {
+        "16": 258,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 30,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 191
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 15,
+        "y": 318,
+        "job": "build",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 13,
+        "targetY": 320,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 221,
+        "y": 304,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 28
+      },
+      {
+        "id": 2,
+        "x": 254,
+        "y": 300,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 8
+      },
+      {
+        "id": 3,
+        "x": 217,
+        "y": 306,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 241,
+        "y": 302,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 17
+      },
+      {
+        "id": 5,
+        "x": 248,
+        "y": 300,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 12
+      }
+    ],
+    "kilns": [],
+    "houses": []
+  },
+  {
+    "tick": 300,
+    "tiles": {
+      "fg": {
+        "16": 256,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3944,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 190
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 5,
+        "y": 320,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 23,
+        "targetY": 313,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "swim",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 261,
+        "y": 300,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 2
+      },
+      {
+        "id": 2,
+        "x": 293,
+        "y": 301,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 45
+      },
+      {
+        "id": 3,
+        "x": 267,
+        "y": 302,
+        "job": "farm",
+        "task": "place",
+        "carrying": "seed",
+        "targetX": 274,
+        "targetY": 303,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 1
+      },
+      {
+        "id": 4,
+        "x": 286,
+        "y": 304,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 49
+      },
+      {
+        "id": 5,
+        "x": 283,
+        "y": 305,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 54
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": []
+  },
+  {
+    "tick": 450,
+    "tiles": {
+      "fg": {
+        "16": 258,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3942,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 190
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 33,
+        "y": 319,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 23,
+        "targetY": 313,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 8,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 286,
+        "y": 306,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 49
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 307,
+        "y": 301,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 41
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 5,
+        "x": 317,
+        "y": 304,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": "mud"
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 600,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 190
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 76,
+        "y": 314,
+        "job": "wanderer",
+        "task": "wander",
+        "carrying": null,
+        "targetX": 23,
+        "targetY": 313,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 8,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 318,
+        "y": 305,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 35
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 750,
+    "tiles": {
+      "fg": {
+        "16": 258,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3942,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 190
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 111,
+        "y": 321,
+        "job": "build",
+        "task": "decide",
+        "carrying": null,
+        "targetX": 185,
+        "targetY": 307,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 63,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 320,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "fall",
+        "pathLen": 32
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 900,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 190
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 140,
+        "y": 305,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 185,
+        "targetY": 307,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 28
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1050,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 506,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 923,
+        "tree": 190
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 178,
+        "y": 300,
+        "job": "build",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 185,
+        "targetY": 307,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 3
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1200,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 924,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 179,
+        "y": 302,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1350,
+    "tiles": {
+      "fg": {
+        "16": 256,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3944,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 181,
+        "y": 303,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1500,
+    "tiles": {
+      "fg": {
+        "16": 256,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3944,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 180,
+        "y": 302,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1650,
+    "tiles": {
+      "fg": {
+        "16": 256,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3944,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 180,
+        "y": 303,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1800,
+    "tiles": {
+      "fg": {
+        "16": 258,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3942,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 181,
+        "y": 301,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 1950,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 180,
+        "y": 303,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 2100,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 181,
+        "y": 303,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 2250,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 180,
+        "y": 304,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 2400,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 181,
+        "y": 304,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 2550,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 183,
+        "y": 304,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 2700,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 182,
+        "y": 304,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 2850,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 180,
+        "y": 303,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  },
+  {
+    "tick": 3000,
+    "tiles": {
+      "fg": {
+        "16": 257,
+        "18": 27,
+        "sand": 505,
+        "stone": 5415,
+        "mud": 3943,
+        "water": 2856,
+        "kiln_stone": 88,
+        "seed": 31,
+        "brick": 1,
+        "kiln_fire": 1
+      },
+      "bg": {
+        "leaf": 925,
+        "tree": 192
+      }
+    },
+    "guys": [
+      {
+        "id": 0,
+        "x": 183,
+        "y": 304,
+        "job": "build",
+        "task": "decide",
+        "carrying": "sand",
+        "targetX": 94,
+        "targetY": 321,
+        "placeX": -1,
+        "placeY": -1,
+        "placeType": 0,
+        "kilnX": 22,
+        "kilnY": 315,
+        "buildX": 94,
+        "buildY": 321,
+        "terraformFills": 390,
+        "terraformClears": 0,
+        "state": "idle",
+        "pathLen": 0
+      },
+      {
+        "id": 1,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 2,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 3,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 31
+      },
+      {
+        "id": 4,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      },
+      {
+        "id": 5,
+        "x": 322,
+        "y": 302,
+        "job": "farm",
+        "task": "mine",
+        "carrying": null,
+        "targetX": 355,
+        "targetY": 313,
+        "placeX": 274,
+        "placeY": 302,
+        "placeType": 9,
+        "kilnX": -1,
+        "kilnY": -1,
+        "buildX": -1,
+        "buildY": -1,
+        "terraformFills": 0,
+        "terraformClears": 0,
+        "state": "walk",
+        "pathLen": 32
+      }
+    ],
+    "kilns": [
+      {
+        "kilnX": 22,
+        "kilnY": 315,
+        "steps": [
+          {
+            "dx": 0,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 1,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 2,
+            "dy": 0,
+            "need": "kiln_stone",
+            "have": 16
+          },
+          {
+            "dx": 0,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -1,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 0,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          },
+          {
+            "dx": 2,
+            "dy": -2,
+            "need": "kiln_stone",
+            "have": "empty"
+          }
+        ],
+        "fireSlot": "empty",
+        "loadSlot": "empty"
+      }
+    ],
+    "houses": [
+      {
+        "buildX": 94,
+        "buildY": 321,
+        "placed": 42,
+        "total": 74,
+        "complete": false
+      }
+    ]
+  }
+]

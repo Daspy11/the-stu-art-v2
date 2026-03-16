@@ -1,11 +1,12 @@
 import { h, render } from "preact"
-import { Counter, Collapsible, Tabs, Alert } from "./components"
+import { Counter, Collapsible, Tabs, Alert, PowderGame } from "./components"
 
 const components: Record<string, any> = {
   Counter,
   Collapsible,
   Tabs,
   Alert,
+  PowderGame,
 }
 
 function hydrateMdxComponents() {

@@ -16,8 +16,9 @@
     "docs": "npx quartz build --serve -d docs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
-    "test": "tsx ./quartz/util/path.test.ts && tsx ./quartz/depgraph.test.ts",
-    "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1"
+    "test": "tsx ./quartz/util/path.test.ts && tsx ./quartz/depgraph.test.ts && tsx ./quartz/components/scripts/particles.test.ts",
+    "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
+    "simulate": "node simulate.mjs"
   },
   "engines": {
     "npm": ">=9.3.1",
@@ -62,6 +63,7 @@
     "mdast-util-to-string": "^4.0.0",
     "micromorph": "^0.4.5",
     "pixi.js": "^8.6.6",
+    "playwright": "^1.58.2",
     "preact": "^10.25.4",
     "preact-render-to-string": "^6.5.12",
     "pretty-bytes": "^6.1.1",

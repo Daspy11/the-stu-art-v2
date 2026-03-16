@@ -3,14 +3,14 @@ import { visit } from "unist-util-visit"
 import { Root } from "hast"
 import { VFile } from "vfile"
 import { QuartzEmitterPlugin } from "../types"
-import { QuartzComponentProps } from "../../components/types"
+import { QuartzComponent, QuartzComponentProps } from "../../components/types"
 import HeaderConstructor from "../../components/Header"
 import BodyConstructor from "../../components/Body"
 import { pageResources, renderPage } from "../../components/renderPage"
 import { FullPageLayout } from "../../cfg"
 import { Argv } from "../../util/ctx"
 import { FilePath, isRelativeURL, joinSegments, pathToRoot } from "../../util/path"
-import { defaultContentPageLayout, sharedPageComponents } from "../../../quartz.layout"
+import { defaultContentPageLayout, defaultLandingPageLayout, sharedPageComponents } from "../../../quartz.layout"
 import { Content } from "../../components"
 import chalk from "chalk"
 import { write } from "./helpers"
@@ -59,6 +59,18 @@ export const ContentPage: QuartzEmitterPlugin<Partial<FullPageLayout>> = (userOp
     ...userOpts,
   }
 
+  const EmptyFooter: QuartzComponent = () => null
+  EmptyFooter.css = ""
+  EmptyFooter.afterDOMLoaded = ""
+  EmptyFooter.beforeDOMLoaded = ""
+
+  const landingOpts: FullPageLayout = {
+    ...sharedPageComponents,
+    ...defaultLandingPageLayout,
+    pageBody: Content(),
+    footer: EmptyFooter,
+  }
+
   const { head: Head, header, beforeBody, pageBody, afterBody, left, right, footer: Footer } = opts
   const Header = HeaderConstructor()
   const Body = BodyConstructor()
@@ -77,6 +89,9 @@ export const ContentPage: QuartzEmitterPlugin<Partial<FullPageLayout>> = (userOp
         ...left,
         ...right,
         Footer,
+        ...landingOpts.beforeBody,
+        ...landingOpts.left,
+        ...landingOpts.right,
       ]
     },
     async getDependencyGraph(ctx, content, _resources) {
@@ -117,7 +132,8 @@ export const ContentPage: QuartzEmitterPlugin<Partial<FullPageLayout>> = (userOp
           allFiles,
         }
 
-        const content = renderPage(cfg, slug, componentData, opts, externalResources)
+        const pageOpts = slug === "index" ? landingOpts : opts
+        const content = renderPage(cfg, slug, componentData, pageOpts, externalResources)
         const fp = await write({
           ctx,
           content,

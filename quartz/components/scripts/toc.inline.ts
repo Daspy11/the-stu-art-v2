@@ -5,7 +5,6 @@ const HEADER_OFFSET = 100 // How far from top a header should be to be considere
 let headers: HTMLElement[] = []
 let tocItems: Map<string, HTMLElement> = new Map()
 let currentSection: string | null = null
-let highestStartedIndex = -1 // Track the furthest section we've started reading
 let scrollTimeout: number | null = null
 
 function getHeaderPositions(): { slug: string; top: number; bottom: number }[] {
@@ -102,15 +101,6 @@ function updateTocState() {
   const positions = getHeaderPositions()
   const currentIndex = findCurrentSection(positions)
 
-  // If at bottom, mark all sections as started/read
-  if (isAtBottom() && positions.length > 0) {
-    highestStartedIndex = positions.length - 1
-  }
-  // Update highest started index (only increases, never decreases)
-  else if (currentIndex > highestStartedIndex) {
-    highestStartedIndex = currentIndex
-  }
-
   // Update current section
   const newCurrentSection = currentIndex >= 0 ? positions[currentIndex].slug : null
 
@@ -121,19 +111,14 @@ function updateTocState() {
     if (link) link.classList.remove("in-view")
   })
 
-  // Apply states - simple priority:
-  // 1. Sections before the frontier: "read"
-  // 2. The frontier (furthest point reached): "in-view"
-  // 3. Sections after: unmarked
+  // Apply states
   positions.forEach((pos, index) => {
     const item = tocItems.get(pos.slug)
     if (!item) return
 
     const link = item.querySelector("a")
 
-    if (index < highestStartedIndex) {
-      item.classList.add("read")
-    } else if (index === highestStartedIndex) {
+    if (index === currentIndex) {
       if (link) link.classList.add("in-view")
     }
   })
@@ -166,15 +151,6 @@ function handleTocClick(e: Event) {
 
   const slug = link.getAttribute("data-for")
   if (!slug) return
-
-  // Find the index of the clicked section
-  const positions = getHeaderPositions()
-  const clickedIndex = positions.findIndex(p => p.slug === slug)
-
-  // When clicking a link, mark all previous sections as read
-  if (clickedIndex > highestStartedIndex) {
-    highestStartedIndex = clickedIndex - 1
-  }
 
   // Let the scroll happen, then update
   setTimeout(() => {
@@ -213,7 +189,6 @@ function setupToc() {
 
   // Reset state
   currentSection = null
-  highestStartedIndex = -1
 
   // Clear existing classes
   tocItems.forEach((item) => {
