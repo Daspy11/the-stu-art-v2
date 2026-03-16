@@ -3094,7 +3094,7 @@ function createToolbar() {
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0
     const inputText = document.createElement("span")
     if (isTouch) {
-      inputText.textContent = "Hold down your finger"
+      inputText.innerHTML = 'Tap and hold'
     } else {
       inputText.innerHTML = 'Hold <svg class="particle-mouse-icon" viewBox="0 0 16 22" width="14" height="19"><rect x="1" y="1" width="14" height="20" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="1" x2="8" y2="9" stroke="currentColor" stroke-width="1"/><rect x="1" y="1" width="7" height="8" rx="4" fill="currentColor" opacity="0.25"/></svg>'
     }
