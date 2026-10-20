@@ -109,6 +109,7 @@ declare module "vfile" {
         description: string
         publish: boolean | string
         draft: boolean | string
+        ai: boolean | string
         lang: string
         enableToc: string
         cssclasses: string[]

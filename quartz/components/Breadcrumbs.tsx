@@ -3,10 +3,12 @@ import style from "./styles/breadcrumbs.css"
 import { FullSlug, SimpleSlug, joinSegments, resolveRelative } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
 import { classNames } from "../util/lang"
+import { AiBadge, isAiWritten } from "./AiBadge"
 
 type CrumbData = {
   displayName: string
   path: string
+  aiWritten?: boolean
 }
 
 interface BreadcrumbOptions {
@@ -45,7 +47,7 @@ function formatCrumb(displayName: string, baseSlug: FullSlug, currentSlug: Simpl
     displayName: displayName
       .replaceAll("-", " ")
       .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" "),
     path: resolveRelative(baseSlug, currentSlug),
   }
@@ -122,6 +124,7 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
         crumbs.push({
           displayName: fileData.frontmatter!.title,
           path: "",
+          aiWritten: isAiWritten(fileData),
         })
       }
     }
@@ -131,6 +134,7 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
         {crumbs.map((crumb, index) => (
           <div class="breadcrumb-element">
             <a href={crumb.path}>{crumb.displayName}</a>
+            {crumb.aiWritten && <AiBadge />}
             {index !== crumbs.length - 1 && <p>{` ${options.spacerSymbol} `}</p>}
           </div>
         ))}
@@ -138,6 +142,6 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
     )
   }
 
-  Breadcrumbs.css = style
+  Breadcrumbs.css = style + AiBadge.css
   return Breadcrumbs
 }) satisfies QuartzComponentConstructor

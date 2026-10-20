@@ -2,6 +2,7 @@
 created: 2026-10-20
 updated: 2026-10-20
 share: true
+ai: true
 title: HADES, on the web
 description: A Haskell GTK desktop app for safety cases, ported module by module to TypeScript and running in a browser tab.
 tags:

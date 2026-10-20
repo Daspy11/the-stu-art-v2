@@ -3,6 +3,7 @@ import { QuartzPluginData } from "../plugins/vfile"
 import { Date, getDate } from "./Date"
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import { GlobalConfiguration } from "../cfg"
+import { AiBadge, isAiWritten } from "./AiBadge"
 
 export type SortFn = (f1: QuartzPluginData, f2: QuartzPluginData) => number
 
@@ -54,6 +55,7 @@ export const PageList: QuartzComponent = ({ cfg, fileData, allFiles, limit, sort
                   <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
                     {title}
                   </a>
+                  {isAiWritten(page) && <AiBadge />}
                 </h3>
               </div>
               <ul class="tags">
@@ -76,7 +78,9 @@ export const PageList: QuartzComponent = ({ cfg, fileData, allFiles, limit, sort
   )
 }
 
-PageList.css = `
+PageList.css =
+  AiBadge.css +
+  `
 .section h3 {
   margin: 0;
 }
