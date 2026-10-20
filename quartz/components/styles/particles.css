@@ -13,6 +13,11 @@
   image-rendering: pixelated;
 }
 
+/* guys walk in front of the buildings */
+#particle-guys {
+  z-index: 3;
+}
+
 #quartz-root {
   position: relative;
   z-index: 1;

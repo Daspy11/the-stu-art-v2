@@ -62,7 +62,7 @@ function slug(): string {
 
 // Worlds are fitted to a screen size, so each size keeps its own save. Bump the
 // version when world generation changes so visitors get the new terrain.
-const SAVE_PREFIX = "particle-world:v3:"
+const SAVE_PREFIX = "particle-world:v4:"
 function storageKey(W: number, H: number): string {
   return `${SAVE_PREFIX}${slug()}:${W}x${Math.round(H / 20)}`
 }

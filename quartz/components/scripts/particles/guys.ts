@@ -34,10 +34,10 @@ const SPRINGS: [number, number, number][] = [
   [N_HEAD, N_HIP, 4.0],
 ]
 
-export const WALK_SPEED = 0.16
-const SWIM_SPEED = 0.07
-const CLIMB_SPEED = 0.13
-const HOP_SPEED = 0.35
+export const WALK_SPEED = 0.24
+const SWIM_SPEED = 0.15
+const CLIMB_SPEED = 0.2
+const HOP_SPEED = 0.5
 
 // What the hands are doing (purely visual)
 export const ACT_NONE = 0,
@@ -231,7 +231,7 @@ export function moveGuy(w: World, g: Guy) {
   if (inWater) {
     if (g.mode !== "swim") g.mode = "swim"
     // float up to the surface
-    if (waterAt(w, cx, Math.round(g.y) - 1)) g.y -= 0.08
+    if (waterAt(w, cx, Math.round(g.y) - 1)) g.y -= 0.15
     else g.y = Math.round(g.y)
   } else if (g.mode === "swim") {
     g.mode = "stand"
@@ -263,7 +263,7 @@ export function moveGuy(w: World, g: Guy) {
         g.x += g.dir * speed
         if ((g.dir > 0 && g.x >= tx) || (g.dir < 0 && g.x <= tx)) g.x = tx
         if (g.mode !== "swim") g.mode = "walk"
-        g.phase += speed * 1.6
+        g.phase += g.mode === "swim" ? speed * 1.2 : speed * 1.4
       }
     } else if (Math.abs(g.y - ty) > 0.01) {
       // vertical: ladder
@@ -303,7 +303,7 @@ export function moveGuy(w: World, g: Guy) {
 const TX = new Float64Array(NUM_NODES),
   TY = new Float64Array(NUM_NODES)
 // how hard each node is pulled to its target: feet and hips firm, hands loose
-const STIFF = [0.16, 0.2, 0.34, 0.24, 0.24, 0.45, 0.45, 0.13, 0.13, 0.09, 0.09]
+const STIFF = [0.15, 0.18, 0.34, 0.17, 0.17, 0.45, 0.45, 0.09, 0.09, 0.06, 0.06]
 const DAMP = 0.8
 
 function setNode(_g: Guy, n: number, x: number, y: number, _k: number) {
@@ -334,7 +334,7 @@ export function pose(g: Guy, k: number) {
         dy = py[b] - py[a]
       const dist = Math.sqrt(dx * dx + dy * dy)
       if (dist < 0.001) continue
-      const diff = ((rest - dist) / dist) * 0.25
+      const diff = ((rest - dist) / dist) * 0.16
       px[a] -= dx * diff
       py[a] -= dy * diff
       px[b] += dx * diff
@@ -356,9 +356,10 @@ function poseTargets(g: Guy) {
   const ph = g.phase
   const mode = g.mode
   let hipY = fy - 4
-  if (mode === "walk") hipY -= Math.abs(Math.sin(ph)) * 0.35
+  if (mode === "walk") hipY -= Math.abs(Math.sin(ph)) * 0.5
   if (g.act === ACT_SIT) hipY = fy - 2.6
-  const lean = mode === "walk" ? d * 0.25 : 0
+  // walking: lean in and let the top half wobble
+  const lean = mode === "walk" ? d * (0.35 + 0.25 * Math.sin(ph * 2)) : 0
   setNode(g, N_HIP, x, hipY, k)
   setNode(g, N_NECK, x + lean, hipY - 2.5, k)
   setNode(g, N_HEAD, x + lean * 1.2, hipY - 4, k)
@@ -389,17 +390,28 @@ function poseTargets(g: Guy) {
     return
   }
   if (mode === "swim") {
-    const t = ph * 3
-    const s = Math.sin(t)
-    setNode(g, N_LHAND, x - 2 + s * 1.5, hipY - 3.5 + s * 1.5, k)
-    setNode(g, N_RHAND, x + 2 - s * 1.5, hipY - 3.5 - s * 1.5, k)
-    setNode(g, N_LELBOW, x - 1.5 + s, hipY - 3 + s, k)
-    setNode(g, N_RELBOW, x + 1.5 - s, hipY - 3 - s, k)
-    setNode(g, N_LKNEE, x - 0.5, hipY + 1.5 + s, k)
-    setNode(g, N_RKNEE, x + 0.5, hipY + 1.5 - s, k)
-    setNode(g, N_LFOOT, x - 0.8, hipY + 3.5 + s * 1.5, k)
-    setNode(g, N_RFOOT, x + 0.8, hipY + 3.5 - s * 1.5, k)
-    g.phase += 0.06
+    // front crawl: lying in the water, head up, arms windmilling, feet kicking
+    const t = ph * 0.8
+    const wy = g.y + 0.3 + Math.sin(ph * 0.5) * 0.15
+    const nx = x + d * 0.8,
+      ny = wy - 0.1
+    setNode(g, N_HIP, x - d * 1.6, wy + 0.2, k)
+    setNode(g, N_NECK, nx, ny, k)
+    setNode(g, N_HEAD, x + d * 2.2, wy - 1.0, k)
+    for (const [hand, elbow, off] of [
+      [N_LHAND, N_LELBOW, 0],
+      [N_RHAND, N_RELBOW, Math.PI],
+    ]) {
+      const a = t + off
+      setNode(g, hand, nx + d * 2.4 * Math.cos(a), ny - 1.5 * Math.sin(a), k)
+      setNode(g, elbow, nx + d * 1.3 * Math.cos(a), ny - 1.1 * Math.sin(a) - 0.3, k)
+    }
+    const kick = Math.sin(ph * 1.6)
+    setNode(g, N_LKNEE, x - d * 3.4, wy + 0.4 + kick * 0.4, k)
+    setNode(g, N_RKNEE, x - d * 3.4, wy + 0.4 - kick * 0.4, k)
+    setNode(g, N_LFOOT, x - d * 5.1, wy + 0.3 + kick * 0.9, k)
+    setNode(g, N_RFOOT, x - d * 5.1, wy + 0.3 - kick * 0.9, k)
+    g.phase += 0.05
     return
   }
 
@@ -412,10 +424,10 @@ function poseTargets(g: Guy) {
   } else if (mode === "walk") {
     const s = Math.sin(ph),
       c = Math.cos(ph)
-    setNode(g, N_LFOOT, x + s * 1.1 * d, fy - Math.max(0, c) * 0.8, k)
-    setNode(g, N_RFOOT, x - s * 1.1 * d, fy - Math.max(0, -c) * 0.8, k)
-    setNode(g, N_LKNEE, x + s * 0.6 * d + d * 0.3, hipY + 2 - Math.max(0, c) * 0.4, k)
-    setNode(g, N_RKNEE, x - s * 0.6 * d + d * 0.3, hipY + 2 - Math.max(0, -c) * 0.4, k)
+    setNode(g, N_LFOOT, x + s * 1.4 * d, fy - Math.max(0, c) * 1.1, k)
+    setNode(g, N_RFOOT, x - s * 1.4 * d, fy - Math.max(0, -c) * 1.1, k)
+    setNode(g, N_LKNEE, x + s * 0.8 * d + d * 0.5, hipY + 1.9 - Math.max(0, c) * 0.6, k)
+    setNode(g, N_RKNEE, x - s * 0.8 * d + d * 0.5, hipY + 1.9 - Math.max(0, -c) * 0.6, k)
   } else {
     setNode(g, N_LFOOT, x - 0.8, fy, k)
     setNode(g, N_RFOOT, x + 0.8, fy, k)
@@ -450,11 +462,13 @@ function poseTargets(g: Guy) {
     setNode(g, N_LHAND, x + d * 1.4, neckY + 2.2, k)
     setNode(g, N_RHAND, x + d * 1.6, neckY + 2.0, k)
   } else {
-    const sw = mode === "walk" ? Math.sin(ph) * 0.5 * d : 0
-    setNode(g, N_LELBOW, x - 0.8 - sw, neckY + 1.2, k)
-    setNode(g, N_RELBOW, x + 0.8 + sw, neckY + 1.2, k)
-    setNode(g, N_LHAND, x - 0.7 - sw * 1.5, neckY + 2.6, k)
-    setNode(g, N_RHAND, x + 0.7 + sw * 1.5, neckY + 2.6, k)
+    const sw = mode === "walk" ? Math.sin(ph) * 0.9 * d : 0
+    const lift = mode === "walk" ? Math.abs(Math.sin(ph)) * 0.5 : 0
+    const nx = x + lean
+    setNode(g, N_LELBOW, nx - 0.8 - sw, neckY + 1.2 - lift * 0.5, k)
+    setNode(g, N_RELBOW, nx + 0.8 + sw, neckY + 1.2 - lift * 0.5, k)
+    setNode(g, N_LHAND, nx - 0.7 - sw * 1.7, neckY + 2.6 - lift, k)
+    setNode(g, N_RHAND, nx + 0.7 + sw * 1.7, neckY + 2.6 - lift, k)
   }
 }
 
@@ -535,6 +549,35 @@ function line(
   }
 }
 
+// A bendy limb: a smooth curve from a through joint b to c (rubber-hose style)
+function noodle(
+  plot: Plot,
+  ax: number,
+  ay: number,
+  bx: number,
+  by: number,
+  cx: number,
+  cy: number,
+  color: number,
+  thick: number,
+) {
+  // control point that makes the curve pass through the joint halfway along
+  const qx = 2 * bx - (ax + cx) / 2,
+    qy = 2 * by - (ay + cy) / 2
+  const n = 6
+  let px = ax,
+    py = ay
+  for (let i = 1; i <= n; i++) {
+    const t = i / n,
+      u = 1 - t
+    const x = u * u * ax + 2 * u * t * qx + t * t * cx
+    const y = u * u * ay + 2 * u * t * qy + t * t * cy
+    line(plot, px, py, x, y, color, thick)
+    px = x
+    py = y
+  }
+}
+
 function circle(plot: Plot, cx: number, cy: number, r: number, color: number) {
   const ir = Math.max(1, Math.round(r))
   const icx = Math.round(cx),
@@ -581,12 +624,23 @@ export function drawGuy(g: Guy, plot: Plot, s: number, ox: number, oy: number) {
       hy = Y(N_HEAD) - headR
     line(plot, hx - headR, hy, hx + headR + g.dir * s * 0.6, hy, col, th)
   }
-  line(plot, X(N_HEAD), Y(N_HEAD) + headR, X(N_NECK), Y(N_NECK), col, th)
-  line(plot, X(N_NECK), Y(N_NECK), X(N_HIP), Y(N_HIP), col, th)
-  line(plot, X(N_HIP), Y(N_HIP), X(N_LKNEE), Y(N_LKNEE), col, th)
-  line(plot, X(N_LKNEE), Y(N_LKNEE), X(N_LFOOT), Y(N_LFOOT), col, th)
-  line(plot, X(N_HIP), Y(N_HIP), X(N_RKNEE), Y(N_RKNEE), col, th)
-  line(plot, X(N_RKNEE), Y(N_RKNEE), X(N_RFOOT), Y(N_RFOOT), col, th)
+  // the spine bends through the neck, from just under the head to the hip
+  const hx0 = X(N_HEAD),
+    hy0 = Y(N_HEAD)
+  const nl = Math.hypot(X(N_NECK) - hx0, Y(N_NECK) - hy0) || 1
+  noodle(
+    plot,
+    hx0 + ((X(N_NECK) - hx0) / nl) * headR,
+    hy0 + ((Y(N_NECK) - hy0) / nl) * headR,
+    X(N_NECK),
+    Y(N_NECK),
+    X(N_HIP),
+    Y(N_HIP),
+    col,
+    th,
+  )
+  noodle(plot, X(N_HIP), Y(N_HIP), X(N_LKNEE), Y(N_LKNEE), X(N_LFOOT), Y(N_LFOOT), col, th)
+  noodle(plot, X(N_HIP), Y(N_HIP), X(N_RKNEE), Y(N_RKNEE), X(N_RFOOT), Y(N_RFOOT), col, th)
   if (g.carry && g.carryAmt > 0 && g.mode !== "dead" && g.act === ACT_NONE && g.mode !== "climb") {
     // arms up, holding a bundle over the head
     const hx = X(N_HEAD),
@@ -612,10 +666,8 @@ export function drawGuy(g: Guy, plot: Plot, s: number, ox: number, oy: number) {
       }
     }
   } else {
-    line(plot, X(N_NECK), Y(N_NECK), X(N_LELBOW), Y(N_LELBOW), col, th)
-    line(plot, X(N_LELBOW), Y(N_LELBOW), X(N_LHAND), Y(N_LHAND), col, th)
-    line(plot, X(N_NECK), Y(N_NECK), X(N_RELBOW), Y(N_RELBOW), col, th)
-    line(plot, X(N_RELBOW), Y(N_RELBOW), X(N_RHAND), Y(N_RHAND), col, th)
+    noodle(plot, X(N_NECK), Y(N_NECK), X(N_LELBOW), Y(N_LELBOW), X(N_LHAND), Y(N_LHAND), col, th)
+    noodle(plot, X(N_NECK), Y(N_NECK), X(N_RELBOW), Y(N_RELBOW), X(N_RHAND), Y(N_RHAND), col, th)
     if ((g.act === ACT_HAMMER || g.act === ACT_CHOP || g.act === ACT_MINE) && s >= 2) {
       // the tool in hand
       const hx = X(N_RHAND),

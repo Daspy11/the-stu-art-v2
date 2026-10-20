@@ -266,7 +266,7 @@ export function generateTerrain(w: World): TerrainInfo {
     for (let y = 1; y < H - 1; y++) {
       for (let x = 1; x < W - 1; x++) {
         const k = y * W + x
-        if (grid[k] !== EMPTY || bg[k] !== EMPTY) continue
+        if (grid[k] !== EMPTY || bg[k] !== EMPTY || w.noBuild[k]) continue
         const l = isWall(bg[k - 1]) || SOLID[grid[k - 1]] === 1,
           r = isWall(bg[k + 1]) || SOLID[grid[k + 1]] === 1
         if (
@@ -404,8 +404,8 @@ export function generateTerrain(w: World): TerrainInfo {
     const kind = pickKind(w, x, y)
     const maxH =
       kind === PINE_T ? 12 + rng.int(14) : kind === BIRCH_T ? 12 + rng.int(10) : 8 + rng.int(14)
-    const h = rng.chance(0.15) ? 1 + rng.int(4) : Math.max(4, Math.floor(maxH * rng.range(0.7, 1)))
-    plantTree(w, x, y, h, kind, maxH)
+    // the forest starts out fully grown
+    plantTree(w, x, y, maxH, kind, maxH)
   }
   const flowers = [FLOWER_RED, FLOWER_GOLD, FLOWER_BLUE]
   const flowerKind = rng.pick(flowers)
@@ -521,6 +521,8 @@ function fillPockets(w: World, min: number) {
     while (q.length) {
       const k = q.pop()!
       region.push(k)
+      // gaps between bits of page text aren't caves
+      if (w.noBuild[k]) open = true
       const x = k % W,
         y = (k - x) / W
       if (y === 0) open = true
@@ -563,7 +565,7 @@ function stampIsland(w: World, cx: number, top: number, iw: number, rng: Rng): b
     }
   }
   for (let x = cx - hw + 2; x <= cx + hw - 2; x += 4 + rng.int(3)) {
-    if (canPlant(w, x, top - 1, 4)) plantTree(w, x, top - 1, 4 + rng.int(5))
+    if (canPlant(w, x, top - 1, 4)) plantTree(w, x, top - 1, 99)
   }
   return true
 }

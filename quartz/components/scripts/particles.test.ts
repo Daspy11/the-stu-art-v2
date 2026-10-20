@@ -57,6 +57,30 @@ describe("particle world", () => {
     }
   })
 
+  test("gaps between bits of text are left alone", () => {
+    // a ring of text with a hole in the middle, and slits between words
+    const ring = [
+      [60, 20, 140, 26],
+      [60, 26, 66, 60],
+      [134, 26, 140, 60],
+      [60, 60, 140, 66],
+      [150, 30, 170, 36],
+      [171, 30, 200, 36],
+    ]
+    for (const seed of [1, 2, 3]) {
+      const w = createWorld(W, H, seed, ring)
+      for (let y = 0; y < w.textBottom; y++) {
+        for (let x = 0; x < W; x++) {
+          const k = y * W + x
+          if (!w.noBuild[k]) continue
+          const c = w.grid[k]
+          assert.ok(c === EMPTY || c === TEXT, `seed ${seed}: ${c} at ${x},${y} among the text`)
+          assert.strictEqual(w.bg[k], 0, `seed ${seed}: back wall at ${x},${y} among the text`)
+        }
+      }
+    }
+  })
+
   test("sand only appears near water", () => {
     for (const seed of [1, 2, 3, 4, 5, 6]) {
       const w = createWorld(W, H, seed, TEXT_RECTS)
