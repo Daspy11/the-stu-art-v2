@@ -303,7 +303,19 @@ export function moveGuy(w: World, g: Guy) {
       g.y = ty
       g.pathI++
       g.stuck = 0
-      if (g.mode !== "swim") g.mode = climbAt(w, tx, ty) && !supported(w, tx, ty) ? "climb" : "walk"
+      if (g.mode !== "swim") {
+        // carry on climbing if the next step is up or down the same ladder
+        const n = g.pathI < g.path.length ? g.path[g.pathI] : -1
+        // (heading up or down a ladder: climbing; heading across: walking)
+        g.mode =
+          n >= 0
+            ? n % W === tx && climbAt(w, tx, ty)
+              ? "climb"
+              : "walk"
+            : midLadder(w, tx, ty)
+              ? "climb"
+              : "walk"
+      }
       // sanity: the world may have changed under the next node
       if (g.pathI < g.path.length) {
         const n = g.path[g.pathI]
@@ -311,16 +323,17 @@ export function moveGuy(w: World, g: Guy) {
       }
     }
     if (g.pathI >= g.path.length && g.mode !== "swim")
-      g.mode =
-        climbAt(w, Math.round(g.x), Math.round(g.y)) &&
-        !supported(w, Math.round(g.x), Math.round(g.y))
-          ? "climb"
-          : "stand"
+      g.mode = midLadder(w, Math.round(g.x), Math.round(g.y)) ? "climb" : "stand"
   } else if (g.mode === "walk" || g.mode === "hop") {
     g.mode = "stand"
     g.y = Math.round(g.y)
   }
   pose(g, 0.45)
+}
+
+// On a ladder with more ladder below (or nothing else holding you up): hang on to it
+function midLadder(w: World, x: number, y: number): boolean {
+  return climbAt(w, x, y) && (climbAt(w, x, y + 1) || !supported(w, x, y))
 }
 
 // --- Pose ---
@@ -667,7 +680,24 @@ export function drawGuy(g: Guy, plot: Plot, s: number, ox: number, oy: number) {
   )
   noodle(plot, X(N_HIP), Y(N_HIP), X(N_LKNEE), Y(N_LKNEE), X(N_LFOOT), Y(N_LFOOT), col, th)
   noodle(plot, X(N_HIP), Y(N_HIP), X(N_RKNEE), Y(N_RKNEE), X(N_RFOOT), Y(N_RFOOT), col, th)
-  if (g.carry && g.carryAmt > 0 && g.mode !== "dead" && g.act === ACT_NONE && g.mode !== "climb") {
+  const carrying = g.carry && g.carryAmt > 0 && g.mode !== "dead"
+  if (carrying && g.mode === "climb") {
+    // climbing needs both hands: the bundle rides on his back
+    const bx = (X(N_NECK) + X(N_HIP)) / 2 - g.dir * s * 1.3,
+      by = (Y(N_NECK) + Y(N_HIP)) / 2
+    const bw = Math.round(s * 0.9),
+      bh = Math.round(s * (g.carry === 1 ? 1.6 : 1.3))
+    const c1 = g.carry === 1 ? WOOD_COLOR : STONE_COLOR
+    const c2 = g.carry === 1 ? WOOD_DARK : STONE_DARK
+    for (let yy = -bh; yy <= bh; yy++)
+      for (let xx = -bw; xx <= bw; xx++)
+        plot(
+          Math.round(bx) + xx,
+          Math.round(by) + yy,
+          yy === 0 || xx === -bw || xx === bw ? c2 : c1,
+        )
+  }
+  if (carrying && g.act === ACT_NONE && g.mode !== "climb") {
     // arms up, holding a bundle over the head
     const hx = X(N_HEAD),
       hy = Y(N_HEAD)

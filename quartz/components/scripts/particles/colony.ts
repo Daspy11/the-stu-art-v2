@@ -142,6 +142,7 @@ export interface Colony {
   quarryT: number
   ladders: number
   mines: number
+  gapBridges: number
   safeT: number // tick the safe set was last computed
   safeDirty: boolean
   stats: { placed: number; felled: number; arrived: number; towers: number }
@@ -172,6 +173,7 @@ export function newColony(w: World, homeX: number, homeY: number): Colony {
     quarryT: 0,
     ladders: 0,
     mines: 0,
+    gapBridges: 0,
     safeT: -1000,
     safeDirty: true,
     stats: { placed: 0, felled: 0, arrived: 0, towers: 0 },
@@ -912,13 +914,15 @@ function workEscape(w: World, g: Guy) {
   }
   if (j.down) {
     // pay the rope out from the edge, a rung at a time, then climb down it
-    const [px, py, rx, sy] = j.down
+    const [px, py, rx, sy, dir] = j.down
     if (cx !== px || cy !== py) return giveUp()
     j.n++
     const y = py + j.n - 1
-    if (y < sy) {
-      if (w.get(rx, y) === EMPTY) w.set(rx, y, RUNG)
-      else return giveUp()
+    if (y <= sy) {
+      for (let i = 0; i < 3; i++) {
+        const x = rx + dir * i
+        if (w.get(x, y) === EMPTY) w.set(x, y, i === 1 ? RUNG : LADDER)
+      }
       return
     }
     c.safeDirty = true
@@ -948,8 +952,16 @@ function workEscape(w: World, g: Guy) {
     if (v === TEXT || BUILT[v]) return giveUp()
     if (SOLID[v]) dig(w, cx, cy - i)
   }
-  if (w.get(cx, cy) === EMPTY) w.set(cx, cy, RUNG)
-  if (w.get(cx, cy - 1) === EMPTY) w.set(cx, cy - 1, RUNG)
+  // a proper ladder: this column and two more on the side away from the ledge
+  const away = j.tx > cx ? -1 : 1
+  for (const y of [cy, cy - 1]) {
+    for (let i = 0; i < 3; i++) {
+      const x = cx + away * i
+      const v = w.get(x, y)
+      if (i > 0 && SOLID[v] && !BUILT[v] && v !== TEXT && !w.noBuild[y * w.W + x]) dig(w, x, y)
+      if (w.get(x, y) === EMPTY && !w.noBuild[y * w.W + x]) w.set(x, y, i === 1 ? RUNG : LADDER)
+    }
+  }
   setPath(g, [(cy - 1) * w.W + cx])
 }
 
@@ -1003,7 +1015,7 @@ function ropeDown(w: World, g: Guy): number[] | null {
       y = (k - x) / W
     for (const dir of [-1, 1]) {
       const rx = x + dir
-      if (rx < 2 || rx >= W - 2) continue
+      if (rx < 3 || rx >= W - 3 || rx + 2 * dir < 3 || rx + 2 * dir >= W - 3) continue
       let yy = y
       let ok = true
       while (yy < w.H - 1 && yy - y < 60) {
@@ -1016,16 +1028,23 @@ function ropeDown(w: World, g: Guy): number[] | null {
         }
         yy++
       }
-      // the rope hangs to just above whatever it reaches, which must be safe ground
+      // the ladder hangs to just above whatever it reaches, which must be safe ground
       const foot = yy - 1
       if (!ok || foot <= y || !w.isSolid(rx, yy)) continue
       if (!standable(w, rx, foot) || !nav.isSafe(foot * W + rx)) continue
       for (let i = 1; i < 8; i++) if (w.isSolid(rx, y - i)) ok = false
+      // and it's a full ladder's width of open air
+      for (let yy2 = y; yy2 <= foot && ok; yy2++)
+        for (let i = 1; i < 3; i++) {
+          const kk = yy2 * W + rx + dir * i
+          if (w.grid[kk] !== EMPTY || w.noBuild[kk] || (w.reserved[kk] && w.reserved[kk] !== 65534))
+            ok = false
+        }
       if (!ok) continue
       const d = foot - y + Math.abs(x - g.x)
       if (d < bd) {
         bd = d
-        best = [x, y, rx, foot]
+        best = [x, y, rx, foot, dir]
       }
     }
   }
@@ -1372,6 +1391,7 @@ function plan(w: World) {
           c.mines < 1 + Math.floor(w.W / 220) ? (c.stock[R_STONE] < 300 ? 4 : 1) : 0,
           () => tryMine(w),
         ],
+        [c.gapBridges < 1 + Math.floor(w.W / 160) ? 2.5 : 0, () => tryGapBridge(w)],
       ]
       // weighted shuffle, then take the first that works
       const order: (() => boolean)[] = []
@@ -2098,6 +2118,79 @@ function tryCliffLadder(w: World): boolean {
   c.ladders++
   reserveSteps(w, steps, 65534)
   addProject(w, "ladder", steps, -1, 1)
+  return true
+}
+
+// --- Bridging gaps in the ground ---
+// Spot a drop (a ravine, a pit, a lake) between two ledges at about the same height
+// where the far side can't be reached, or only by a long detour or a swim, and throw
+// a plank bridge across it from the near side.
+function tryGapBridge(w: World): boolean {
+  const c = w.colony
+  if (c.projects.some((p) => !p.done && p.kind === "gapbridge")) return false
+  const { W, H } = w
+  const nav = w.nav
+  const fs = new Int16Array(W)
+  for (let x = 0; x < W; x++) fs[x] = surfaceAt(w, x)
+  const free = (x: number, y: number) => {
+    const k = y * W + x
+    return w.inBounds(x, y) && !w.noBuild[k] && !w.reserved[k] && !SOLID[w.grid[k]]
+  }
+  type Gap = { xa: number; xb: number; ya: number; yb: number; score: number }
+  let best: Gap | null = null
+  // searches are budgeted, so each look starts somewhere new along the ground
+  const x0 = 6 + w.rng.int(Math.max(1, W - 18))
+  for (let i = 0; i < W - 18; i++) {
+    const x = 6 + ((x0 - 6 + i) % (W - 18))
+    const ya = fs[x]
+    if (ya >= H - 4 || w.get(x, ya) === WATER) continue
+    // the near side: a walkable edge on the safe network, with the ground dropping away
+    if (!standable(w, x, ya - 1) || !nav.isSafe((ya - 1) * W + x)) continue
+    if (fs[x + 1] <= ya + 3 && w.get(x + 1, fs[x + 1]) !== WATER) continue
+    for (let xb = x + 6; xb <= Math.min(W - 7, x + 36); xb++) {
+      const yb = fs[xb]
+      if (Math.abs(yb - ya) > 3 || w.get(xb, yb) === WATER || !standable(w, xb, yb - 1)) continue
+      // everything in between is well below the deck (or water), with air over it
+      const deck = Math.min(ya, yb)
+      let ok = true,
+        wet = false,
+        deep = 0
+      for (let xi = x + 1; xi < xb && ok; xi++) {
+        const v = w.get(xi, fs[xi])
+        if (v === WATER) wet = true
+        deep = Math.max(deep, fs[xi] - deck)
+        if (fs[xi] <= deck + 1) ok = false
+        for (let y = deck - 9; y <= deck && ok; y++) if (!free(xi, y)) ok = false
+        // (and no bridge or building already just under it)
+        for (let y = deck + 1; y <= deck + 8 && ok; y++)
+          if (BUILT[w.get(xi, y)] || BUILT_BG[w.getBg(xi, y)]) ok = false
+      }
+      if (!ok || (!wet && deep < 8)) continue
+      // is it worth it? the far side is cut off, or the way round is long
+      nav.beginGoals()
+      nav.markGoal(xb, yb - 1, 0)
+      const path = nav.search(w, (ya - 1) * W + x, 6000, true, false)
+      c.budget -= nav.expanded
+      const span = xb - x
+      const cost = path ? nav.dist[(yb - 1) * W + xb] : Infinity
+      const gain = Math.min(cost, span * 20) - span * 2
+      if (gain < span * 3) {
+        break // the first ledge across is the one that matters; it's already easy
+      }
+      const score = gain - span
+      if (!best || score > best.score) best = { xa: x + 1, xb: xb - 1, ya, yb, score }
+      break
+    }
+    if (!canSearch(w)) break
+  }
+  if (!best) return false
+  const plan = bridgeSteps(w, best.xa, best.ya, best.xb, best.yb)
+  if (!plan) return false
+  const id = c.nextId++
+  if (!validSteps(w, plan.steps, id)) return false
+  reserveSteps(w, plan.steps, id)
+  c.gapBridges++
+  addProject(w, "gapbridge", plan.steps, -1, 2)
   return true
 }
 
