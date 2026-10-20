@@ -60,9 +60,21 @@ function slug(): string {
   return document.getElementById("particle-mount")?.getAttribute("data-slug") || "index"
 }
 
-// Worlds are fitted to a screen size, so each size keeps its own save
+// Worlds are fitted to a screen size, so each size keeps its own save. Bump the
+// version when world generation changes so visitors get the new terrain.
+const SAVE_PREFIX = "particle-world:v3:"
 function storageKey(W: number, H: number): string {
-  return `particle-world:v2:${slug()}:${W}x${Math.round(H / 20)}`
+  return `${SAVE_PREFIX}${slug()}:${W}x${Math.round(H / 20)}`
+}
+
+function dropOldSaves() {
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i)
+      if (k && k.startsWith("particle-world:") && !k.startsWith(SAVE_PREFIX))
+        localStorage.removeItem(k)
+    }
+  } catch {}
 }
 
 // --- Text the guys stand on and won't build against (document coordinates) ---
@@ -161,6 +173,7 @@ function startWorld(fresh: boolean) {
   const rects = textRects()
   const urlSeed = seedFromUrl()
   if (!fresh && urlSeed === null) {
+    dropOldSaves()
     try {
       const raw = localStorage.getItem(storageKey(W, H))
       const saved = raw ? (JSON.parse(raw) as SavedWorld) : null
