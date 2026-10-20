@@ -136,10 +136,8 @@ export function killGuy(g: Guy) {
   g.deadT = 0
   g.job = null
   g.path = []
-  for (let n = 0; n < NUM_NODES; n++) {
-    g.ox[n] = g.px[n] - (n === N_HEAD ? g.dir * 0.3 : 0)
-    g.oy[n] = g.py[n] + 0.2
-  }
+  // keep whatever wobble they had, plus a little stagger
+  g.ox[N_HEAD] += g.dir * 0.3
 }
 
 // Advance one guy by one tick: hazards, gravity, water, path following, pose.
@@ -300,12 +298,58 @@ export function moveGuy(w: World, g: Guy) {
 }
 
 // --- Pose ---
-function setNode(g: Guy, n: number, x: number, y: number, k: number) {
-  g.px[n] += (x - g.px[n]) * k
-  g.py[n] += (y - g.py[n]) * k
+// Poses are targets; the skeleton chases them on springs with a little inertia and
+// floppy bones, so guys jiggle, bounce on landing and trail their arms.
+const TX = new Float64Array(NUM_NODES),
+  TY = new Float64Array(NUM_NODES)
+// how hard each node is pulled to its target: feet and hips firm, hands loose
+const STIFF = [0.16, 0.2, 0.34, 0.24, 0.24, 0.45, 0.45, 0.13, 0.13, 0.09, 0.09]
+const DAMP = 0.8
+
+function setNode(_g: Guy, n: number, x: number, y: number, _k: number) {
+  TX[n] = x
+  TY[n] = y
 }
 
 export function pose(g: Guy, k: number) {
+  poseTargets(g)
+  const { px, py, ox, oy } = g
+  for (let n = 0; n < NUM_NODES; n++) {
+    if (k >= 1 || Math.abs(TX[n] - px[n]) > 6 || Math.abs(TY[n] - py[n]) > 6) {
+      px[n] = ox[n] = TX[n]
+      py[n] = oy[n] = TY[n]
+      continue
+    }
+    const vx = (px[n] - ox[n]) * DAMP,
+      vy = (py[n] - oy[n]) * DAMP
+    ox[n] = px[n]
+    oy[n] = py[n]
+    px[n] += vx + (TX[n] - px[n]) * STIFF[n]
+    py[n] += vy + (TY[n] - py[n]) * STIFF[n]
+  }
+  // bones keep their length (loosely), which passes wobble along the limbs
+  for (let iter = 0; iter < 2; iter++) {
+    for (const [a, b, rest] of SPRINGS) {
+      const dx = px[b] - px[a],
+        dy = py[b] - py[a]
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      if (dist < 0.001) continue
+      const diff = ((rest - dist) / dist) * 0.25
+      px[a] -= dx * diff
+      py[a] -= dy * diff
+      px[b] += dx * diff
+      py[b] += dy * diff
+    }
+  }
+  // feet stay planted
+  for (const n of [N_LFOOT, N_RFOOT]) {
+    px[n] += (TX[n] - px[n]) * 0.5
+    py[n] += (TY[n] - py[n]) * 0.5
+  }
+}
+
+function poseTargets(g: Guy) {
+  const k = 1
   const x = g.x
   const fy = g.y + 0.6 // feet sit at the bottom of the feet cell
   const d = g.dir

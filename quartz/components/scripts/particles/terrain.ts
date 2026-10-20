@@ -1,8 +1,8 @@
-// Procedural terrain. Builds a side-on slice of land under the page's text:
-// a noise heightfield (hills, ridged mountains, mesas, lake basins) bent into
-// overhangs by 2D noise, hollowed by tunnel networks, caverns and surface caves,
-// then layered into turf, dirt, clay, gravel and banded stone with ore, flooded
-// into lakes and cave pools, edged with sand, and planted with trees and flowers.
+// Procedural terrain. Builds a side-on band of land along the bottom of the page,
+// always below the text: a noise heightfield (rolling hills, broad domes, mesas,
+// lake basins) with gentle overhangs and caves opening off the surface, layered
+// into turf and dirt over stone, flooded into lakes edged with sand, dotted with
+// floating islands, and planted with trees and flowers.
 
 import {
   EMPTY,
@@ -10,13 +10,7 @@ import {
   SAND,
   DIRT,
   TURF,
-  CLAY,
   ROCK,
-  SLATE,
-  STONE,
-  COPPER,
-  GOLD,
-  GRAVEL,
   TEXT,
   TUFT,
   FLOWER_RED,
@@ -57,32 +51,32 @@ export function generateTerrain(w: World): TerrainInfo {
       y = (k - x) / W
     rawMin[x] = Math.max(rawMin[x], y + 1 + TEXT_MARGIN + 3)
   }
-  const topLimit = Math.floor(H * 0.2)
+  // nothing rises above the text
+  const tb = w.textBottom
+  const topLimit = tb > 0 ? tb + TEXT_MARGIN + 8 : Math.floor(H * 0.5)
   const effMin = new Float32Array(W)
   for (let x = 0; x < W; x++) effMin[x] = Math.max(rawMin[x], topLimit)
   for (let x = 1; x < W; x++) effMin[x] = Math.max(effMin[x], effMin[x - 1] - 1.15)
   for (let x = W - 2; x >= 0; x--) effMin[x] = Math.max(effMin[x], effMin[x + 1] - 1.15)
 
-  const tb = w.textBottom
+  // a thin band of ground along the bottom, leaving sky under the text to build in
   const free = H - tb
-  const minThick = Math.max(16, Math.floor(H * 0.1))
-  let groundAvg = tb + free * rng.range(0.5, 0.62)
-  groundAvg = Math.min(groundAvg, H - minThick)
-  if (tb === 0) groundAvg = H * rng.range(0.55, 0.68)
+  const thickness = Math.max(18, Math.min(H * rng.range(0.17, 0.23), free * 0.55))
+  const groundAvg = H - thickness
+  const minThick = Math.max(10, Math.floor(thickness * 0.4))
 
   // --- Style dials: every seed mixes these differently ---
-  const hillAmp = rng.range(2, 6) + free * rng.range(0.03, 0.07)
-  const hillF = rng.range(0.012, 0.028)
+  const hillAmp = rng.range(3, 6) + thickness * rng.range(0.12, 0.25)
+  const hillF = rng.range(0.01, 0.022)
   const maxRise = Math.max(0, groundAvg - topLimit)
-  const mountainAmp = rng.chance(0.8) ? maxRise * rng.range(0.35, 0.85) : 0
+  const mountainAmp = rng.chance(0.85) ? maxRise * rng.range(0.4, 0.85) : 0
+  const knollAmp = thickness * rng.range(0.1, 0.3)
   const mountainOff = rng.range(0, 100)
-  const mesa = rng.chance(0.45)
+  const mesa = rng.chance(0.6)
   const mesaStep = 4 + rng.int(5)
-  const overhang = rng.range(1.5, 7)
-  const tunnelW = rng.range(0.04, 0.07)
-  const cavernT = rng.range(0.5, 0.65)
+  const overhang = rng.range(1.5, 4)
   const wide = W > 260
-  if (mountainAmp > 0) features.push("mountains")
+  if (mountainAmp > 0) features.push("hills")
   if (mesa) features.push("mesas")
 
   // Lake basins carved into the heightfield
@@ -93,7 +87,7 @@ export function generateTerrain(w: World): TerrainInfo {
     lakes.push({
       cx,
       rx: Math.min(W * 0.18, rng.range(10, 30), cx - 6, W - 6 - cx),
-      depth: rng.range(6, 15),
+      depth: Math.min(thickness * 0.35, rng.range(5, 12)),
     })
   }
 
@@ -103,14 +97,15 @@ export function generateTerrain(w: World): TerrainInfo {
   for (let x = 0; x < W; x++) {
     let y =
       groundAvg +
-      noise.fbm1(x * hillF + 3.1, 4) *
-        Math.min(hillAmp, Math.max(3, (groundAvg - effMin[x] - 28) * 0.5))
-    // mountains: ridged noise in some regions
-    const mm = smooth(-0.05, 0.45, noise.n1(x * 0.0055 + mountainOff))
-    const ridge = 1 - Math.abs(noise.fbm1(x * 0.016 + 40, 3))
+      noise.fbm1(x * hillF + 3.1, 3) * hillAmp -
+      // rounded knolls
+      Math.max(0, noise.n1(x * 0.028 + 9)) ** 2 * knollAmp
+    // broad rounded rises in some regions (no spiky ridges)
+    const mm = smooth(-0.1, 0.5, noise.n1(x * 0.0055 + mountainOff))
+    const ridge = 0.6 + 0.4 * noise.fbm1(x * 0.009 + 40, 2)
     // keep a band of open sky under the text for building in
     const maxRise = Math.max(0, groundAvg - (effMin[x] + 28))
-    let m = mm * ridge * ridge * mountainAmp
+    let m = mm * ridge * mountainAmp
     if (m > maxRise) m = maxRise + (m - maxRise) * 0.15
     mountainness[x] = mm
     y -= m
@@ -134,7 +129,7 @@ export function generateTerrain(w: World): TerrainInfo {
     surf[x] = Math.min(H - minThick * 0.5, y)
   }
 
-  // --- 2D solidity: overhangs + caves ---
+  // --- 2D solidity: gentle overhangs ---
   for (let x = 0; x < W; x++) {
     const s = surf[x]
     for (let y = Math.max(0, Math.floor(s - 12)); y < H; y++) {
@@ -147,25 +142,18 @@ export function generateTerrain(w: World): TerrainInfo {
         solid = rel + oh >= 0
       }
       if (y < effMin[x] + 1) solid = false
-      if (solid && y < H - 2) {
-        const depth = rel - 3 * N(x * 0.05 + 9, y * 0.05)
-        if (depth > 10) {
-          const t = Math.abs(N(x * 0.011, y * 0.022))
-          const width = tunnelW * (0.6 + 1.0 * Math.max(0, N(x * 0.008 + 3, y * 0.008)))
-          if (t < width) solid = false
-          else if (depth > 16 && N(x * 0.03 + 50, y * 0.045) > cavernT) solid = false
-        }
-      }
       if (solid) grid[k] = DIRT
     }
     grid[(H - 1) * W + x] = DIRT
   }
 
-  // Surface cave entrances: worms carved from the surface downward
-  const worms = rng.int(wide ? 4 : 2) + (rng.chance(0.5) ? 1 : 0)
+  // Caves that open off the surface: worms carved from the surface downward
+  const worms = 1 + rng.int(wide ? 5 : 3)
   const carved: number[] = []
   for (let i = 0; i < worms; i++) {
     let x = 10 + rng.next() * (W - 20)
+    // keep cave mouths away from lakes so they don't drain them
+    if (lakes.some((l) => Math.abs(x - l.cx) < l.rx + 14)) continue
     let y = surf[Math.floor(x)] + 1
     let ang = Math.PI * 0.5 + rng.range(-0.6, 0.6)
     const len = 25 + rng.int(60)
@@ -174,7 +162,7 @@ export function generateTerrain(w: World): TerrainInfo {
     for (let s = 0; s < len; s++) {
       ang += N(i * 13.1, s * 0.08) * 0.35
       ang = Math.min(Math.PI * 0.8, Math.max(Math.PI * 0.2, ang))
-      if (y - y0 > 40) break
+      if (y - y0 > thickness * 0.6) break
       x += Math.cos(ang)
       y += Math.sin(ang) * 0.8
       const r = r0 * (0.8 + 0.4 * (N(s * 0.1, i) + 1) * 0.5)
@@ -186,7 +174,7 @@ export function generateTerrain(w: World): TerrainInfo {
           if (cx < 1 || cx >= W - 1 || cy < 0 || cy >= H - 2) continue
           if (grid[cy * W + cx] === DIRT) {
             grid[cy * W + cx] = EMPTY
-            if (cy - y0 > 4) carved.push(cy * W + cx)
+            if (cy - y0 > 1) carved.push(cy * W + cx)
           }
         }
       }
@@ -202,7 +190,7 @@ export function generateTerrain(w: World): TerrainInfo {
       bestRise = 0
     for (let x = 12; x < W - 12; x++) {
       const rise = groundAvg - surf[x]
-      if (rise > bestRise && rise > 26) {
+      if (rise > bestRise && rise > 16) {
         bestRise = rise
         best = x
       }
@@ -226,9 +214,10 @@ export function generateTerrain(w: World): TerrainInfo {
     }
   }
 
-  // --- Cleanup: drop floating crumbs, fill tiny air pockets ---
+  // --- Cleanup: drop floating crumbs, fill every enclosed air pocket (caves only
+  // where they open to the sky) ---
   removeFloating(w)
-  fillPockets(w, 30)
+  fillPockets(w, Infinity)
 
   // --- Materials ---
   const fs = new Int16Array(W)
@@ -240,9 +229,12 @@ export function generateTerrain(w: World): TerrainInfo {
   const archSet = new Set(arches)
   const thick = H - groundAvg
   for (let x = 0; x < W; x++) {
-    const slope = Math.abs(fs[Math.min(W - 1, x + 2)] - fs[Math.max(0, x - 2)]) / 4
     // stone starts about halfway down the ground band, regardless of hills above it
-    const stoneTop = groundAvg + thick * (0.45 + 0.12 * noise.fbm1(x * 0.015 + 8, 3))
+    // mostly dirt; the stone underneath rises partway into hills, giving them cores
+    const dirtDepth = 10 + 10 * (noise.fbm1(x * 0.02 + 8, 3) + 1) * 0.5
+    const floor = groundAvg + thick * (0.5 + 0.1 * noise.fbm1(x * 0.012 + 3, 2))
+    const top = Math.min(fs[x], surf[x])
+    const stoneTop = Math.max(top + dirtDepth, floor - (floor - top) * 0.45)
     const wallDepth = Math.max(6, stoneTop - fs[x])
     let skyAbove = true
     for (let y = 0; y < H; y++) {
@@ -258,30 +250,11 @@ export function generateTerrain(w: World): TerrainInfo {
       const exposed = skyAbove || (y > 0 && grid[k - W] === EMPTY && bg[k - W] === EMPTY)
       skyAbove = false
       if (exposed) {
-        grid[k] = slope > 1.8 && mountainness[x] > 0.3 ? ROCK : TURF
+        grid[k] = TURF
         continue
       }
-      const yy = y + 3 * N(x * 0.07, y * 0.07)
-      if (yy < stoneTop) {
-        // dirt, with clay bands, gravel pockets and rocky outcrops in the mountains
-        if (N(x * 0.015 + 20, y * 0.18) > 0.45) grid[k] = CLAY
-        else if (N(x * 0.06 + 5, y * 0.06) > 0.62) grid[k] = GRAVEL
-        else if (mountainness[x] > 0.35 && d > 3 && N(x * 0.04 + 61, y * 0.05) > 0.38)
-          grid[k] = ROCK
-      } else {
-        const v = N(x * 0.006, y * 0.045 + 0.9 * noise.n1(x * 0.004 + 11))
-        let t = ROCK
-        if (v > 0.18) t = STONE
-        if (v < -0.3 || yy > stoneTop + 25 + 8 * N(x * 0.02, 3)) t = SLATE
-        if (N(x * 0.1 + 31, y * 0.1) > 0.62 && hash2(x, y, w.seed) < 0.3) t = COPPER
-        if (
-          yy > stoneTop + 12 &&
-          N(x * 0.09 + 71, y * 0.09) > 0.66 &&
-          hash2(x, y, w.seed + 1) < 0.3
-        )
-          t = GOLD
-        grid[k] = t
-      }
+      // dirt on top of stone
+      if (y + 3 * N(x * 0.07, y * 0.07) >= stoneTop) grid[k] = ROCK
     }
   }
 
@@ -314,11 +287,12 @@ export function generateTerrain(w: World): TerrainInfo {
       const cx = Math.floor(W * rng.range(0.08, 0.92))
       const iw = 8 + rng.int(10)
       const top = Math.floor(surf[cx] - 22 - rng.int(14))
+      if (top - 14 < topLimit) continue
       if (stampIsland(w, cx, top, iw, rng)) features.push("island")
     }
   }
 
-  // --- Water: surface lakes from the heightfield, then pools in caves ---
+  // --- Water: lakes in the heightfield basins ---
   const left = new Int16Array(W),
     right = new Int16Array(W)
   left[0] = fs[0]
@@ -343,7 +317,15 @@ export function generateTerrain(w: World): TerrainInfo {
     x = x1
   }
   basins.sort((a, b) => b.depth * (b.x1 - b.x0) - a.depth * (a.x1 - a.x0))
+  // caves would drain a lake next to them
+  const caveCol = new Uint8Array(W)
+  for (const k of carved) caveCol[k % W] = 1
+  let lakeWidth = 0
   for (const b of basins.slice(0, lakeCount)) {
+    let nearCave = false
+    for (let xx = Math.max(0, b.x0 - 4); xx < Math.min(W, b.x1 + 4); xx++)
+      if (caveCol[xx]) nearCave = true
+    if (nearCave || lakeWidth > W * 0.3) continue
     let lvl = b.lvl + Math.max(0, b.depth - 14)
     // no lake wider than about a third of the screen: lower it until it fits
     const wet = (l: number) => {
@@ -351,7 +333,8 @@ export function generateTerrain(w: World): TerrainInfo {
       for (let xx = b.x0; xx < b.x1; xx++) if (fs[xx] > l) n++
       return n
     }
-    while (wet(lvl) > W * 0.35 && lvl < H) lvl++
+    while (wet(lvl) > Math.min(W * 0.35, W * 0.32 - lakeWidth + 8) && lvl < H) lvl++
+    lakeWidth += wet(lvl)
     for (let xx = b.x0; xx < b.x1; xx++) {
       for (let y = lvl; y < fs[xx]; y++) {
         const k = y * W + xx
@@ -360,36 +343,35 @@ export function generateTerrain(w: World): TerrainInfo {
     }
     features.push("lake")
   }
-  const pools = 1 + rng.int(4)
-  for (let i = 0; i < pools * 6 && i < 60; i++) {
-    const px = 2 + rng.int(W - 4),
-      py = fs[px] + 8 + rng.int(Math.max(1, H - fs[px] - 10))
-    if (py >= H - 2) continue
-    const k = py * W + px
-    if (grid[k] !== EMPTY || !SOLID[grid[k + W]] || bg[k] === EMPTY) continue
-    if (floodPool(w, px, py, 2 + rng.int(4), 260)) {
-      features.push("pool")
-      if (features.filter((f) => f === "pool").length >= pools) break
-    }
-  }
 
-  // --- Sand only where there is water ---
-  const toSand: number[] = []
+  // --- Sand only where there is water, in a ragged rounded band ---
+  const dist = new Float32Array(W * H).fill(99)
+  const R = 5
   for (let k = 0; k < W * H; k++) {
     if (grid[k] !== WATER) continue
     const wx = k % W,
       wy = (k - wx) / W
-    const r = bg[k] === EMPTY ? 2 + Math.floor(hash2(wx, wy, w.seed + 7) * 3) : 1
-    for (let dy = -r; dy <= r + 1; dy++) {
-      for (let dx = -r - 1; dx <= r + 1; dx++) {
+    for (let dy = -R; dy <= R; dy++) {
+      for (let dx = -R; dx <= R; dx++) {
         const sx = wx + dx,
           sy = wy + dy
         if (sx < 0 || sx >= W || sy < 0 || sy >= H - 1) continue
         const sk = sy * W + sx
-        const c = grid[sk]
-        if (c === DIRT || c === TURF || c === CLAY || c === GRAVEL) toSand.push(sk)
+        const d = Math.sqrt(dx * dx + dy * dy)
+        if (d < dist[sk]) dist[sk] = d
       }
     }
+  }
+  const toSand: number[] = []
+  for (let k = 0; k < W * H; k++) {
+    if (dist[k] > R) continue
+    const c = grid[k]
+    if (c !== DIRT && c !== TURF) continue
+    const x = k % W,
+      y = (k - x) / W
+    const reach =
+      1.6 + 2.6 * (N(x * 0.13 + 5, y * 0.13) + 1) * 0.5 + (hash2(x, y, w.seed + 7) - 0.5) * 0.8
+    if (dist[k] <= reach) toSand.push(k)
   }
   for (const k of toSand) grid[k] = SAND
   // sand that would fall into a cave stays dirt
@@ -437,7 +419,7 @@ export function generateTerrain(w: World): TerrainInfo {
         else if (r < 0.36) bg[k - W] = rng.chance(0.7) ? flowerKind : rng.pick(flowers)
       } else if (c === EMPTY && (bg[k] === DIRT_WALL || bg[k] === ROCK_WALL)) {
         const above = grid[k - W]
-        if ((above === DIRT || above === TURF || above === CLAY) && rng.chance(0.18)) {
+        if ((above === DIRT || above === TURF) && rng.chance(0.18)) {
           const len = 1 + rng.int(5)
           for (let i = 0; i < len && grid[k + i * W] === EMPTY; i++) bg[k + i * W] = VINE
         } else if (SOLID[grid[k + W]] && rng.chance(0.04)) bg[k] = MUSHROOM
@@ -559,32 +541,6 @@ function fillPockets(w: World, min: number) {
     // drain anything left in the queue so it isn't revisited as a new region
     while (q.length) region.push(q.pop()!)
   }
-}
-
-function floodPool(w: World, x0: number, y0: number, depth: number, maxCells: number): boolean {
-  const { W, grid } = w
-  const lvl = y0 - depth
-  const seen = new Set<number>()
-  const q = [y0 * W + x0]
-  seen.add(q[0])
-  while (q.length) {
-    const k = q.pop()!
-    const x = k % W,
-      y = (k - x) / W
-    for (const n of [k - W, k + W, k - 1, k + 1]) {
-      const nx = n % W,
-        ny = (n - nx) / W
-      if (ny < lvl || ny >= w.H || Math.abs(nx - x) > 1 || seen.has(n) || grid[n] !== EMPTY)
-        continue
-      seen.add(n)
-      if (seen.size > maxCells) return false
-      q.push(n)
-    }
-    void y
-  }
-  if (seen.size < 12) return false
-  for (const k of seen) grid[k] = WATER
-  return true
 }
 
 function stampIsland(w: World, cx: number, top: number, iw: number, rng: Rng): boolean {
