@@ -61,7 +61,7 @@ export function generateTerrain(w: World): TerrainInfo {
 
   // a thin band of ground along the bottom, leaving sky under the text to build in
   const free = H - tb
-  const thickness = Math.max(18, Math.min(H * rng.range(0.17, 0.23), free * 0.55))
+  const thickness = Math.max(15, Math.min(H * rng.range(0.12, 0.16), free * 0.47))
   const groundAvg = H - thickness
   const minThick = Math.max(10, Math.floor(thickness * 0.4))
 
@@ -69,7 +69,7 @@ export function generateTerrain(w: World): TerrainInfo {
   const hillAmp = rng.range(3, 6) + thickness * rng.range(0.12, 0.25)
   const hillF = rng.range(0.01, 0.022)
   const maxRise = Math.max(0, groundAvg - topLimit)
-  const mountainAmp = rng.chance(0.85) ? maxRise * rng.range(0.4, 0.85) : 0
+  const mountainAmp = rng.chance(0.85) ? maxRise * rng.range(0.28, 0.6) : 0
   const knollAmp = thickness * rng.range(0.1, 0.3)
   const mountainOff = rng.range(0, 100)
   const mesa = rng.chance(0.6)
