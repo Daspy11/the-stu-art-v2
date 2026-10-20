@@ -1569,8 +1569,11 @@ function pickStyle(w: World): TowerStyle {
   const c = w.colony
   if (w.tick >= c.quarryT) refreshQuarry(w)
   const stoneOk = c.stock[R_STONE] > 150 || c.quarry.length > 20
-  const stone = tier >= 2 && stoneOk && r.chance(0.6)
-  const brick = tier >= 3 && stoneOk && r.chance(0.5)
+  // a colony sitting on a pile of stone and short of wood builds in stone
+  const stoneRich = c.stock[R_STONE] > 600 && c.stock[R_STONE] > c.stock[R_WOOD] * 2
+  const stone =
+    (tier >= 2 && stoneOk && r.chance(0.6)) || (tier >= 1 && stoneRich && r.chance(0.85))
+  const brick = (tier >= 3 && stoneOk && r.chance(0.5)) || (tier >= 2 && stoneRich && r.chance(0.5))
   const woodWalls =
     tier >= 1 ? [WALL_WOOD, WALL_WOOD, WALL_PLASTER, WALL_DARK] : [WALL_WOOD, WALL_WOOD, WALL_DARK]
   const roofs = tier >= 1 ? [ROOF, ROOF, ROOF_SLATE, ROOF_GREEN] : [ROOF]
@@ -2392,7 +2395,8 @@ function tryMine(w: World): boolean {
   }
   let best: { lx: number; s: number; b: number; L: number; R: number; score: number } | null = null
   for (let i = 0; i < 60; i++) {
-    const lx = Math.round(c.homeX + r.range(-80, 80))
+    // anywhere the colony can walk to, but the first one close to home
+    const lx = c.nests.length ? 8 + r.int(W - 20) : Math.round(c.homeX + r.range(-80, 80))
     if (lx < 8 || lx + 2 > W - 9) continue
     const s = surfaceAt(w, lx)
     if (s >= H - 20) continue
@@ -2419,7 +2423,11 @@ function tryMine(w: World): boolean {
     while (L < maxLen && galleryOk(lx - 2 - L, b)) L++
     while (R < maxLen && galleryOk(lx + 4 + R, b)) R++
     if (L + R < 6) continue
-    const score = L + R - Math.abs(lx - c.homeX) * 0.1
+    // spread out: away from the other nests (and not too far from home)
+    let apart = 200
+    for (const n of c.nests) apart = Math.min(apart, Math.abs(n.lx - lx))
+    if (apart < 24) continue
+    const score = L + R - Math.abs(lx - c.homeX) * 0.05 + Math.min(apart, 80) * 0.2
     if (!best || score > best.score) best = { lx, s, b, L, R, score }
   }
   if (!best) return false
