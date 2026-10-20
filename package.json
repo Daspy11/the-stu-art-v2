@@ -18,7 +18,8 @@
     "format": "npx prettier . --write",
     "test": "tsx ./quartz/util/path.test.ts && tsx ./quartz/depgraph.test.ts && tsx ./quartz/components/scripts/particles.test.ts",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
-    "simulate": "node simulate.mjs"
+    "simulate": "tsx scripts/particles-sim.mts",
+    "particles:video": "node scripts/particles-video/capture.mjs video-out/capture && tsx scripts/particles-video/main.ts video-out/capture video-out/particles.mp4"
   },
   "engines": {
     "npm": ">=9.3.1",

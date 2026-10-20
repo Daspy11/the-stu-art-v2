@@ -1,12 +1,13 @@
 /* ========================================
    PARTICLE CANVAS — transparent overlay
    ======================================== */
-#particle-canvas {
-  position: fixed;
-  top: 0;
+/* Cells are drawn one pixel each and scaled up; guys are drawn at full size.
+   Both are sized from script to cover the page. */
+#particle-canvas,
+#particle-guys {
+  position: absolute;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0;
   z-index: 2;
   pointer-events: none;
   image-rendering: pixelated;
@@ -385,7 +386,8 @@
    REDUCED MOTION
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
-  #particle-canvas {
+  #particle-canvas,
+  #particle-guys {
     opacity: 0.3;
   }
 }
