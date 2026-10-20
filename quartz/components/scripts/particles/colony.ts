@@ -2102,8 +2102,9 @@ function tryCliffLadder(w: World): boolean {
 }
 
 // --- Mines ---
-// A ladder shaft down through the dirt into the stone, then a gallery dug out along
-// the bottom, propped up with timber. Everything dug out of the stone is building stone.
+// A shaft down through the dirt into the stone, with a ladder down the middle and
+// room either side of it, then a gallery dug out along the bottom, propped up with
+// timber. Everything dug out of the stone is building stone.
 const MINE = 65533
 const GALLERY_H = 9
 
@@ -2132,35 +2133,33 @@ function tryMine(w: World): boolean {
     return true
   }
   let best: { lx: number; s: number; b: number; L: number; R: number; score: number } | null = null
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 60; i++) {
     const lx = Math.round(c.homeX + r.range(-80, 80))
     if (lx < 8 || lx + 2 > W - 9) continue
     const s = surfaceAt(w, lx)
     if (s >= H - 20) continue
     let ok = true
-    for (let x = lx - 1; x <= lx + 3 && ok; x++) {
+    for (let x = lx - 2; x <= lx + 4 && ok; x++) {
       if (Math.abs(surfaceAt(w, x) - s) > 1) ok = false
-      for (let y = s - 9; y < s && ok; y++) if (!free(x, y) || cell(x, y) !== EMPTY) ok = false
+      for (let y = s - 9; y < s && ok; y++) if (!free(x, y) || SOLID[cell(x, y)]) ok = false
     }
     if (!ok) continue
-    for (const t of w.trees) if (t.x >= lx - 3 && t.x <= lx + 5) ok = false
-    if (!ok) continue
     // the top must be on the safe network
-    if (!w.nav.isSafe((s - 1) * W + lx - 1) && !w.nav.isSafe((s - 1) * W + lx + 3)) continue
+    if (!w.nav.isSafe((s - 1) * W + lx - 2) && !w.nav.isSafe((s - 1) * W + lx + 4)) continue
     const b = H - 3
     // the shaft goes through soil and stone only
     for (let y = s; y <= b && ok; y++)
-      for (let x = lx; x <= lx + 2; x++) {
+      for (let x = lx - 1; x <= lx + 3; x++) {
         const v = cell(x, y)
         if (!free(x, y) || DYNAMIC[v] || v === WATER || v === TEXT) ok = false
       }
     if (!ok || b - s < 16) continue
-    if (!galleryOk(lx, b) || !galleryOk(lx + 2, b)) continue
+    if (!galleryOk(lx - 1, b) || !galleryOk(lx + 3, b)) continue
     let L = 0,
       R = 0
     const maxLen = 8 + r.int(12)
-    while (L < maxLen && galleryOk(lx - 1 - L, b)) L++
-    while (R < maxLen && galleryOk(lx + 3 + R, b)) R++
+    while (L < maxLen && galleryOk(lx - 2 - L, b)) L++
+    while (R < maxLen && galleryOk(lx + 4 + R, b)) R++
     if (L + R < 6) continue
     const score = L + R - Math.abs(lx - c.homeX) * 0.1
     if (!best || score > best.score) best = { lx, s, b, L, R, score }
@@ -2168,9 +2167,14 @@ function tryMine(w: World): boolean {
   if (!best) return false
   const { lx, s, b, L, R } = best
   const steps: Step[] = []
-  // the shaft: dig a row, then put the ladder in it, all the way down
+  // clear the trees off the spot first
+  for (const t of w.trees)
+    if (t.x >= lx - 4 && t.x <= lx + 6 && Math.abs(t.y - s) < 4)
+      steps.push(mkStep(t.x, t.y, EMPTY, L_FELL))
+  // the shaft: dig out a row a cell wider than the ladder each side, then put that
+  // row of ladder in, all the way down
   for (let y = s; y <= b; y++) {
-    for (let x = lx; x <= lx + 2; x++)
+    for (let x = lx - 1; x <= lx + 3; x++)
       if (cell(x, y) !== EMPTY) steps.push(mkStep(x, y, EMPTY, L_CLEAR))
     steps.push(
       mkStep(lx, y, LADDER, L_FG),
@@ -2182,7 +2186,7 @@ function tryMine(w: World): boolean {
   for (let d = 1; d <= Math.max(L, R); d++) {
     for (const side of [-1, 1]) {
       if (d > (side < 0 ? L : R)) continue
-      const x = side < 0 ? lx - d : lx + 2 + d
+      const x = side < 0 ? lx - 1 - d : lx + 3 + d
       for (let y = b; y > b - GALLERY_H; y--) steps.push(mkStep(x, y, EMPTY, L_CLEAR))
       if (d % 5 === 0) {
         for (let y = b; y > b - GALLERY_H + 1; y--) steps.push(mkStep(x, y, FRAME, L_BG))
@@ -2195,7 +2199,7 @@ function tryMine(w: World): boolean {
   reserveSteps(w, kept, MINE)
   // keep the way in clear
   for (let y = s - 10; y < s; y++)
-    for (let x = lx - 1; x <= lx + 3; x++)
+    for (let x = lx - 2; x <= lx + 4; x++)
       if (w.inBounds(x, y) && !w.reserved[y * W + x]) w.reserved[y * W + x] = MINE
   c.mines++
   addProject(w, "mine", kept, -1, 3)
