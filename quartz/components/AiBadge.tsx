@@ -15,14 +15,16 @@ export function AiBadge() {
 AiBadge.css = `
 .ai-badge {
   display: inline-block;
+  vertical-align: middle;
   margin-left: 0.5rem;
-  padding: 0 0.2rem;
+  padding: 0 0.4rem;
   border-radius: 5px;
   background-color: var(--highlight);
   color: var(--secondary);
   font-family: var(--bodyFont);
+  font-size: 0.65em;
   font-weight: normal;
-  line-height: 1.4rem;
+  line-height: 1.6;
   white-space: nowrap;
 }
 `
