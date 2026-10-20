@@ -57,6 +57,7 @@ export interface Step {
   v?: number // furniture variant
   flip?: boolean
   room?: number
+  seal?: number[] // [x0, y0, x1, y1]: don't place while anyone's in here (they'd be shut in)
 }
 
 export const STORY = 12 // rows from floor to floor (11 clear)
@@ -233,8 +234,14 @@ export function orderRoof(t: Tower, stories: number, steps: Step[]): Step[] {
     .map((e) => e.s)
   // then the hatch is boarded over so nobody wanders out onto the finished roof
   const F = floorY(t, stories)
-  for (let x = lx; x <= lx + 2; x++) out.push(mkStep(x, F, EMPTY, L_CLEAR))
-  for (let x = lx; x <= lx + 2; x++) out.push(mkStep(x, F, t.style.floor, L_FG))
+  let top = F
+  for (const st of steps) top = Math.min(top, st.y)
+  const seal = [t.x0 - 3, top - 2, t.x1 + 3, F - 1]
+  // anything solid over the hatch shuts it too, so that waits for the roof to empty
+  for (let i = 0; i < out.length; i++)
+    if (out[i].L === L_FG && out[i].x >= lx - 1 && out[i].x <= lx + 3) out[i] = { ...out[i], seal }
+  for (let x = lx; x <= lx + 2; x++) out.push({ ...mkStep(x, F, EMPTY, L_CLEAR), seal })
+  for (let x = lx; x <= lx + 2; x++) out.push({ ...mkStep(x, F, t.style.floor, L_FG), seal })
   return out
 }
 

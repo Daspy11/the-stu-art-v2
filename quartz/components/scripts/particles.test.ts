@@ -122,6 +122,28 @@ describe("particle world", () => {
     }
   })
 
+  test("guys don't get stuck", () => {
+    const w = createWorld(W, H, 3, TEXT_RECTS)
+    const last = new Map<number, { x: number; y: number; still: number; esc: number }>()
+    for (let i = 0; i < 20000; i++) {
+      step(w)
+      for (const g of w.guys) {
+        if (g.mode === "dead") continue
+        const s = last.get(g.id) ?? { x: g.x, y: g.y, still: 0, esc: 0 }
+        // trying to walk somewhere but not getting anywhere
+        const going = g.job && g.job.phase === "go" && g.pathI < g.path.length
+        s.still = going && Math.abs(g.x - s.x) + Math.abs(g.y - s.y) < 0.01 ? s.still + 1 : 0
+        assert.ok(s.still < 300, `guy ${g.id} stuck at ${g.x},${g.y} (tick ${w.tick})`)
+        s.esc = g.job?.kind === "escape" ? s.esc + 1 : 0
+        assert.ok(s.esc < 2000, `guy ${g.id} stranded at ${g.x},${g.y} (tick ${w.tick})`)
+        s.x = g.x
+        s.y = g.y
+        last.set(g.id, s)
+        assert.ok(!SOLID[w.get(Math.round(g.x), Math.round(g.y))] || g.mode === "hop")
+      }
+    }
+  })
+
   test("saving and loading keeps the world", () => {
     const w = run(9, 4000)
     const saved = JSON.parse(JSON.stringify(saveWorld(w)))

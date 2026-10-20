@@ -7,6 +7,7 @@ import {
   EMPTY,
   WATER,
   DYNAMIC,
+  CLIMB,
   TEXT,
   SOLID,
   BUILT,
@@ -263,23 +264,29 @@ function startNode(w: World, g: Guy): number {
   return w.nav.snap(w, g.x, g.y)
 }
 
-// Path to any marked goal; spends the shared search budget
-// Work trips may end somewhere one-way (they'll hang a rope ladder to get back,
-// which links that place to the rest for good); idle strolls stay on safe ground.
-function go(w: World, g: Guy, maxExpand = 20000, safeOnly = false): boolean {
+// Path to any marked goal; spends the shared search budget. Trips stay on the safe
+// network (everywhere you can walk back home from), so nobody works their way into
+// a hole. Building only ever needs a place to stand that's connected both ways.
+function go(w: World, g: Guy, maxExpand = 20000): boolean {
   const s = startNode(w, g)
   if (s < 0) {
     g.lost++
     return false
   }
-  w.nav.safeGoalsOnly = safeOnly && w.nav.isSafe(s)
-  const path = w.nav.search(w, s, maxExpand, true, false)
+  w.nav.safeGoalsOnly = w.nav.isSafe(s) || inWater(w, s)
+  // (a lake's surface ripples faster than the safe map is redrawn, so swimmers
+  // search freely until they reach the shore)
+  const path = w.nav.search(w, s, maxExpand, true, !inWater(w, s))
   w.nav.safeGoalsOnly = false
   w.colony.budget -= w.nav.expanded + 50
   if (!path) return false
   g.lost = 0
   setPath(g, path)
   return true
+}
+
+function inWater(w: World, k: number): boolean {
+  return w.grid[k] === WATER || w.grid[k + w.W] === WATER
 }
 
 function canGetHome(w: World, g: Guy): boolean {
@@ -497,7 +504,13 @@ function think(w: World, g: Guy) {
   const c = w.colony
   // Off the safe network (fell in a hole, got walled in)? Head home, or dig out.
   const here = startNode(w, g)
-  if (here < 0 || !w.nav.isSafe(here)) {
+  if (here < 0 || (!w.nav.isSafe(here) && !inWater(w, here))) {
+    // the map of safe ground may just be out of date (we're on something new)
+    if (w.tick - c.safeT > 8) {
+      c.safeDirty = true
+      g.wait = 9
+      return
+    }
     if (here >= 0 && goToSafety(w, g)) return
     g.job = { kind: "escape", dir: c.homeX >= g.x ? 1 : -1, n: 0, phase: "work", t: 0 }
     return
@@ -694,6 +707,16 @@ function applyStep(w: World, g: Guy, s: Step): "ok" | "skip" | "wait" | "need" {
     }
   }
   const affordable = () => s.r === R_NONE || (g.carry === s.r && g.carryAmt >= s.c)
+  // closing up a hatch: wait for everyone up there to come down first
+  if (s.seal) {
+    const [x0, y0, x1, y1] = s.seal
+    for (const o of w.guys) {
+      if (o.mode !== "dead" && o.x >= x0 && o.x <= x1 && o.y >= y0 && o.y <= y1) {
+        s.tries -= 0.04 // waiting on people is mostly not the step's fault
+        return "wait"
+      }
+    }
+  }
   switch (s.L) {
     case L_FG: {
       const cur = w.grid[k]
@@ -705,6 +728,14 @@ function applyStep(w: World, g: Guy, s: Step): "ok" | "skip" | "wait" | "need" {
       if (SOLID[s.t] && overlapsGuy(w, s.x, s.y)) return "wait"
       // ground that's still to be dug out (by whoever's on the step before this one)
       if (SOLID[cur]) return "wait"
+      // never cap somebody else's ladder or rope: leave a gap for it instead
+      if (SOLID[s.t]) {
+        for (let d = 1; d <= 8; d++) {
+          const kk = k + d * w.W
+          if (kk < w.grid.length && CLIMB[w.grid[kk]] && w.reserved[kk] !== w.reserved[k])
+            return "skip"
+        }
+      }
       w.grid[k] = s.t
       pay()
       return "ok"
@@ -805,14 +836,23 @@ function workEscape(w: World, g: Guy) {
     }
     endJob(w, g, 60)
   }
-  if (j.tx === undefined) {
+  const walkTo = (x: number, y: number, dx: number) => {
+    w.nav.beginGoals()
+    w.nav.markBox(x, y, dx, -1, 1, 0)
+    const s = startNode(w, g)
+    const path = s >= 0 ? w.nav.search(w, s, 20000, true, false) : null
+    c.budget -= w.nav.expanded
+    if (path) setPath(g, path)
+    return !!path
+  }
+  if (j.tx === undefined && j.down === undefined) {
     // nearest safe ledge above us, with a clear column beside it to hang a ladder
     let best = -1,
       bd = 1e9
     for (let y = Math.max(2, cy - 45); y <= cy; y++) {
       for (let x = Math.max(2, cx - 60); x <= Math.min(w.W - 3, cx + 60); x++) {
         const k = y * w.W + x
-        if (!w.nav.isSafe(k)) continue
+        if (!w.nav.isSafe(k) || !standable(w, x, y)) continue
         const d = Math.abs(x - cx) + (cy - y) * 0.6
         if (d < bd) {
           bd = d
@@ -820,40 +860,88 @@ function workEscape(w: World, g: Guy) {
         }
       }
     }
-    if (best < 0) return giveUp()
-    const tx = best % w.W,
+    let up = best >= 0
+    let tx = 0,
+      ty = 0,
+      lx = 0,
+      by = 0
+    if (up) {
+      tx = best % w.W
       ty = Math.floor(best / w.W)
-    const side = tx > cx ? -1 : 1
-    const lx = tx + side
-    let by = ty
-    while (by < w.H - 1 && !w.isSolid(lx, by + 1) && by - ty < 50) by++
-    if (by - ty >= 50 || w.isSolid(lx, ty) || w.noBuild[ty * w.W + lx]) return giveUp()
-    j.tx = tx
-    j.ty = ty
-    j.lx = lx
-    // walk to the bottom of where the ladder goes
-    if (!(cx === lx && cy === by)) {
-      w.nav.beginGoals()
-      w.nav.markBox(lx, by, 1, -1, 1, 0)
-      const s = startNode(w, g)
-      const path = s >= 0 ? w.nav.search(w, s, 20000, true, false) : null
-      c.budget -= w.nav.expanded
-      if (!path) return giveUp()
-      setPath(g, path)
+      lx = tx + (tx > cx ? -1 : 1)
+      by = ty
+      while (by < w.H - 1 && !w.isSolid(lx, by + 1) && by - ty < 50) by++
+      up = !(by - ty >= 50 || w.isSolid(lx, ty) || w.noBuild[ty * w.W + lx])
     }
+    if (up) {
+      j.tx = tx
+      j.ty = ty
+      j.lx = lx
+      // walk to the foot of where the ladder goes (its own column if we can)
+      if (!(cx === lx && cy === by) && !walkTo(lx, by, 0) && !walkTo(lx, by, 1)) return giveUp()
+      return
+    }
+    // stuck up high (a roof, a ledge) with nothing safe above: let a rope down instead
+    const down = ropeDown(w, g)
+    if (down) {
+      j.down = down
+      if (!(cx === down[0] && cy === down[1]) && !walkTo(down[0], down[1], 0)) return giveUp()
+      return
+    }
+    // walled in by a bit of earth: tunnel through to safe ground alongside
+    const tun = tunnelOut(w, cx, cy)
+    if (!tun) return giveUp()
+    j.tunnel = tun
+    j.n = 0
     return
   }
-  g.act = ACT_HAMMER
+  g.act = j.tunnel ? ACT_MINE : ACT_HAMMER
   g.actT++
   if (g.actT % 10 !== 0) return
-  // at the top: step off onto the ledge
+  if (j.tunnel) {
+    // dig a column a time, from where we stand to the far side
+    const [dir, x1, y0, y1] = j.tunnel
+    const x = cx + dir * (j.n + 1)
+    if ((dir > 0 && x > x1) || (dir < 0 && x < x1)) {
+      c.safeDirty = true
+      return endJob(w, g, 10)
+    }
+    for (let y = y0; y <= y1; y++) if (w.isSolid(x, y)) dig(w, x, y)
+    j.n++
+    return
+  }
+  if (j.down) {
+    // pay the rope out from the edge, a rung at a time, then climb down it
+    const [px, py, rx, sy] = j.down
+    if (cx !== px || cy !== py) return giveUp()
+    j.n++
+    const y = py + j.n - 1
+    if (y < sy) {
+      if (w.get(rx, y) === EMPTY) w.set(rx, y, RUNG)
+      else return giveUp()
+      return
+    }
+    c.safeDirty = true
+    endJob(w, g, 10)
+    return
+  }
+  // at the top: step off onto the ledge (and if that keeps failing, pick another)
   if (cy <= j.ty) {
+    j.tops = (j.tops ?? 0) + 1
+    if (j.tops > 4 || !standable(w, j.tx, j.ty)) {
+      if ((j.retries = (j.retries ?? 0) + 1) > 3) return giveUp()
+      j.tx = undefined
+      j.tops = 0
+      return
+    }
     setPath(g, [j.ty * w.W + j.tx])
     if (cy > j.ty) g.mode = "hop"
     c.safeDirty = true
     return
   }
   j.n++
+  // ended up a column over from where we meant to start: hang it here instead
+  if (j.n === 1 && cx !== j.lx && Math.abs(cx - j.lx) === 1 && cx !== j.tx) j.lx = cx
   if (j.n > 70 || cx !== j.lx) return giveUp()
   for (let i = 1; i <= BODY_TOP; i++) {
     const v = w.get(cx, cy - i)
@@ -863,6 +951,85 @@ function workEscape(w: World, g: Guy) {
   if (w.get(cx, cy) === EMPTY) w.set(cx, cy, RUNG)
   if (w.get(cx, cy - 1) === EMPTY) w.set(cx, cy - 1, RUNG)
   setPath(g, [(cy - 1) * w.W + cx])
+}
+
+// A short straight tunnel through natural ground to a safe spot at about our height:
+// [direction, far column, top row, bottom row] of what has to be dug
+function tunnelOut(w: World, cx: number, cy: number): number[] | null {
+  let best: number[] | null = null,
+    bd = 1e9
+  for (const dir of [-1, 1]) {
+    for (let d = 1; d <= 10; d++) {
+      const x = cx + dir * d
+      for (let y = cy - 2; y <= cy + 2; y++) {
+        if (!standable(w, x, y) || !w.nav.isSafe(y * w.W + x)) continue
+        const y0 = Math.min(cy, y) - BODY_TOP + 1,
+          y1 = Math.max(cy, y)
+        let dug = 0,
+          ok = true
+        for (let xx = cx + dir; xx !== x + dir && ok; xx += dir) {
+          for (let yy = y0; yy <= y1; yy++) {
+            const k = yy * w.W + xx
+            const v = w.get(xx, yy)
+            if (v === EMPTY) continue
+            if (!SOLID[v] || BUILT[v] || v === TEXT || w.noBuild[k] || w.reserved[k]) ok = false
+            else dug++
+          }
+        }
+        const cost = dug + d
+        if (ok && cost < bd) {
+          bd = cost
+          best = [dir, x - dir, y0, y1]
+        }
+      }
+    }
+  }
+  return best
+}
+
+// From somewhere we can walk to, an edge with a clear drop beside it down to safe
+// ground: [edge x, edge y, rope column, row the rope reaches down to]
+function ropeDown(w: World, g: Guy): number[] | null {
+  const s = startNode(w, g)
+  if (s < 0) return null
+  const nav = w.nav
+  nav.search(w, s, 3000, false, false)
+  w.colony.budget -= nav.expanded
+  const W = w.W
+  let best: number[] | null = null,
+    bd = 1e9
+  for (const k of nav.visited) {
+    const x = k % W,
+      y = (k - x) / W
+    for (const dir of [-1, 1]) {
+      const rx = x + dir
+      if (rx < 2 || rx >= W - 2) continue
+      let yy = y
+      let ok = true
+      while (yy < w.H - 1 && yy - y < 60) {
+        const kk = yy * W + rx
+        const v = w.grid[kk]
+        if (v !== EMPTY) break
+        if (w.noBuild[kk] || (w.reserved[kk] && w.reserved[kk] !== 65534)) {
+          ok = false
+          break
+        }
+        yy++
+      }
+      // the rope hangs to just above whatever it reaches, which must be safe ground
+      const foot = yy - 1
+      if (!ok || foot <= y || !w.isSolid(rx, yy)) continue
+      if (!standable(w, rx, foot) || !nav.isSafe(foot * W + rx)) continue
+      for (let i = 1; i < 8; i++) if (w.isSolid(rx, y - i)) ok = false
+      if (!ok) continue
+      const d = foot - y + Math.abs(x - g.x)
+      if (d < bd) {
+        bd = d
+        best = [x, y, rx, foot]
+      }
+    }
+  }
+  return best
 }
 
 const MAX_STEP_UP = 7
@@ -1025,7 +1192,7 @@ function startPlant(w: World, g: Guy): boolean {
       }
     }
   }
-  if (!any || !go(w, g, 20000, true)) return false
+  if (!any || !go(w, g, 20000)) return false
   g.job = { kind: "plant", spot: nav.lastGoalId, phase: "go", t: 0 }
   return true
 }
@@ -1055,7 +1222,7 @@ function startRelax(w: World, g: Guy): boolean {
     nav.markGoal(sx, f.y, i)
     any = true
   }
-  if (!any || !go(w, g, 6000, true)) return false
+  if (!any || !go(w, g, 6000)) return false
   const f = c.furniture[nav.lastGoalId]
   g.job = {
     kind: "relax",
@@ -1075,9 +1242,17 @@ function startWander(w: World, g: Guy) {
     return
   }
   w.nav.beginGoals()
-  w.nav.search(w, s, 220, false)
+  w.nav.search(w, s, 220, false, !inWater(w, s))
   w.colony.budget -= 300
-  const v = w.nav.visited.filter((n) => w.grid[n] !== WATER)
+  let v = w.nav.visited.filter((n) => w.grid[n] !== WATER)
+  const wet = v.length < 2
+  if (wet) {
+    // out in the middle of a lake: swim for the nearest shore
+    w.nav.search(w, s, 4000, false, false)
+    w.colony.budget -= w.nav.expanded
+    const shore = w.nav.visited.find((n) => w.grid[n] !== WATER)
+    v = shore !== undefined ? [shore, shore] : []
+  }
   if (v.length < 2) {
     g.lost += 3
     g.wait = 20
@@ -1101,7 +1276,7 @@ function startWander(w: World, g: Guy) {
   }
   w.nav.beginGoals()
   w.nav.markGoal(pick % w.W, Math.floor(pick / w.W), 0)
-  if (!go(w, g, 400, true)) {
+  if (!go(w, g, wet ? 5000 : 400)) {
     g.wait = 40
     return
   }

@@ -228,7 +228,7 @@ export function moveGuy(w: World, g: Guy) {
     }
   }
 
-  if (inWater) {
+  if (inWater && g.mode !== "hop") {
     if (g.mode !== "swim") g.mode = "swim"
     // float up to the surface
     if (waterAt(w, cx, Math.round(g.y) - 1)) g.y -= 0.15
@@ -243,6 +243,34 @@ export function moveGuy(w: World, g: Guy) {
     const t = g.path[g.pathI]
     const tx = t % W,
       ty = (t - tx) / W
+    // somebody built or dug where we were headed, or in the way: stop and let the
+    // brain re-plan
+    const fy = Math.round(g.y)
+    const sideways = tx !== cx || Math.abs(g.x - tx) > 0.01
+    const inTheWay =
+      g.mode !== "hop" &&
+      (sideways
+        ? ty >= fy && solidAt(w, tx, fy)
+        : ty > g.y
+          ? solidAt(w, tx, Math.floor(g.y) + 1)
+          : ty < g.y && solidAt(w, tx, Math.ceil(g.y) - 1))
+    // (a lake's surface ripples, so swimmers don't give up over a passing gap)
+    const wet = g.mode === "swim" || waterAt(w, tx, ty) || waterAt(w, tx, ty + 1)
+    if (inTheWay || (!wet && !standable(w, tx, ty)) || (g.mode === "hop" && g.stuck > 90)) {
+      g.stuck = Math.max(g.stuck, 1000)
+      // drop out of a hop or climb (gravity sorts it out), so the brain gets a look in
+      if (g.mode === "hop" || g.mode === "climb" || g.mode === "walk")
+        g.mode = climbAt(w, cx, cy) || supported(w, cx, cy) ? "stand" : "fall"
+      pose(g, 0.45)
+      return
+    }
+    // the surface rippled and our next spot is under water now: floating here will do
+    if (wet && ty > g.y && Math.abs(g.x - tx) < 0.01 && waterAt(w, tx, ty - 1)) {
+      g.pathI++
+      g.stuck = 0
+      pose(g, 0.45)
+      return
+    }
     const speed = g.mode === "swim" ? SWIM_SPEED : WALK_SPEED
     g.stuck++
     if (g.mode === "hop") {
@@ -254,10 +282,8 @@ export function moveGuy(w: World, g: Guy) {
         if ((g.dir > 0 && g.x >= tx) || (g.dir < 0 && g.x <= tx)) g.x = tx
       }
     } else if (tx !== cx || Math.abs(g.x - tx) > 0.01) {
-      if (ty < Math.round(g.y) && Math.abs(g.x - tx) <= 1.01 && g.mode !== "swim") {
-        g.mode = "hop" // jump up first, then step across
-      } else if (ty < Math.round(g.y) && g.mode === "swim") {
-        g.y = ty // climb out of the water
+      if (ty < Math.round(g.y) && Math.abs(g.x - tx) <= 1.01) {
+        g.mode = "hop" // jump up first (or haul out of the water), then step across
       } else {
         g.dir = tx > g.x ? 1 : -1
         g.x += g.dir * speed
