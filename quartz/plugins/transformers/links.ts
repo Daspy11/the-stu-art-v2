@@ -145,7 +145,12 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options>> = (userOpts) 
                   node.properties.loading = "lazy"
                 }
 
-                if (!isAbsoluteUrl(node.properties.src)) {
+                // `data-router-ignore` marks a resource whose URL must be used as written, for
+                // example an iframe pointing at a standalone app with a query string.
+                if (
+                  !isAbsoluteUrl(node.properties.src) &&
+                  !("dataRouterIgnore" in node.properties)
+                ) {
                   let dest = node.properties.src as RelativeURL
                   dest = node.properties.src = transformLink(
                     file.data.slug!,

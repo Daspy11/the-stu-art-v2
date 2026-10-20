@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - v4
+  # Rebuild by hand, e.g. after an experiment's own repository changes.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -29,6 +31,8 @@ jobs:
         run: npm ci
       - name: Build Quartz
         run: npx quartz build
+      - name: Build experiments
+        run: node scripts/build-experiments.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

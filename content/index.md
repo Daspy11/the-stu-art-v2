@@ -13,5 +13,6 @@ I like to code, I like to write, and I love building, using, and evangelising be
 Here are some starting points to dive in:
 - [[./Wutzu|Wutzu]], my first failed startup
 - [[./Simple Construction Software|Simple Construction]], my second failed startup
+- [[Experiments/index|Experiments]], programs that run in the page and might do weird things
 
 <span id="particle-instructions"></span>

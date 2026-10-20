@@ -1,0 +1,8 @@
+[
+  {
+    "slug": "hades",
+    "repo": "Daspy11/hades-web",
+    "ref": "main",
+    "build": "npm ci && npx vite build --base ./ --outDir \"$OUT\" --emptyOutDir"
+  }
+]
