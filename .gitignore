@@ -17,3 +17,4 @@ content/[Aa]rchive*/
 .history
 /.playwright-mcp
 video-out
+bench-out
