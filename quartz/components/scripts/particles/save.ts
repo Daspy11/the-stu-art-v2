@@ -99,6 +99,8 @@ export function loadWorld(s: SavedWorld): World | null {
   w.colony = s.colony
   w.colony.mines ??= 0 // saved before mines existed
   w.colony.gapBridges ??= 0
+  w.colony.nests ??= []
+  w.colony.badSites ??= []
   w.colony.safeT = -1000
   w.colony.safeDirty = true
   w.nextGuyId = s.nextGuyId

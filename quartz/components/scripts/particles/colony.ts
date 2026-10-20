@@ -119,9 +119,17 @@ export interface Project {
   fails: number
   starved: number
   progress: number // tick of the last placed step
+  failMark?: number // fails as of the last placed step
   x: number
   y: number
   data: any
+}
+
+export interface Nest {
+  lx: number // shaft ladder's left column
+  s: number // surface row at the shaft
+  b: number // bottom gallery's floor row
+  levels: { y: number; xl: number; xr: number }[] // galleries: floor row, dug columns
 }
 
 export interface Colony {
@@ -143,6 +151,8 @@ export interface Colony {
   ladders: number
   mines: number
   gapBridges: number
+  nests: Nest[] // finished mines and the tunnels dug off them
+  badSites: number[][] // [x0, x1, until tick]: recently abandoned, don't build there
   safeT: number // tick the safe set was last computed
   safeDirty: boolean
   stats: { placed: number; felled: number; arrived: number; towers: number }
@@ -151,7 +161,7 @@ export interface Colony {
 export const TIER_NAMES = ["Shelter", "Carpentry", "Masonry", "Engineering"]
 const TIER_STORIES = [2, 4, 6, 9]
 const SEARCH_BUDGET = 9000
-const CARRY_MAX = 400
+const CARRY_MAX = 1200
 
 export function newColony(w: World, homeX: number, homeY: number): Colony {
   const c: Colony = {
@@ -174,6 +184,8 @@ export function newColony(w: World, homeX: number, homeY: number): Colony {
     ladders: 0,
     mines: 0,
     gapBridges: 0,
+    nests: [],
+    badSites: [],
     safeT: -1000,
     safeDirty: true,
     stats: { placed: 0, felled: 0, arrived: 0, towers: 0 },
@@ -382,7 +394,8 @@ function nextStep(w: World, p: Project, g?: Guy): number {
       near = i
     }
   }
-  if (first >= 0) return near >= 0 ? near : first
+  // (after a run of failures, go back to the first step, which may be what's stuck)
+  if (first >= 0) return near >= 0 && p.fails - (p.failMark ?? 0) < 8 ? near : first
   while (p.cursor < p.steps.length && p.steps[p.cursor].done) p.cursor++
   if (p.cursor >= p.steps.length) completeProject(w, p)
   return -1
@@ -632,9 +645,13 @@ function startBuild(w: World, g: Guy, p: Project, i: number): boolean {
       // only blame the step if this guy can otherwise get around
       // Only blame the step if it's the first unbuilt one (later steps often just
       // need the floor below them first) and this guy can otherwise get around.
+      // (a stale safe map might be to blame, so those failures count for less)
       if (i === p.cursor) {
         if (w.tick - w.colony.safeT <= 5) s.tries++
-        else w.colony.safeDirty = true
+        else {
+          s.tries += 0.25
+          w.colony.safeDirty = true
+        }
       }
       p.fails++
       g.wait = 40
@@ -678,6 +695,7 @@ function workBuild(w: World, g: Guy) {
   if (res === "ok") {
     c.stats.placed++
     p.progress = w.tick
+    p.failMark = p.fails
     if (s.L !== L_BG) c.safeDirty = true
   }
   // keep going while the next step is in reach and affordable
@@ -1343,7 +1361,10 @@ function immigrate(w: World) {
 // --- Planning ---
 function updateTier(w: World) {
   const c = w.colony
-  const done = c.towers.filter((t) => t.complete).length
+  // a dug-out nest counts as much as a tower (a level for every finished one)
+  let levels = 0
+  for (const n of c.nests) levels += n.levels.length
+  const done = c.towers.filter((t) => t.complete).length + Math.floor(levels / 2)
   const furn = c.furniture.length
   let tier = 0
   if (done >= 1) tier = 1
@@ -1363,11 +1384,20 @@ function plan(w: World) {
   // projects nobody has managed to touch in ages are dropped
   for (const p of c.projects) {
     if (!p.done && (w.tick - p.progress > 15000 || (p.fails > 60 && w.tick - p.progress > 2000))) {
+      // remember where that was, so the same thing isn't planned straight back
+      let x0 = Infinity,
+        x1 = -Infinity
+      for (const st of p.steps) {
+        x0 = Math.min(x0, st.x)
+        x1 = Math.max(x1, st.x)
+      }
+      c.badSites.push([x0, x1, w.tick + 30000])
       for (const st of p.steps) if (!st.done) st.tries = 9
       completeProject(w, p)
     }
   }
   c.projects = c.projects.filter((p) => !p.done)
+  c.badSites = c.badSites.filter((b) => b[2] > w.tick)
   updateTier(w)
   const alive = w.guys.filter((g) => g.mode !== "dead")
   const idle = alive.filter((g) => g.project < 0).length
@@ -1379,8 +1409,9 @@ function plan(w: World) {
   // a few big crews make visible progress; lots of tiny ones just make scaffolding
   const towerRoom = building < Math.max(1, Math.min(3, Math.ceil(alive.length / 9)))
   if ((active < limit && idle > 0) || active === 0) {
-    if (c.towers.length === 0) tryTower(w)
-    else {
+    if (c.towers.length === 0 && tryTower(w)) {
+      // the first tower comes first, if there's anywhere for one
+    } else {
       const options: [number, () => boolean][] = [
         [!towerRoom ? 0 : c.towers.length < Math.floor(w.W / 28) + 1 ? 3 : 0.3, () => tryTower(w)],
         [c.tier >= 1 && towerRoom ? 2 : 0, () => tryRaise(w)],
@@ -1388,10 +1419,11 @@ function plan(w: World) {
         [c.tier >= 1 ? 0.8 : 0, () => tryBalcony(w)],
         [c.ladders < Math.floor(w.W / 80) + 1 ? 0.7 : 0, () => tryCliffLadder(w)],
         [
-          c.mines < 1 + Math.floor(w.W / 220) ? (c.stock[R_STONE] < 300 ? 4 : 1) : 0,
+          c.mines < 1 + Math.floor(w.W / 160) ? (c.stock[R_STONE] < 300 ? 4 : 1) : 0,
           () => tryMine(w),
         ],
         [c.gapBridges < 1 + Math.floor(w.W / 160) ? 2.5 : 0, () => tryGapBridge(w)],
+        [c.nests.length ? 2 + idle : 0, () => tryTunnel(w)],
       ]
       // weighted shuffle, then take the first that works
       const order: (() => boolean)[] = []
@@ -1411,7 +1443,12 @@ function plan(w: World) {
       for (const f of order) if (f()) break
     }
   }
-  if (c.tier >= 1 && activeCount(c, true) < 2 && (idle > 0 || w.rng.chance(0.2))) tryFurnish(w)
+  if (
+    (c.tier >= 1 || c.nests.length) &&
+    activeCount(c, true) < 2 &&
+    (idle > 0 || w.rng.chance(0.2))
+  )
+    tryFurnish(w)
 }
 
 function addProject(
@@ -1498,6 +1535,21 @@ function completeProject(w: World, p: Project) {
     if (a) a.doors[d.sa] = (a.doors[d.sa] ?? 0) | 2
     if (b) b.doors[d.sb] = (b.doors[d.sb] ?? 0) | 1
     c.bridges.push({ id: p.id, a: d.a, sa: d.sa, b: d.b, sb: d.sb })
+  } else if (p.kind === "mine" && p.data) {
+    const d = p.data
+    c.nests.push({ lx: d.lx, s: d.s, b: d.b, levels: [{ y: d.b, xl: d.xl, xr: d.xr }] })
+    nestRooms(w, c.nests.length - 1, d.b, d.xl, d.xr)
+  } else if (p.kind === "tunnel" && p.data) {
+    const d = p.data
+    const n = c.nests[d.nest]
+    nestRooms(w, d.nest, d.y, d.xl, d.xr)
+    if (n) {
+      const lv = n.levels.find((l) => l.y === d.y)
+      if (lv) {
+        lv.xl = Math.min(lv.xl, d.xl)
+        lv.xr = Math.max(lv.xr, d.xr)
+      } else n.levels.push({ y: d.y, xl: d.xl, xr: d.xr })
+    }
   } else if (p.kind === "balcony" && t) {
     t.doors[p.data.story] = (t.doors[p.data.story] ?? 0) | p.data.bit
     t.balconies[p.data.story] = (t.balconies[p.data.story] ?? 0) | p.data.bit
@@ -1683,6 +1735,7 @@ function tryTower(w: World): boolean {
   for (const [x0, wd] of cands) {
     const x1 = x0 + wd - 1
     if (x0 < 3 || x1 > w.W - 4) continue
+    if (c.badSites.some((b) => x1 + 3 >= b[0] && x0 - 3 <= b[1])) continue
     let gmin = w.H,
       gmax = 0,
       wet = 0,
@@ -2194,6 +2247,118 @@ function tryGapBridge(w: World): boolean {
   return true
 }
 
+// Stretches of finished gallery become rooms underground, to be furnished like any
+// other (which brings more guys in). The shaft itself is left clear.
+function nestRooms(w: World, nest: number, y: number, xl: number, xr: number) {
+  const c = w.colony
+  const n = c.nests[nest]
+  const runs: [number, number][] = []
+  let a = -1
+  for (let x = xl; x <= xr + 1; x++) {
+    const ok = x <= xr && (!n || x < n.lx - 1 || x > n.lx + 3) && w.get(x, y) === EMPTY
+    if (ok && a < 0) a = x
+    if (!ok && a >= 0) {
+      runs.push([a, x - 1])
+      a = -1
+    }
+  }
+  for (const [x0, x1] of runs) {
+    for (let s = x0; s + 4 <= x1; s += 14) {
+      const e = Math.min(x1, s + 13)
+      if (e - s < 4) continue
+      c.rooms.push({ id: c.nextId++, tower: -1, story: -1, x0: s, x1: e, y })
+    }
+  }
+}
+
+// --- The nest: more tunnels off the mines ---
+// Like an ant colony, there's always more digging to do: carry a gallery further, or
+// open a new level off a shaft. Galleries are a body tall, dug only through solid
+// natural ground (never breaking into caves) with solid ground over and under them,
+// and propped with a timber post every few cells under a beam along the roof.
+function tunnelColOk(w: World, x: number, y: number): boolean {
+  const { W, H } = w
+  if (x < 4 || x >= W - 4 || y + 1 >= H || y - GALLERY_H - 3 < 0) return false
+  if (!SOLID[w.get(x, y + 1)]) return false
+  for (let yy = y - GALLERY_H - 2; yy <= y; yy++) {
+    const k = yy * W + x
+    const v = w.grid[k]
+    if (w.noBuild[k] || w.reserved[k] || BUILT_BG[w.bg[k]]) return false
+    if (!SOLID[v] || BUILT[v] || DYNAMIC[v] || v === TEXT) return false
+  }
+  // nothing loose or wet overhead that would pour in
+  for (let yy = 0; yy < y - GALLERY_H - 2; yy++) {
+    const v = w.grid[yy * W + x]
+    if (DYNAMIC[v] || v === WATER) return false
+  }
+  return true
+}
+
+function gallerySteps(x: number, y: number, fromShaft: number): Step[] {
+  const steps: Step[] = []
+  for (let yy = y; yy > y - GALLERY_H; yy--) steps.push(mkStep(x, yy, EMPTY, L_CLEAR))
+  steps.push(mkStep(x, y - GALLERY_H + 1, FRAME, L_BG))
+  if (fromShaft % 4 === 0)
+    for (let yy = y; yy > y - GALLERY_H + 1; yy--) steps.push(mkStep(x, yy, FRAME, L_BG))
+  if (fromShaft % 12 === 6) steps.push(mkStep(x, y - GALLERY_H + 3, LANTERN, L_BG))
+  return steps
+}
+
+function tryTunnel(w: World): boolean {
+  const c = w.colony
+  // more hands, more tunnels on the go
+  const crews = 1 + Math.floor(w.guys.length / 8)
+  if (c.projects.filter((p) => !p.done && p.kind === "tunnel").length >= crews) return false
+  const r = w.rng
+  type Cand = { nest: number; y: number; cols: number[]; side: number; score: number }
+  const cands: Cand[] = []
+  const run = (x0: number, dir: number, y: number) => {
+    const cols: number[] = []
+    const len = 6 + r.int(8)
+    for (let x = x0; cols.length < len && tunnelColOk(w, x, y); x += dir) cols.push(x)
+    return cols
+  }
+  c.nests.forEach((n, i) => {
+    // carry each gallery further
+    for (const lv of n.levels) {
+      for (const dir of [-1, 1]) {
+        const cols = run(dir < 0 ? lv.xl - 1 : lv.xr + 1, dir, lv.y)
+        if (cols.length >= 4) cands.push({ nest: i, y: lv.y, cols, side: dir, score: cols.length })
+      }
+    }
+    // or open a new level off the shaft
+    for (let y = n.b - 12; y - GALLERY_H - 2 > n.s + 2; y -= 12) {
+      if (n.levels.some((l) => l.y === y)) continue
+      for (const dir of [-1, 1]) {
+        const cols = run(dir < 0 ? n.lx - 2 : n.lx + 4, dir, y)
+        if (cols.length >= 4) cands.push({ nest: i, y, cols, side: dir, score: cols.length + 6 })
+      }
+    }
+  })
+  if (!cands.length) return false
+  let total = 0
+  for (const cd of cands) total += cd.score
+  let pick = r.next() * total
+  let cand = cands[0]
+  for (const cd of cands)
+    if ((pick -= cd.score) <= 0) {
+      cand = cd
+      break
+    }
+  const n = c.nests[cand.nest]
+  const steps: Step[] = []
+  for (const x of cand.cols) steps.push(...gallerySteps(x, cand.y, Math.abs(x - (n.lx + 1))))
+  reserveSteps(w, steps, MINE)
+  const xs = cand.cols
+  addProject(w, "tunnel", steps, -1, 3, {
+    nest: cand.nest,
+    y: cand.y,
+    xl: Math.min(...xs),
+    xr: Math.max(...xs),
+  })
+  return true
+}
+
 // --- Mines ---
 // A shaft down through the dirt into the stone, with a ladder down the middle and
 // room either side of it, then a gallery dug out along the bottom, propped up with
@@ -2280,12 +2445,7 @@ function tryMine(w: World): boolean {
     for (const side of [-1, 1]) {
       if (d > (side < 0 ? L : R)) continue
       const x = side < 0 ? lx - 1 - d : lx + 3 + d
-      for (let y = b; y > b - GALLERY_H; y--) steps.push(mkStep(x, y, EMPTY, L_CLEAR))
-      if (d % 5 === 0) {
-        for (let y = b; y > b - GALLERY_H + 1; y--) steps.push(mkStep(x, y, FRAME, L_BG))
-        for (let dx = -2; dx <= 2; dx++) steps.push(mkStep(x + dx, b - GALLERY_H + 1, FRAME, L_BG))
-        if (d % 10 === 0) steps.push(mkStep(x + side, b - GALLERY_H + 3, LANTERN, L_BG))
-      }
+      steps.push(...gallerySteps(x, b, Math.abs(x - (lx + 1))))
     }
   }
   const kept = steps.filter((st) => w.inBounds(st.x, st.y))
@@ -2295,7 +2455,7 @@ function tryMine(w: World): boolean {
     for (let x = lx - 2; x <= lx + 4; x++)
       if (w.inBounds(x, y) && !w.reserved[y * W + x]) w.reserved[y * W + x] = MINE
   c.mines++
-  addProject(w, "mine", kept, -1, 3)
+  addProject(w, "mine", kept, -1, 3, { lx, s, b, xl: lx - 1 - L, xr: lx + 3 + R })
   return true
 }
 
@@ -2333,8 +2493,8 @@ function tryFurnish(w: World): boolean {
   // emptiest rooms first
   rooms.sort((a, b) => countIn(c, a) - countIn(c, b) + (r.next() - 0.5) * 2)
   for (const room of rooms.slice(0, 4)) {
-    const t = towerById(c, room.tower)
-    if (!t) continue
+    const t = towerById(c, room.tower) ?? null
+    if (!t && room.tower >= 0) continue
     const have = c.furniture.filter((f) => f.room === room.id).map((f) => FURN[f.kind].name)
     const wish = hasBench
       ? ROOM_WISHLIST.filter((n) => {
@@ -2365,7 +2525,7 @@ function tryFurnish(w: World): boolean {
         flip: slot.flip,
         room: room.id,
       }
-      addProject(w, "furnish", [st], t.id, 1, { room: room.id, kind })
+      addProject(w, "furnish", [st], t ? t.id : -1, 1, { room: room.id, kind })
       return true
     }
   }
@@ -2380,7 +2540,7 @@ function countIn(c: Colony, room: Room): number {
 
 function findSlot(
   w: World,
-  t: Tower,
+  t: Tower | null,
   room: Room,
   kind: number,
 ): { x: number; y: number; flip: boolean } | null {
@@ -2396,11 +2556,13 @@ function findSlot(
       if (x >= room.x0 && x <= room.x1) arr[x - room.x0] = Math.max(arr[x - room.x0], v)
   }
   // ladders up from this floor (including the one a future raise would add) and the hole below
-  const lx = ladderX(t, room.story)
-  block(lx, lx + 2, 1, floorUse)
-  if (room.story > 0) {
-    const bx = ladderX(t, room.story - 1)
-    block(bx, bx + 2, 1, floorUse)
+  if (t) {
+    const lx = ladderX(t, room.story)
+    block(lx, lx + 2, 1, floorUse)
+    if (room.story > 0) {
+      const bx = ladderX(t, room.story - 1)
+      block(bx, bx + 2, 1, floorUse)
+    }
   }
   for (const f of c.furniture) {
     if (f.room !== room.id) continue
