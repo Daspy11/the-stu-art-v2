@@ -1,5 +1,6 @@
 // Blueprints turn a structure description into an ordered list of build steps.
-// Steps are placed bottom-up so the guys can always climb what they've built.
+// Steps are placed bottom-up, frame before infill, so the guys can always climb
+// what they've built and reach the next piece from it.
 
 import {
   EMPTY,
@@ -119,7 +120,7 @@ export function costOf(type: number, L: number): [number, number] {
   }
   if (L === L_BG) {
     if (type === WALL_STONE || type === WALL_BRICK) return [R_STONE, 1]
-    if (type === LANTERN) return [R_STONE, 4]
+    if (type === LANTERN) return [R_WOOD, 4]
     if (type === BANNER_RED || type === BANNER_BLUE) return [R_WOOD, 3]
     return [R_WOOD, 1]
   }
@@ -153,33 +154,55 @@ function windowCell(t: Tower, k: number, x: number, y: number): number {
   return 0
 }
 
-export function storySteps(w: World, t: Tower, k: number, top: boolean): Step[] {
+// Dig out anything in a storey's way
+function storyClear(w: World, t: Tower, k: number): Step[] {
+  const steps: Step[] = []
+  const fl = floorY(t, k),
+    ceil = floorY(t, k + 1)
+  for (let y = fl - 1; y >= ceil; y--) {
+    for (let x = t.x0; x <= t.x1; x++) {
+      const c = w.get(x, y)
+      if (c !== EMPTY && !BUILT[c] && (DIGGABLE[c] || SOLID[c] || c === WATER) && c !== TEXT)
+        steps.push(mkStep(x, y, EMPTY, L_CLEAR))
+    }
+  }
+  return steps
+}
+
+// The skeleton of a storey: posts and ladder rise together row by row, then the floor
+// above goes in, working out from the ladder hole. Every storey has a ladder, so the
+// top one is the hatch the roofers climb out of.
+function storyFrame(t: Tower, k: number): Step[] {
   const steps: Step[] = []
   const { x0, x1, style } = t
   const fl = floorY(t, k),
     ceil = floorY(t, k + 1)
   const lx = ladderX(t, k)
   const door = t.doors[k] ?? 0
-  // dig out anything in the way
   for (let y = fl - 1; y >= ceil; y--) {
-    for (let x = x0; x <= x1; x++) {
-      const c = w.get(x, y)
-      if (c !== EMPTY && !BUILT[c] && (DIGGABLE[c] || SOLID[c] || c === WATER) && c !== TEXT)
-        steps.push(mkStep(x, y, EMPTY, L_CLEAR))
+    if (y > ceil) {
+      const doorway = y >= fl - 9
+      if (!(doorway && door & 1)) steps.push(mkStep(x0, y, style.pillar, L_FG))
+      if (!(doorway && door & 2)) steps.push(mkStep(x1, y, style.pillar, L_FG))
     }
+    steps.push(mkStep(lx, y, LADDER, L_FG))
+    steps.push(mkStep(lx + 1, y, RUNG, L_FG))
+    steps.push(mkStep(lx + 2, y, LADDER, L_FG))
   }
-  // pillars and ladder rise together, row by row
-  for (let y = fl - 1; y > ceil; y--) {
-    const doorway = y >= fl - 9
-    if (!(doorway && door & 1)) steps.push(mkStep(x0, y, style.pillar, L_FG))
-    if (!(doorway && door & 2)) steps.push(mkStep(x1, y, style.pillar, L_FG))
-    if (!top) {
-      steps.push(mkStep(lx, y, LADDER, L_FG))
-      steps.push(mkStep(lx + 1, y, RUNG, L_FG))
-      steps.push(mkStep(lx + 2, y, LADDER, L_FG))
-    }
-  }
-  // back wall with windows and a beam under the ceiling
+  const floor: number[] = []
+  for (let x = x0; x <= x1; x++) if (x < lx || x > lx + 2) floor.push(x)
+  floor.sort((a, b) => Math.abs(a - lx - 1) - Math.abs(b - lx - 1))
+  for (const x of floor) steps.push(mkStep(x, ceil, style.floor, L_FG))
+  return steps
+}
+
+// Filling in a storey once the frame is up: back wall, windows, a beam under the
+// ceiling, and a lantern
+function storyInfill(t: Tower, k: number): Step[] {
+  const steps: Step[] = []
+  const { x0, x1, style } = t
+  const fl = floorY(t, k),
+    ceil = floorY(t, k + 1)
   for (let y = fl - 1; y > ceil; y--) {
     for (let x = x0 + 1; x < x1; x++) {
       const wc = windowCell(t, k, x, y)
@@ -187,17 +210,42 @@ export function storySteps(w: World, t: Tower, k: number, top: boolean): Step[] 
     }
   }
   if (style.lantern && x1 - x0 > 10) steps.push(mkStep((x0 + x1) >> 1, ceil + 2, LANTERN, L_BG))
-  // ceiling / next floor, leaving the ladder hole
-  if (!top) {
-    steps.push(mkStep(lx, ceil, LADDER, L_FG))
-    steps.push(mkStep(lx + 1, ceil, RUNG, L_FG))
-    steps.push(mkStep(lx + 2, ceil, LADDER, L_FG))
-  }
-  for (let x = x0; x <= x1; x++) {
-    if (!top && x >= lx && x <= lx + 2) continue
-    steps.push(mkStep(x, ceil, style.floor, L_FG))
-  }
   return steps
+}
+
+// Storeys k0..k1-1 in the order a real crew would build them: the whole frame and
+// its ladders first, storey by storey, then the walls and windows
+export function shellSteps(w: World, t: Tower, k0: number, k1: number): Step[] {
+  const steps: Step[] = []
+  for (let k = k0; k < k1; k++) steps.push(...storyClear(w, t, k), ...storyFrame(t, k))
+  for (let k = k0; k < k1; k++) steps.push(...storyInfill(t, k))
+  return steps
+}
+
+// Roofs go on from the outside in, so the roofers keep a way down through the
+// hatch until the very last pieces, which they fit from the ladder below
+export function orderRoof(t: Tower, stories: number, steps: Step[]): Step[] {
+  const lx = ladderX(t, stories - 1)
+  const hx = lx + 1
+  const out = steps
+    .map((s, i) => ({ s, i }))
+    .sort((a, b) => Math.abs(b.s.x - hx) - Math.abs(a.s.x - hx) || b.s.y - a.s.y || a.i - b.i)
+    .map((e) => e.s)
+  // then the hatch is boarded over so nobody wanders out onto the finished roof
+  const F = floorY(t, stories)
+  for (let x = lx; x <= lx + 2; x++) out.push(mkStep(x, F, EMPTY, L_CLEAR))
+  for (let x = lx; x <= lx + 2; x++) out.push(mkStep(x, F, t.style.floor, L_FG))
+  return out
+}
+
+// Taking a roof off is the same in reverse: open up around the hatch first, then work
+// outwards along the roof floor
+export function orderRoofRemoval(t: Tower, stories: number, steps: Step[]): Step[] {
+  const hx = ladderX(t, stories - 1) + 1
+  return steps
+    .map((s, i) => ({ s, i }))
+    .sort((a, b) => Math.abs(a.s.x - hx) - Math.abs(b.s.x - hx) || b.s.y - a.s.y || a.i - b.i)
+    .map((e) => e.s)
 }
 
 // Ground floor plank and the stilts or stone footing under it
@@ -228,7 +276,12 @@ export function foundationSteps(w: World, t: Tower): Step[] {
     for (let y = gy - 1; y > f; y--)
       steps.push(mkStep(x, y, style.foundation === STONEBLOCK ? WALL_STONE : FRAME, L_BG))
   }
-  for (let x = x0; x <= x1; x++) steps.push(mkStep(x, f, style.floor, L_FG))
+  // the ground floor goes down from the side you can walk in from
+  const from = t.entrance > 0 ? x1 : t.entrance < 0 ? x0 : -1
+  const xs: number[] = []
+  for (let x = x0; x <= x1; x++) xs.push(x)
+  if (from >= 0) xs.sort((a, b) => Math.abs(a - from) - Math.abs(b - from))
+  for (const x of xs) steps.push(mkStep(x, f, style.floor, L_FG))
   return steps
 }
 
@@ -394,8 +447,9 @@ export function bridgeSteps(
   if (span > 28) {
     const [mx, my] = deck[deck.length >> 1]
     let gy = my + 1
-    while (gy < w.H && !w.isSolid(mx, gy) && gy - my < 22) gy++
-    if (gy - my < 22 && w.isSolid(mx, gy)) {
+    // (only short ones: it's built from the ground up, within arm's reach)
+    while (gy < w.H && !w.isSolid(mx, gy) && gy - my < 13) gy++
+    if (gy - my < 13 && w.isSolid(mx, gy)) {
       const sup: Step[] = []
       for (let y = gy - 1; y > my; y--)
         sup.push(mkStep(mx, y, FRAME, L_BG), mkStep(mx + 1, y, FRAME, L_BG))

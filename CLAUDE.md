@@ -88,11 +88,11 @@ The site automatically deploys to GitHub Pages when pushing to the `v4` branch v
 The landing page runs a falling-sand world with a colony of stick-figure builders. The page script is `quartz/components/scripts/particles.inline.ts` (canvases, text mask, input, toolbar, localStorage saves); the simulation is plain TypeScript in `quartz/components/scripts/particles/` so it also runs in Node:
 
 - `sim.ts` - `createWorld(W, H, seed, textRects)` and `step(world)`; same seed + size + text layout always plays out identically (all randomness comes from `rng.ts`)
-- `terrain.ts` - procedural terrain: heightfield (hills, ridged mountains, mesas, lake basins), overhangs, caves, strata, lakes and cave pools, sand only around water, trees and flowers. Kept clear of the page text
+- `terrain.ts` - procedural terrain: heightfield (hills, ridged mountains, mesas, lake basins), overhangs, caves open to the sky, dirt over stone, lakes, sand only around water, trees and flowers. Kept clear of the page text
 - `world.ts` - grids and falling-particle physics. Page text becomes invisible solid `TEXT` cells
 - `nav.ts` - walkable cells and Dijkstra pathfinding; the "safe set" is everywhere a guy can reach from home and walk back from
-- `colony.ts` - planner (tower sites, raises, bridges, balconies, cliff ladders, furniture), job board of projects made of build steps, guy brains (fell trees, quarry, stockpile, build, relax), tech tiers, and immigration driven by furniture
-- `blueprints.ts` - turns towers, roofs, bridges and ladders into ordered build steps
+- `colony.ts` - planner (tower sites, raises, bridges, balconies, cliff ladders, mine shafts, furniture), job board of projects made of build steps, guy brains (fell trees, quarry, stockpile, build, relax), tech tiers, and immigration driven by furniture. Guys only build within arm's reach (`REACH_X`/`REACH_UP`/`REACH_DOWN`), so blueprints must always leave something to stand on
+- `blueprints.ts` - turns towers, roofs, bridges and ladders into ordered build steps: frame and ladders first (storey by storey), then walls and windows, then the roof from the outside in through a hatch that's boarded over last
 - `guys.ts`, `trees.ts`, `furniture.ts`, `render.ts`, `save.ts`
 
 Tools: `npm test` (determinism, terrain and build-rule checks), `npm run simulate -- <seed> <ticks> --png out.png` (headless run), `npm run particles:video` (after `npx quartz build`; renders the tiled timelapse video to `video-out/`, needs ffmpeg). Add `?seed=N` to the landing page URL to load a specific world.

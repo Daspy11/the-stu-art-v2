@@ -197,7 +197,8 @@ export class Nav {
       }
     }
     // ladders
-    if (climbAt(w, x, y) && standable(w, x, y - 1)) cb(k - W, 3)
+    // (you can also reach up and grab the bottom rung of a ladder over your head)
+    if ((climbAt(w, x, y) || climbAt(w, x, y - 1)) && standable(w, x, y - 1)) cb(k - W, 3)
     if (climbAt(w, x, y + 1) && standable(w, x, y + 1)) cb(k + W, 3)
   }
 

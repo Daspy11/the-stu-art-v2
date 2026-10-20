@@ -6,6 +6,7 @@
 import {
   EMPTY,
   WATER,
+  DYNAMIC,
   TEXT,
   SOLID,
   BUILT,
@@ -30,6 +31,7 @@ import {
   LADDER,
   RUNG,
   GLASS,
+  LANTERN,
   DIRT,
   DIRT_WALL,
   ROCK_WALL,
@@ -44,7 +46,9 @@ import {
   floorY,
   ladderX,
   mkStep,
-  storySteps,
+  shellSteps,
+  orderRoof,
+  orderRoofRemoval,
   foundationSteps,
   roofSteps,
   ladderSteps,
@@ -136,6 +140,7 @@ export interface Colony {
   quarry: number[]
   quarryT: number
   ladders: number
+  mines: number
   safeT: number // tick the safe set was last computed
   safeDirty: boolean
   stats: { placed: number; felled: number; arrived: number; towers: number }
@@ -158,12 +163,14 @@ export function newColony(w: World, homeX: number, homeY: number): Colony {
     bridges: [],
     furniture: [],
     tier: 0,
-    startPop: w.W < 220 ? 3 : 4,
+    // wider screens start with a bigger crew
+    startPop: Math.max(4, Math.min(16, Math.round(2 + w.W / 45))),
     immT: 1500,
     budget: SEARCH_BUDGET,
     quarry: [],
     quarryT: 0,
     ladders: 0,
+    mines: 0,
     safeT: -1000,
     safeDirty: true,
     stats: { placed: 0, felled: 0, arrived: 0, towers: 0 },
@@ -179,10 +186,14 @@ export function newColony(w: World, homeX: number, homeY: number): Colony {
 export function spawnInitialGuys(w: World) {
   const c = w.colony
   for (let i = 0; i < c.startPop; i++) {
-    const x = c.homeX + (i - (c.startPop >> 1)) * 4
-    let y = c.homeY - 10
-    while (y < w.H - 1 && !standable(w, x, y)) y++
-    w.guys.push(makeGuy(w, x, y))
+    const x = c.homeX + (i - (c.startPop >> 1)) * 3
+    const k = w.nav.snap(w, x, c.homeY, 12)
+    if (k >= 0) w.guys.push(makeGuy(w, k % w.W, Math.floor(k / w.W)))
+    else {
+      let y = c.homeY - 10
+      while (y < w.H - 1 && !standable(w, x, y)) y++
+      w.guys.push(makeGuy(w, x, y))
+    }
   }
 }
 
@@ -329,12 +340,17 @@ function claimValid(w: World, p: Project, i: number): boolean {
   )
 }
 
-const WINDOW = 10
+const WINDOW = 12
 
-// The next step this guy could take on, or -1
-function nextStep(w: World, p: Project): number {
+// The next step this guy could take on, or -1. Of the next few steps, a guy takes one
+// he can do from where he stands, or else the nearest, so the crew isn't forever
+// walking back and forth.
+function nextStep(w: World, p: Project, g?: Guy): number {
   while (p.cursor < p.steps.length && p.steps[p.cursor].done) p.cursor++
   const end = Math.min(p.steps.length, p.cursor + WINDOW)
+  let first = -1,
+    near = -1,
+    nearD = Infinity
   for (let i = p.cursor; i < end; i++) {
     const s = p.steps[i]
     if (s.done) continue
@@ -348,8 +364,16 @@ function nextStep(w: World, p: Project): number {
     }
     if (claimValid(w, p, i)) continue
     s.claim = 0
-    return i
+    if (!g) return i
+    if (first < 0) first = i
+    if (inReach(g, s) && (s.r === R_NONE || (g.carry === s.r && g.carryAmt >= s.c))) return i
+    const d = Math.abs(s.x - g.x) + Math.abs(s.y - g.y) * 0.7
+    if (d < nearD) {
+      nearD = d
+      near = i
+    }
   }
+  if (first >= 0) return near >= 0 ? near : first
   while (p.cursor < p.steps.length && p.steps[p.cursor].done) p.cursor++
   if (p.cursor >= p.steps.length) completeProject(w, p)
   return -1
@@ -364,14 +388,19 @@ function remainingNeed(p: Project, r: number): number {
   return n
 }
 
-// Cells a guy standing at a node can work on: 6 to each side, from 4 below the feet
-// to 20 above (they throw planks up to whoever's building).
+// Cells a guy standing at a node can work on: an arm's length to each side, a little
+// below the feet, and up to just over their head. Anything further needs a ladder,
+// a floor or scaffolding to stand on first.
+const REACH_X = 4,
+  REACH_UP = 12,
+  REACH_DOWN = 3
+
 function markReach(w: World, s: Step) {
   const nav = w.nav
   nav.beginGoals()
   const solidPlace = s.L === L_FG && SOLID[s.t]
-  for (let ny = s.y - 4; ny <= s.y + 20; ny++) {
-    for (let nx = s.x - 6; nx <= s.x + 6; nx++) {
+  for (let ny = s.y - REACH_DOWN; ny <= s.y + REACH_UP; ny++) {
+    for (let nx = s.x - REACH_X; nx <= s.x + REACH_X; nx++) {
       if (solidPlace && Math.abs(nx - s.x) <= 1 && s.y >= ny - 8 && s.y <= ny) continue
       nav.markGoal(nx, ny, 0)
     }
@@ -381,7 +410,7 @@ function markReach(w: World, s: Step) {
 function inReach(g: Guy, s: Step): boolean {
   const gx = Math.round(g.x),
     gy = Math.round(g.y)
-  if (Math.abs(gx - s.x) > 6 || s.y < gy - 20 || s.y > gy + 4) return false
+  if (Math.abs(gx - s.x) > REACH_X || s.y < gy - REACH_UP || s.y > gy + REACH_DOWN) return false
   if (s.L === L_FG && SOLID[s.t] && Math.abs(gx - s.x) <= 1 && s.y >= gy - 8 && s.y <= gy)
     return false
   return true
@@ -483,7 +512,7 @@ function think(w: World, g: Guy) {
     const list = own ? [own, ...c.projects] : c.projects
     for (const p of list) {
       if (p.done) continue
-      const i = nextStep(w, p)
+      const i = nextStep(w, p, g)
       if (i >= 0 && p.steps[i].r === g.carry && g.carryAmt >= p.steps[i].c) {
         if (startBuild(w, g, p, i)) return
         break
@@ -498,7 +527,7 @@ function think(w: World, g: Guy) {
     p = assignProject(w, g)
   }
   if (p) {
-    const i = nextStep(w, p)
+    const i = nextStep(w, p, g)
     if (i < 0) {
       leaveProject(c, g)
     } else {
@@ -560,7 +589,9 @@ function assignProject(w: World, g: Guy): Project | undefined {
   let bestScore = -Infinity
   for (const p of c.projects) {
     if (p.done || p.starved > w.tick) continue
-    const room = p.want - p.workers
+    // big jobs soak up a bigger crew
+    const big = p.kind === "tower" || p.kind === "raise" || p.kind === "mine"
+    const room = (big ? Math.min(6, p.want + Math.floor(w.guys.length / 10)) : p.want) - p.workers
     const dist = Math.abs(p.x - g.x) + Math.abs(p.y - g.y) * 0.5
     const score = room * 40 - dist * 0.2 - p.fails * 3 + (p.kind === "furnish" ? -10 : 0)
     if (room <= 0 && p.workers > 0) continue
@@ -635,7 +666,7 @@ function workBuild(w: World, g: Guy) {
     if (s.L !== L_BG) c.safeDirty = true
   }
   // keep going while the next step is in reach and affordable
-  const n = nextStep(w, p)
+  const n = nextStep(w, p, g)
   if (n >= 0) {
     const ns = p.steps[n]
     const afford = ns.r === R_NONE || (g.carry === ns.r && g.carryAmt >= ns.c)
@@ -672,6 +703,8 @@ function applyStep(w: World, g: Guy, s: Step): "ok" | "skip" | "wait" | "need" {
       }
       if (!affordable()) return "need"
       if (SOLID[s.t] && overlapsGuy(w, s.x, s.y)) return "wait"
+      // ground that's still to be dug out (by whoever's on the step before this one)
+      if (SOLID[cur]) return "wait"
       w.grid[k] = s.t
       pay()
       return "ok"
@@ -690,6 +723,8 @@ function applyStep(w: World, g: Guy, s: Step): "ok" | "skip" | "wait" | "need" {
       const cur = w.grid[k]
       if (cur === TEXT) return "skip"
       if (BUILT[cur]) c.stock[cur === STONEBLOCK || cur === BRICKWORK ? R_STONE : R_WOOD] += 5
+      // stone dug out of the ground is hauled up for building
+      else if (QUARRY[cur]) c.stock[R_STONE] += 12
       dig(w, s.x, s.y)
       return "ok"
     }
@@ -1078,7 +1113,7 @@ export function popCap(w: World): number {
   const c = w.colony
   let score = 0
   for (const f of c.furniture) score += FURN[f.kind].name === "bed" ? 2 : 1
-  const max = Math.max(6, Math.min(40, Math.floor((w.W * w.H) / 4200)))
+  const max = Math.max(c.startPop + 6, Math.min(44, Math.floor((w.W * w.H) / 3800)))
   return Math.min(max, c.startPop + Math.floor(score / 2))
 }
 
@@ -1147,7 +1182,8 @@ function plan(w: World) {
   const building = c.projects.filter(
     (p) => !p.done && (p.kind === "tower" || p.kind === "raise"),
   ).length
-  const towerRoom = building < Math.max(1, Math.ceil(alive.length / 4))
+  // a few big crews make visible progress; lots of tiny ones just make scaffolding
+  const towerRoom = building < Math.max(1, Math.min(3, Math.ceil(alive.length / 9)))
   if ((active < limit && idle > 0) || active === 0) {
     if (c.towers.length === 0) tryTower(w)
     else {
@@ -1157,6 +1193,10 @@ function plan(w: World) {
         [c.tier >= 1 ? 3 : 0, () => tryBridge(w)],
         [c.tier >= 1 ? 0.8 : 0, () => tryBalcony(w)],
         [c.ladders < Math.floor(w.W / 80) + 1 ? 0.7 : 0, () => tryCliffLadder(w)],
+        [
+          c.mines < 1 + Math.floor(w.W / 220) ? (c.stock[R_STONE] < 300 ? 4 : 1) : 0,
+          () => tryMine(w),
+        ],
       ]
       // weighted shuffle, then take the first that works
       const order: (() => boolean)[] = []
@@ -1598,7 +1638,6 @@ function towerBlueprint(w: World, t: Tower, stories: number): Step[] | null {
       steps.push(mkStep(tr.x, tr.y, EMPTY, L_FELL))
     }
   }
-  const found = foundationSteps(w, t)
   // entrances: a step up is fine, a taller one gets a ladder on that side so the
   // tower never cuts the ground path in two
   const gl = surfaceAt(w, t.x0 - 2) - 1,
@@ -1616,15 +1655,21 @@ function towerBlueprint(w: World, t: Tower, stories: number): Step[] | null {
     }
     const lad = ladderSteps(w, left ? t.x0 - 3 : t.x1 + 1, t.base, 30)
     if (!lad) continue
+    // its foot has to be somewhere the colony can walk back from, not down a hole
+    const foot = lad[0]
+    let footSafe = false
+    for (let dx = -2; dx <= 2 && !footSafe; dx++)
+      for (let dy = -1; dy <= 1; dy++)
+        if (w.nav.isSafe((foot.y + dy) * w.W + foot.x + dx)) footSafe = true
+    if (!footSafe) continue
     t.entrance = left ? -1 : 1
     steps.push(...lad)
     entrances++
   }
   if (entrances === 0) return null
-  steps.push(...found)
-  for (let k = 0; k < stories; k++) steps.push(...storySteps(w, t, k, k === stories - 1))
-  const roof = roofSteps(t, stories)
-  steps.push(...roof.steps)
+  steps.push(...foundationSteps(w, t))
+  steps.push(...shellSteps(w, t, 0, stories))
+  steps.push(...orderRoof(t, stories, roofSteps(t, stories).steps))
   if (!validSteps(w, steps, t.id)) return null
   return steps
 }
@@ -1648,25 +1693,31 @@ function tryRaise(w: World): boolean {
     const top = floorY(t, n + m) - 10
     const free = volumeFree2(w, t, t.x0 - 2, t.x1 + 2, top, floorY(t, n) - 1)
     if (!free) continue
-    const steps: Step[] = []
     // take the old roof off
+    const off: Step[] = []
     for (let y = t.roofTop; y < floorY(t, n); y++) {
       for (let x = t.x0 - 3; x <= t.x1 + 3; x++) {
         if (!w.inBounds(x, y) || w.reserved[y * w.W + x] !== t.id) continue
-        if (BUILT[w.get(x, y)]) steps.push(mkStep(x, y, EMPTY, L_CLEAR))
-        if (BUILT_BG[w.getBg(x, y)]) steps.push(mkStep(x, y, EMPTY, L_CLEARBG))
+        if (BUILT[w.get(x, y)]) off.push(mkStep(x, y, EMPTY, L_CLEAR))
+        if (BUILT_BG[w.getBg(x, y)]) off.push(mkStep(x, y, EMPTY, L_CLEARBG))
       }
     }
-    // open a ladder hole in the old ceiling and put a ladder up through it
+    // first open the hatch in the old ceiling and put the ladder back up through it,
+    // then climb out and take the roof apart
+    const steps: Step[] = []
     const lx = ladderX(t, n - 1)
     const fl = floorY(t, n - 1),
       ceil = floorY(t, n)
-    for (let x = lx; x <= lx + 2; x++) steps.push(mkStep(x, ceil, EMPTY, L_CLEAR))
+    for (let x = lx; x <= lx + 2; x++) {
+      const v = w.get(x, ceil)
+      if (v !== LADDER && v !== RUNG) steps.push(mkStep(x, ceil, EMPTY, L_CLEAR))
+    }
     for (let y = fl - 1; y >= ceil; y--) {
       steps.push(mkStep(lx, y, LADDER, L_FG))
       steps.push(mkStep(lx + 1, y, RUNG, L_FG))
       steps.push(mkStep(lx + 2, y, LADDER, L_FG))
     }
+    steps.push(...orderRoofRemoval(t, n, off))
     // fresh style for the new top if the colony has learned new tricks
     const nt: Tower = { ...t, style: { ...t.style } }
     if (r.chance(0.5)) {
@@ -1676,9 +1727,9 @@ function tryRaise(w: World): boolean {
       nt.style.flag = s2.flag
       nt.style.lantern = s2.lantern
     }
-    for (let k = n; k < n + m; k++) steps.push(...storySteps(w, nt, k, k === n + m - 1))
+    steps.push(...shellSteps(w, nt, n, n + m))
     const roof = roofSteps(nt, n + m)
-    steps.push(...roof.steps)
+    steps.push(...orderRoof(nt, n + m, roof.steps))
     const clearing = new Set<number>()
     for (const s of steps) if (s.L === L_CLEAR || s.L === L_CLEARBG) clearing.add(s.y * w.W + s.x)
     const check = steps.filter(
@@ -1872,6 +1923,107 @@ function tryCliffLadder(w: World): boolean {
   c.ladders++
   reserveSteps(w, steps, 65534)
   addProject(w, "ladder", steps, -1, 1)
+  return true
+}
+
+// --- Mines ---
+// A ladder shaft down through the dirt into the stone, then a gallery dug out along
+// the bottom, propped up with timber. Everything dug out of the stone is building stone.
+const MINE = 65533
+const GALLERY_H = 9
+
+function tryMine(w: World): boolean {
+  const c = w.colony
+  if (c.projects.some((p) => !p.done && p.kind === "mine")) return false
+  const { W, H } = w
+  const r = w.rng
+  const cell = (x: number, y: number) => w.grid[y * W + x]
+  const free = (x: number, y: number) => {
+    const k = y * W + x
+    return !w.noBuild[k] && !w.reserved[k] && !BUILT[w.grid[k]] && !BUILT_BG[w.bg[k]]
+  }
+  // can this column hold gallery rows b-GALLERY_H+1..b with solid stone over and under?
+  const galleryOk = (x: number, b: number) => {
+    if (x < 4 || x >= W - 4) return false
+    if (!SOLID[cell(x, b + 1)]) return false
+    for (let y = b - GALLERY_H - 2; y <= b; y++) {
+      const v = cell(x, y)
+      if (!free(x, y)) return false
+      if (y >= b - GALLERY_H + 1 && v !== EMPTY && !QUARRY[v] && !SOLID[v]) return false
+      if (y < b - GALLERY_H + 1 && !QUARRY[v]) return false // a stone roof
+    }
+    // nothing loose or wet overhead that would pour in
+    for (let y = 0; y < b; y++) if (DYNAMIC[cell(x, y)]) return false
+    return true
+  }
+  let best: { lx: number; s: number; b: number; L: number; R: number; score: number } | null = null
+  for (let i = 0; i < 30; i++) {
+    const lx = Math.round(c.homeX + r.range(-80, 80))
+    if (lx < 8 || lx + 2 > W - 9) continue
+    const s = surfaceAt(w, lx)
+    if (s >= H - 20) continue
+    let ok = true
+    for (let x = lx - 1; x <= lx + 3 && ok; x++) {
+      if (Math.abs(surfaceAt(w, x) - s) > 1) ok = false
+      for (let y = s - 9; y < s && ok; y++) if (!free(x, y) || cell(x, y) !== EMPTY) ok = false
+    }
+    if (!ok) continue
+    for (const t of w.trees) if (t.x >= lx - 3 && t.x <= lx + 5) ok = false
+    if (!ok) continue
+    // the top must be on the safe network
+    if (!w.nav.isSafe((s - 1) * W + lx - 1) && !w.nav.isSafe((s - 1) * W + lx + 3)) continue
+    const b = H - 3
+    // the shaft goes through soil and stone only
+    for (let y = s; y <= b && ok; y++)
+      for (let x = lx; x <= lx + 2; x++) {
+        const v = cell(x, y)
+        if (!free(x, y) || DYNAMIC[v] || v === WATER || v === TEXT) ok = false
+      }
+    if (!ok || b - s < 16) continue
+    if (!galleryOk(lx, b) || !galleryOk(lx + 2, b)) continue
+    let L = 0,
+      R = 0
+    const maxLen = 8 + r.int(12)
+    while (L < maxLen && galleryOk(lx - 1 - L, b)) L++
+    while (R < maxLen && galleryOk(lx + 3 + R, b)) R++
+    if (L + R < 6) continue
+    const score = L + R - Math.abs(lx - c.homeX) * 0.1
+    if (!best || score > best.score) best = { lx, s, b, L, R, score }
+  }
+  if (!best) return false
+  const { lx, s, b, L, R } = best
+  const steps: Step[] = []
+  // the shaft: dig a row, then put the ladder in it, all the way down
+  for (let y = s; y <= b; y++) {
+    for (let x = lx; x <= lx + 2; x++)
+      if (cell(x, y) !== EMPTY) steps.push(mkStep(x, y, EMPTY, L_CLEAR))
+    steps.push(
+      mkStep(lx, y, LADDER, L_FG),
+      mkStep(lx + 1, y, RUNG, L_FG),
+      mkStep(lx + 2, y, LADDER, L_FG),
+    )
+  }
+  // the gallery, a column at a time on alternating sides, with a prop every few cells
+  for (let d = 1; d <= Math.max(L, R); d++) {
+    for (const side of [-1, 1]) {
+      if (d > (side < 0 ? L : R)) continue
+      const x = side < 0 ? lx - d : lx + 2 + d
+      for (let y = b; y > b - GALLERY_H; y--) steps.push(mkStep(x, y, EMPTY, L_CLEAR))
+      if (d % 5 === 0) {
+        for (let y = b; y > b - GALLERY_H + 1; y--) steps.push(mkStep(x, y, FRAME, L_BG))
+        for (let dx = -2; dx <= 2; dx++) steps.push(mkStep(x + dx, b - GALLERY_H + 1, FRAME, L_BG))
+        if (d % 10 === 0) steps.push(mkStep(x + side, b - GALLERY_H + 3, LANTERN, L_BG))
+      }
+    }
+  }
+  const kept = steps.filter((st) => w.inBounds(st.x, st.y))
+  reserveSteps(w, kept, MINE)
+  // keep the way in clear
+  for (let y = s - 10; y < s; y++)
+    for (let x = lx - 1; x <= lx + 3; x++)
+      if (w.inBounds(x, y) && !w.reserved[y * W + x]) w.reserved[y * W + x] = MINE
+  c.mines++
+  addProject(w, "mine", kept, -1, 3)
   return true
 }
 
