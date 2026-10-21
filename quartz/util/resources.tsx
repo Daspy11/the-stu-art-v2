@@ -22,12 +22,26 @@ export type CSSResource = {
   spaPreserve?: boolean
 }
 
-export function JSResourceToScriptElement(resource: JSResource, preserve?: boolean): JSX.Element {
+// `persist` marks a script for the SPA's page swap (micromorph) to insert as-is
+// rather than recreate: a recreated script runs again (it even gets a fresh `?t=`
+// query, so a module isn't deduplicated), doubling every listener and loop on the site.
+export function JSResourceToScriptElement(
+  resource: JSResource,
+  preserve?: boolean,
+  persist?: boolean,
+): JSX.Element {
   const scriptType = resource.moduleType ?? "application/javascript"
   const spaPreserve = preserve ?? resource.spaPreserve
+  const dataPersist = persist ? "" : undefined
   if (resource.contentType === "external") {
     return (
-      <script key={resource.src} src={resource.src} type={scriptType} spa-preserve={spaPreserve} />
+      <script
+        key={resource.src}
+        src={resource.src}
+        type={scriptType}
+        spa-preserve={spaPreserve}
+        data-persist={dataPersist}
+      />
     )
   } else {
     const content = resource.script
@@ -36,6 +50,7 @@ export function JSResourceToScriptElement(resource: JSResource, preserve?: boole
         key={randomUUID()}
         type={scriptType}
         spa-preserve={spaPreserve}
+        data-persist={dataPersist}
         dangerouslySetInnerHTML={{ __html: content }}
       ></script>
     )

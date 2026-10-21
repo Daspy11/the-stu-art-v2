@@ -141,7 +141,11 @@ function makeCanvas(id: string): HTMLCanvasElement {
   if (!c) {
     c = document.createElement("canvas")
     c.id = id
-    document.body.prepend(c)
+    // at the end of the page, never the start: the site swaps pages by comparing the
+    // body's children position by position, and anything ahead of its own elements
+    // shifts them all, so it rebuilds everything, its <script> tags included, and
+    // the whole site's code runs a second time (two routers, two of everything)
+    document.body.append(c)
   }
   return c
 }
@@ -444,7 +448,7 @@ function setupInput() {
       const [W, H] = worldSize()
       if (W !== world.W || Math.abs(H - world.H) > world.H * 0.25) startWorld(false)
       else scheduleText()
-    }, 250)
+    }, 400)
   })
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") persist()
@@ -514,6 +518,8 @@ function slider(
 }
 
 function createToolbar() {
+  if (closeMenu) document.removeEventListener("click", closeMenu)
+  closeMenu = null
   if (toolbarEl) toolbarEl.remove()
   inlineDropdown?.remove()
   document.getElementById("particle-instructions-content")?.remove()
@@ -726,7 +732,20 @@ function loop() {
     if (simAccum > 3) simAccum = 0
   }
   render()
+  // a page swap that lands after we've started (quick back/forward) can replace the
+  // page text our menu lives in: put it back
+  if (++uiCheck % 20 === 0 && world && menuMissing()) {
+    createToolbar()
+    scheduleText()
+  }
   raf = requestAnimationFrame(loop)
+}
+let uiCheck = 0
+function menuMissing(): boolean {
+  // in the page text when there's a spot for it there, else the floating toolbar
+  return document.getElementById("particle-instructions")
+    ? !document.getElementById("particle-instructions-content")
+    : !toolbarEl?.isConnected
 }
 
 // --- Lifecycle ---
