@@ -787,6 +787,9 @@ p {
 
 .table-container {
   overflow-x: auto;
+  /* don't let a wide table set the min width of the centered column, or it
+     overflows the viewport on phones instead of scrolling in here */
+  contain: inline-size;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 15px;
 }
