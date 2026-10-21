@@ -2319,8 +2319,8 @@ function gallerySteps(x: number, y: number, fromShaft: number): Step[] {
 
 function tryTunnel(w: World): boolean {
   const c = w.colony
-  // more hands, more tunnels on the go
-  const crews = 1 + Math.floor(w.guys.length / 8)
+  // more hands, more tunnels on the go (a couple of diggers each)
+  const crews = 1 + Math.floor(w.guys.length / 4)
   if (c.projects.filter((p) => !p.done && p.kind === "tunnel").length >= crews) return false
   const r = w.rng
   type Cand = { nest: number; y: number; cols: number[]; side: number; score: number }
@@ -2363,7 +2363,7 @@ function tryTunnel(w: World): boolean {
   for (const x of cand.cols) steps.push(...gallerySteps(x, cand.y, Math.abs(x - (n.lx + 1))))
   reserveSteps(w, steps, MINE)
   const xs = cand.cols
-  addProject(w, "tunnel", steps, -1, 3, {
+  addProject(w, "tunnel", steps, -1, 2, {
     nest: cand.nest,
     y: cand.y,
     xl: Math.min(...xs),
@@ -2428,10 +2428,11 @@ function tryMine(w: World): boolean {
     if (!galleryOk(lx - 1, b) || !galleryOk(lx + 3, b)) continue
     let L = 0,
       R = 0
-    const maxLen = 8 + r.int(12)
+    // just a short starter gallery: the nest opens sooner, and it grows from there
+    const maxLen = 4
     while (L < maxLen && galleryOk(lx - 2 - L, b)) L++
     while (R < maxLen && galleryOk(lx + 4 + R, b)) R++
-    if (L + R < 6) continue
+    if (L + R < 4) continue
     // not right on top of another nest
     let apart = 200
     for (const n of c.nests) apart = Math.min(apart, Math.abs(n.lx - lx))
