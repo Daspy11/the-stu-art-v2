@@ -1596,7 +1596,7 @@ function completeProject(w: World, p: Project) {
     const n = c.nests[d.nest]
     nestRooms(w, d.nest, d.y, d.xl, d.xr)
     if (n) {
-      const lv = n.levels.find((l) => l.y === d.y)
+      const lv = n.levels.find((l) => l.y === d.y && d.xl <= l.xr + 1 && d.xr >= l.xl - 1)
       if (lv) {
         lv.xl = Math.min(lv.xl, d.xl)
         lv.xr = Math.max(lv.xr, d.xr)
@@ -2368,13 +2368,61 @@ function gallerySteps(x: number, y: number, fromShaft: number): Step[] {
   return steps
 }
 
+// Can a winze go from the gallery floor row `from` to a new gallery at row `to`
+// (12 rows up or down), through solid natural ground, with column x as its middle?
+function winzeOk(w: World, x: number, from: number, to: number): boolean {
+  for (let xc = x - 2; xc <= x + 2; xc++) {
+    if (w.get(xc, from) !== EMPTY) return false // the old gallery is open here
+    if (!tunnelColOk(w, xc, to)) return false
+    // and the ground between the two (the old floor, or the old roof)
+    const [y0, y1] = to > from ? [from + 1, to - GALLERY_H - 2] : [to + 1, from - GALLERY_H]
+    for (let y = y0; y <= y1; y++) {
+      const k = y * w.W + xc
+      const v = w.grid[k]
+      if (!SOLID[v] || BUILT[v] || DYNAMIC[v] || v === TEXT || w.noBuild[k] || w.reserved[k])
+        return false
+    }
+  }
+  return true
+}
+
+// Dig a winze a row at a time, a cell wider than the ladder each side, putting each
+// row of ladder in as it goes (downwards from the old floor, or upwards through the
+// old roof), then open out the bottom of the new gallery around it.
+function winzeSteps(w: World, x: number, from: number, to: number): Step[] {
+  const steps: Step[] = []
+  const row = (y: number, ladder: boolean) => {
+    for (let xc = x - 2; xc <= x + 2; xc++)
+      if (w.get(xc, y) !== EMPTY) steps.push(mkStep(xc, y, EMPTY, L_CLEAR))
+    if (ladder)
+      steps.push(
+        mkStep(x - 1, y, LADDER, L_FG),
+        mkStep(x, y, RUNG, L_FG),
+        mkStep(x + 1, y, LADDER, L_FG),
+      )
+  }
+  if (to > from) for (let y = from + 1; y <= to; y++) row(y, true)
+  else {
+    for (let y = from; y >= to; y--) row(y, true)
+    for (let y = to - 1; y > to - GALLERY_H; y--) row(y, false)
+  }
+  return steps
+}
+
 function tryTunnel(w: World): boolean {
   const c = w.colony
   // more hands, more tunnels on the go (a couple of diggers each)
   const crews = 1 + Math.floor(w.guys.length / 4)
   if (c.projects.filter((p) => !p.done && p.kind === "tunnel").length >= crews) return false
   const r = w.rng
-  type Cand = { nest: number; y: number; cols: number[]; side: number; score: number }
+  type Cand = {
+    nest: number
+    y: number
+    cols: number[]
+    side: number
+    score: number
+    winze?: { x: number; from: number }
+  }
   const cands: Cand[] = []
   const run = (x0: number, dir: number, y: number) => {
     const cols: number[] = []
@@ -2398,6 +2446,30 @@ function tryTunnel(w: World): boolean {
         if (cols.length >= 4) cands.push({ nest: i, y, cols, side: dir, score: cols.length + 6 })
       }
     }
+    // or sink a little shaft (a winze) from a gallery to a new level above or below,
+    // so the nest spreads out wherever there's ground, not just along the main shaft
+    for (const lv of n.levels) {
+      if (lv.xr - lv.xl < 12) continue
+      const x = lv.xl + 4 + r.int(lv.xr - lv.xl - 7)
+      if (Math.abs(x - (n.lx + 1)) < 8) continue
+      if (c.furniture.some((f) => Math.abs(f.x - x) <= 4 && Math.abs(f.y - lv.y) <= 9)) continue
+      for (const d of [-1, 1]) {
+        const y = lv.y + 12 * d
+        if (n.levels.some((l) => l.y === y && x >= l.xl - 6 && x <= l.xr + 6)) continue
+        if (!winzeOk(w, x, lv.y, y)) continue
+        const cols: number[] = []
+        for (const dir of [-1, 1]) cols.push(...run(x + 3 * dir, dir, y))
+        if (cols.length >= 4)
+          cands.push({
+            nest: i,
+            y,
+            cols,
+            side: 0,
+            score: cols.length + 4,
+            winze: { x, from: lv.y },
+          })
+      }
+    }
   })
   if (!cands.length) return false
   let total = 0
@@ -2411,9 +2483,24 @@ function tryTunnel(w: World): boolean {
     }
   const n = c.nests[cand.nest]
   const steps: Step[] = []
+  if (cand.winze) {
+    const { x, from } = cand.winze
+    steps.push(...winzeSteps(w, x, from, cand.y))
+    // the shaft cuts through a room on the old level: split it around the hole
+    const keep: Room[] = []
+    for (const rm of c.rooms) {
+      if (rm.tower >= 0 || rm.y !== from || rm.x1 < x - 2 || rm.x0 > x + 2) {
+        keep.push(rm)
+        continue
+      }
+      if (x - 3 - rm.x0 >= 4) keep.push({ ...rm, id: c.nextId++, x1: x - 3 })
+      if (rm.x1 - (x + 3) >= 4) keep.push({ ...rm, id: c.nextId++, x0: x + 3 })
+    }
+    c.rooms = keep
+  }
   for (const x of cand.cols) steps.push(...gallerySteps(x, cand.y, Math.abs(x - nestOrigin(n))))
   reserveSteps(w, steps, MINE)
-  const xs = cand.cols
+  const xs = cand.winze ? [...cand.cols, cand.winze.x - 2, cand.winze.x + 2] : cand.cols
   addProject(w, "tunnel", steps, -1, 2, {
     nest: cand.nest,
     y: cand.y,

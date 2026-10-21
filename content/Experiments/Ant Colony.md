@@ -25,7 +25,8 @@ The rules: anything the guys _do_ can change, but the terrain generator and the 
 | 6: more diggers, sooner |     27.8 |             51.4 |         6.7 |
 | 7: into the hills       |     28.5 |             52.4 |    **16.2** |
 | 8: everyone pitches in  |     50.3 |             88.5 |        20.6 |
-| 9: the long way round   | **55.8** |         **99.0** |    **21.4** |
+| 9: the long way round   |     55.8 |             99.0 |        21.4 |
+| 10: winzes              | **64.1** |        **118.1** |    **47.8** |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
@@ -100,6 +101,20 @@ _A tablet world: the hill is now an ant hill, hollowed out level after level._
 
 _A phone world: from a couple of towers to a village over two levels of nest._
 
+## Gen 10: winzes
+
+New levels of the nest could only be opened off the main shaft, every twelve rows. A cave, a lake or just the shaft being in the wrong place left whole stretches of ground out of reach, and small screens ran out of digging by about a third of the way through.
+
+Now a gallery can sink a **winze**, a little ladder shaft of its own, twelve rows up or down to start a new level, as long as there's solid ground all the way. So the nest grows in every direction, a level at a time, like a real ant nest. Rooms it cuts through are split around the hole, and no winze goes where there's furniture.
+
+![[Assets/ant-colony/gen9-gen10-tablet-34153.png]]
+
+_The mountain-top world that used to be the weakest: now the whole mountain is a nest._
+
+![[Assets/ant-colony/gen9-gen10-laptop-261462.png]]
+
+_A laptop world: the far shore of the lake finally gets dug, and there are levels all the way along._
+
 ## Little things fixed along the way
 
 - Swimmers stopped and turned around every time a ripple passed under the next stroke.
@@ -114,5 +129,6 @@ _A phone world: from a couple of towers to a village over two levels of nest._
 ## Still to do
 
 - Stone piles up by the tonne with not much to spend it on.
-- Phones are the weakest screens: there's barely any flat ground to dig a mine from.
+- Some towers stand as bare frames for a long time; crews start more than they finish.
+- Phones are still the weakest screens: there's barely any flat ground to dig a mine from.
 - Guys still walk far more than they work.
