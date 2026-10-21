@@ -27,7 +27,8 @@ The rules: anything the guys _do_ can change, but the terrain generator and the 
 | 8: everyone pitches in  |     50.3 |             88.5 |        20.6 |
 | 9: the long way round   |     55.8 |             99.0 |        21.4 |
 | 10: winzes              |     64.1 |            118.1 |        47.8 |
-| 11: nobody left behind  | **66.9** |        **121.5** |    **49.8** |
+| 11: nobody left behind  |     66.9 |        **121.5** |        49.8 |
+| 12: many hands          | **71.0** |            120.6 |    **53.7** |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
@@ -127,6 +128,14 @@ A generation of bug fixes, found by hunting down where the stuck-guy penalty cam
 ![[Assets/ant-colony/gen10-gen11-laptop-706844.png]]
 
 _The laptop world with the five frozen guys: nobody is stuck now, and it shows._
+
+## Gen 12: many hands
+
+Early on, a third of the guys had nothing to do: every project already had a full crew, and the planner only kept one project on the go for every three guys. Now it's one for every two. The colony ends up in the same place after 40 minutes, but it gets there much sooner, and that's what the page is for: most visitors only see the first few minutes.
+
+![[Assets/ant-colony/gen11-gen12-tablet-202618-30k.png]]
+
+_The same tablet world 12 minutes in: twice as much nest._
 
 ## Little things fixed along the way
 

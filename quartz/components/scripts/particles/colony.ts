@@ -1449,7 +1449,7 @@ function plan(w: World) {
   updateTier(w)
   const alive = w.guys.filter((g) => g.mode !== "dead")
   const idle = alive.filter((g) => g.project < 0).length
-  const limit = Math.max(1, Math.ceil(alive.length / 3))
+  const limit = Math.max(1, Math.ceil(alive.length / 2))
   const active = activeCount(c, false)
   const building = c.projects.filter(
     (p) => !p.done && (p.kind === "tower" || p.kind === "raise"),

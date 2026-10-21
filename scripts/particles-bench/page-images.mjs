@@ -2,12 +2,16 @@
 // before/after comparisons. Usage:
 //   node scripts/particles-bench/page-images.mjs chart gen0 gen1 gen2
 //   node scripts/particles-bench/page-images.mjs compare gen0 gen2 phone-825701 laptop-429927 ...
+//   (add --at 30000 to compare shots from bench-out/<gen>/shots-30000 at that tick)
 import sharp from "sharp"
 import { readFileSync, mkdirSync } from "fs"
 
 const OUT = "content/Assets/ant-colony"
 mkdirSync(OUT, { recursive: true })
-const [mode, ...args] = process.argv.slice(2)
+const argv = process.argv.slice(2)
+const atI = argv.indexOf("--at")
+const AT = atI >= 0 ? +argv.splice(atI, 2)[1] : 100000
+const [mode, ...args] = argv
 const summary = (g) => JSON.parse(readFileSync(`bench-out/${g}/summary.json`, "utf8"))
 const runs = (g) =>
   readFileSync(`bench-out/${g}/runs.jsonl`, "utf8")
@@ -63,8 +67,8 @@ if (mode === "chart") {
   for (const w of worlds) {
     const [layout, seed] = w.split("-")
     const score = (rs) =>
-      rs.find((r) => r.layout === layout && r.seed === +seed && r.t === 100000)?.score ?? 0
-    const shot = (g) => `bench-out/${g}/shots/${layout}-${seed}.png`
+      rs.find((r) => r.layout === layout && r.seed === +seed && r.t === AT)?.score ?? 0
+    const shot = (g) => `bench-out/${g}/shots${AT === 100000 ? "" : "-" + AT}/${layout}-${seed}.png`
     const meta = await sharp(shot(a)).metadata()
     // the ground and what's on it: the bottom of the screen
     const cropH = Math.round(
@@ -105,7 +109,8 @@ if (mode === "chart") {
             { input: Bm.buf, left: 0, top: A.h + gap },
           ],
         }
-    const file = `${OUT}/gen${name(a)}-gen${name(b)}-${layout}-${seed}.png`
+    const at = AT === 100000 ? "" : `-${AT / 1000}k`
+    const file = `${OUT}/gen${name(a)}-gen${name(b)}-${layout}-${seed}${at}.png`
     await sharp({
       create: { width: out.width, height: out.height, channels: 3, background: "#ffffff" },
     })
