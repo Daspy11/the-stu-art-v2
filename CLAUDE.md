@@ -102,6 +102,7 @@ Tools: `npm test` (determinism, terrain and build-rule checks), `npm run simulat
 - `Head.tsx` picks each page's preview image: frontmatter `image`/`cover`/`socialImage` (a URL, a content path like `Assets/photo.png`, or a file name), else the first non-SVG image on the page, else `static/og-image.png`. It also writes canonical URLs, article dates and JSON-LD; `author` in `quartz.config.ts` names the site's author
 - The `Description` transformer builds meta descriptions from the page's prose only (no headings, tags or footnotes)
 - `ImageLightbox` (`scripts/lightbox.inline.ts`) opens any image in an article full screen; images inside links or with class `no-lightbox` are left alone
+- `RecentWriting` lists every page of writing, newest first by year, on any page with `showRecent: true` in its frontmatter (`content/Recent.md`, linked from the homepage). Writing means pages inside a folder, not folder indexes, tag pages or empty pages
 
 ## Styling with CSS and Tailwind
 
