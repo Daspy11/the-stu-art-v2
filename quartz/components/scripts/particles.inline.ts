@@ -64,8 +64,11 @@ function slug(): string {
 // Worlds are fitted to a screen size, so each size keeps its own save. Bump the
 // version when world generation changes so visitors get the new terrain.
 const SAVE_PREFIX = "particle-world:v4:"
+// (the page the world belongs to, fixed when it starts: by the time a world is saved
+// on the way out, the site may already have swapped in the next page)
+let worldSlug = "index"
 function storageKey(W: number, H: number): string {
-  return `${SAVE_PREFIX}${slug()}:${W}x${Math.round(H / 20)}`
+  return `${SAVE_PREFIX}${worldSlug}:${W}x${Math.round(H / 20)}`
 }
 
 function dropOldSaves() {
@@ -177,6 +180,7 @@ function newSeed(): number {
 // Build (or restore) the world for the current screen
 function startWorld(fresh: boolean) {
   if (world) persist()
+  worldSlug = slug()
   const [W, H] = worldSize()
   sizeCanvases(W, H)
   world = null
@@ -223,11 +227,26 @@ function persist() {
 // --- Drawing ---
 function render() {
   if (!world || !cellCanvas || !guyCanvas) return
+  // the site's page swaps can remove or rewrite our canvases: put them back as they
+  // should be, rather than drawing into buffers of the wrong size (it shears)
+  if (
+    !cellCanvas.isConnected ||
+    !guyCanvas.isConnected ||
+    cellCanvas.width !== world.W ||
+    cellCanvas.height !== world.H ||
+    guyCanvas.width !== guyImg.width ||
+    guyCanvas.height !== guyImg.height ||
+    cellImg.width !== world.W
+  ) {
+    cellCanvas.remove()
+    guyCanvas.remove()
+    sizeCanvases(world.W, world.H)
+  }
   renderCells(world, cellBuf)
   cellCtx.putImageData(cellImg, 0, 0)
 
-  const GW = guyCanvas.width,
-    GH = guyCanvas.height
+  const GW = guyImg.width,
+    GH = guyImg.height
   // clear last frame's guys, then draw this frame's, and upload just that region
   if (dirty) {
     const [x0, y0, x1, y1] = dirty
@@ -728,6 +747,9 @@ function teardown() {
 }
 
 function init() {
+  // the site clears its cleanup list on every page change, so ask again each time:
+  // this world has to be saved and taken down before the next page goes in
+  window.addCleanup?.(() => teardown())
   setupInput()
   startWorld(false)
   createToolbar()
@@ -761,7 +783,6 @@ function startup() {
 
 startup()
 document.addEventListener("nav", () => startup())
-window.addCleanup?.(() => teardown())
 
 // --- Handle for headless tools (screenshots, the video renderer) ---
 ;(window as any).__sim = {
