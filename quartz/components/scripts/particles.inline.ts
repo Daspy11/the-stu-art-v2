@@ -64,8 +64,11 @@ function slug(): string {
 // Worlds are fitted to a screen size, so each size keeps its own save. Bump the
 // version when world generation changes so visitors get the new terrain.
 const SAVE_PREFIX = "particle-world:v4:"
+// (the page the world belongs to, fixed when it starts: by the time a world is saved
+// on the way out, the site may already have swapped in the next page)
+let worldSlug = "index"
 function storageKey(W: number, H: number): string {
-  return `${SAVE_PREFIX}${slug()}:${W}x${Math.round(H / 20)}`
+  return `${SAVE_PREFIX}${worldSlug}:${W}x${Math.round(H / 20)}`
 }
 
 function dropOldSaves() {
@@ -177,6 +180,7 @@ function newSeed(): number {
 // Build (or restore) the world for the current screen
 function startWorld(fresh: boolean) {
   if (world) persist()
+  worldSlug = slug()
   const [W, H] = worldSize()
   sizeCanvases(W, H)
   world = null
@@ -223,11 +227,26 @@ function persist() {
 // --- Drawing ---
 function render() {
   if (!world || !cellCanvas || !guyCanvas) return
+  // the site's page swaps can remove or rewrite our canvases: put them back as they
+  // should be, rather than drawing into buffers of the wrong size (it shears)
+  if (
+    !cellCanvas.isConnected ||
+    !guyCanvas.isConnected ||
+    cellCanvas.width !== world.W ||
+    cellCanvas.height !== world.H ||
+    guyCanvas.width !== guyImg.width ||
+    guyCanvas.height !== guyImg.height ||
+    cellImg.width !== world.W
+  ) {
+    cellCanvas.remove()
+    guyCanvas.remove()
+    sizeCanvases(world.W, world.H)
+  }
   renderCells(world, cellBuf)
   cellCtx.putImageData(cellImg, 0, 0)
 
-  const GW = guyCanvas.width,
-    GH = guyCanvas.height
+  const GW = guyImg.width,
+    GH = guyImg.height
   // clear last frame's guys, then draw this frame's, and upload just that region
   if (dirty) {
     const [x0, y0, x1, y1] = dirty
@@ -382,7 +401,10 @@ function setupInput() {
     mouse.spawning = false
     guySpawnedThisClick = false
   }
-  document.addEventListener("mousedown", (e) => down(e.clientX, e.clientY, e.target as HTMLElement))
+  document.addEventListener("mousedown", (e) => {
+    // only the main button: the side buttons are the browser's back and forward
+    if (e.button === 0) down(e.clientX, e.clientY, e.target as HTMLElement)
+  })
   document.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX
     mouse.y = e.clientY
@@ -672,10 +694,12 @@ function createToolbar() {
     }
   })
   dropdown.addEventListener("click", (e: Event) => e.stopPropagation())
-  document.addEventListener("click", () => {
+  // (a click anywhere else closes the menu; taken off again in teardown)
+  closeMenu = () => {
     dropdown.classList.remove("open")
     toggleArrow.textContent = "▼"
-  })
+  }
+  document.addEventListener("click", closeMenu)
   toolbarEl.addEventListener("click", (e: Event) => e.stopPropagation())
   document.body.appendChild(toolbarEl)
 }
@@ -708,6 +732,7 @@ function loop() {
 
 // --- Lifecycle ---
 let particlesActive = false
+let closeMenu: (() => void) | null = null
 
 function teardown() {
   if (!particlesActive) return
@@ -716,6 +741,13 @@ function teardown() {
   raf = 0
   if (saveTimer) clearInterval(saveTimer)
   saveTimer = 0
+  if (textTimer) clearTimeout(textTimer)
+  textTimer = 0
+  if (closeMenu) document.removeEventListener("click", closeMenu)
+  closeMenu = null
+  // a button held down as the page changed never gets its mouseup here
+  mouse.down = false
+  mouse.spawning = false
   persist()
   cellCanvas?.remove()
   guyCanvas?.remove()
@@ -729,6 +761,9 @@ function teardown() {
 }
 
 function init() {
+  // the site clears its cleanup list on every page change, so ask again each time:
+  // this world has to be saved and taken down before the next page goes in
+  window.addCleanup?.(() => teardown())
   setupInput()
   startWorld(false)
   createToolbar()
@@ -762,7 +797,6 @@ function startup() {
 
 startup()
 document.addEventListener("nav", () => startup())
-window.addCleanup?.(() => teardown())
 
 // --- Handle for headless tools (screenshots, the video renderer) ---
 ;(window as any).__sim = {

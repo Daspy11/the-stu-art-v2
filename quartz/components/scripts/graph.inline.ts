@@ -67,7 +67,19 @@ type TweenNode = {
   stop: () => void
 }
 
+// The graph running in each container, so that re-rendering it (theme change, opening
+// the global graph again) or leaving the page stops the old one: its animation loop,
+// its force simulation and its pixi renderer (a WebGL context plus window listeners).
+// Left running, every visit to a page with a graph added another set.
+const stopGraph = new Map<string, () => void>()
+
 async function renderGraph(container: string, fullSlug: FullSlug) {
+  stopGraph.get(container)?.()
+  // (until the renderer exists, stopping just means "don't start")
+  let stopped = false
+  stopGraph.set(container, () => {
+    stopped = true
+  })
   const slug = simplifySlug(fullSlug)
   const visited = getVisited()
   const graph = document.getElementById(container)
@@ -358,6 +370,12 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
     resolution: window.devicePixelRatio,
     eventMode: "static",
   })
+  if (stopped) {
+    // the page changed (or a newer render began) while the renderer was starting up
+    simulation.stop()
+    app.destroy(true, { children: true })
+    return
+  }
   graph.appendChild(app.canvas)
 
   const stage = app.stage
@@ -538,11 +556,21 @@ async function renderGraph(container: string, fullSlug: FullSlug) {
 
     tweens.forEach((t) => t.update(time))
     app.renderer.render(stage)
-    requestAnimationFrame(animate)
+    frame = requestAnimationFrame(animate)
   }
 
-  const graphAnimationFrameHandle = requestAnimationFrame(animate)
-  window.addCleanup(() => cancelAnimationFrame(graphAnimationFrameHandle))
+  let frame = requestAnimationFrame(animate)
+  const stop = () => {
+    if (stopped) return
+    stopped = true
+    cancelAnimationFrame(frame)
+    simulation.stop()
+    tweens.forEach((t) => t.stop())
+    app.destroy(true, { children: true })
+    if (stopGraph.get(container) === stop) stopGraph.delete(container)
+  }
+  stopGraph.set(container, stop)
+  window.addCleanup(stop)
 }
 
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
@@ -578,6 +606,7 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   }
 
   function hideGlobalGraph() {
+    stopGraph.get("global-graph-container")?.()
     container?.classList.remove("active")
     if (sidebar) {
       sidebar.style.zIndex = ""
