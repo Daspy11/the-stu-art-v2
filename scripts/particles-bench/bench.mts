@@ -81,13 +81,31 @@ for (const r of rows) {
   const k = `${r.layout}-${r.seed}`
   byRun.set(k, [...(byRun.get(k) ?? []), r])
 }
-// headline: the average score over the whole run (rewards getting going quickly too)
-const auc = mean([...byRun.values()].map((rs) => mean(rs.map((r) => r.score as number))))
+// headline: the score averaged over the whole run, with early checkpoints counting a
+// bit more (weights fall from 1.5 at the start to 0.5 at the end), so a colony that
+// gets going quickly beats one that only catches up at the end
+const weighted = (rs: Row[], key: string) => {
+  let sw = 0,
+    s = 0
+  for (const r of rs) {
+    const wt = 1.5 - (r.t as number) / ticks
+    sw += wt
+    s += wt * (r[key] as number)
+  }
+  return sw ? s / sw : 0
+}
+const auc = mean([...byRun.values()].map((rs) => weighted(rs, "score")))
+const flat = mean([...byRun.values()].map((rs) => mean(rs.map((r) => r.score as number))))
+const old = mean(
+  [...byRun.values()].map((rs) => mean(rs.map((r) => (r.scoreOld ?? r.score) as number))),
+)
 const summary = {
   label,
   ticks,
   runs: final.length,
   score: +auc.toFixed(2),
+  flatScore: +flat.toFixed(2),
+  oldMetricScore: +old.toFixed(2),
   final: +mean(final.map((r) => r.score as number)).toFixed(2),
   worstFinal: +Math.min(...final.map((r) => r.score as number)).toFixed(2),
   penalty: +mean(

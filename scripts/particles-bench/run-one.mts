@@ -37,8 +37,21 @@ for (let k = 0; k < W * H; k++) {
 }
 let teleports = 0,
   stranded = 0,
-  stuck = 0
-type Track = { hist: number[][]; quiet: number; qx0: number; qx1: number; qy0: number; qy1: number }
+  stuck = 0,
+  // the first version of the metric also counted guys standing about with nothing
+  // to do, which made getting the work done sooner look bad; kept for comparison
+  stuckOld = 0
+type Track = {
+  hist: number[][]
+  quiet: number
+  qx0: number
+  qx1: number
+  qy0: number
+  qy1: number
+  job: unknown // the job we last saw
+  worked: boolean // ...and whether it got anywhere
+  fails: number // jobs given up before they got going, while hanging about here
+}
 const track = new Map<number, Track>()
 
 function changed() {
@@ -61,7 +74,27 @@ for (let i = 1; i <= ticks; i++) {
     if (b && !b[2] && Math.abs(g.x - b[0]) + Math.abs(g.y - b[1]) > 6) teleports++
     if (g.job?.kind === "escape") stranded++
     let t = track.get(g.id)
-    if (!t) track.set(g.id, (t = { hist: [], quiet: 0, qx0: g.x, qx1: g.x, qy0: g.y, qy1: g.y }))
+    if (!t)
+      track.set(
+        g.id,
+        (t = {
+          hist: [],
+          quiet: 0,
+          qx0: g.x,
+          qx1: g.x,
+          qy0: g.y,
+          qy1: g.y,
+          job: null,
+          worked: false,
+          fails: 0,
+        }),
+      )
+    if (g.job !== t.job) {
+      if (t.job && !t.worked) t.fails++
+      t.job = g.job
+      t.worked = false
+    }
+    if (g.job && g.job.phase === "work") t.worked = true
     if (i % 30 === 0) {
       // walking (or trying to) without getting anywhere, over the last 600 ticks
       t.hist.push([g.x, g.y])
@@ -78,9 +111,14 @@ for (let i = 1; i <= ticks; i++) {
           y0 = Math.min(y0, y)
           y1 = Math.max(y1, y)
         }
-        if (x1 - x0 < 3 && y1 - y0 < 3) stuck += 30
+        if (x1 - x0 < 3 && y1 - y0 < 3) {
+          stuck += 30
+          stuckOld += 30
+        }
       }
-      // or hanging about in one small spot for ages, neither working nor relaxing
+      // or going round in a loop: hanging about in one small spot for ages, starting
+      // job after job that never gets going (just standing about with nothing to do
+      // isn't being stuck)
       const idle = !g.job || (g.job.phase === "go" && g.job.kind !== "escape")
       if (idle) {
         t.qx0 = Math.min(t.qx0, g.x)
@@ -90,11 +128,16 @@ for (let i = 1; i <= ticks; i++) {
         t.quiet += 30
         if (t.qx1 - t.qx0 > 6 || t.qy1 - t.qy0 > 6) {
           t.quiet = 0
+          t.fails = 0
           t.qx0 = t.qx1 = g.x
           t.qy0 = t.qy1 = g.y
-        } else if (t.quiet >= 3000) stuck += 30
+        } else if (t.quiet >= 3000) {
+          stuckOld += 30
+          if (t.fails >= 3) stuck += 30
+        }
       } else {
         t.quiet = 0
+        t.fails = 0
         t.qx0 = t.qx1 = g.x
         t.qy0 = t.qy1 = g.y
       }
@@ -103,6 +146,7 @@ for (let i = 1; i <= ticks; i++) {
   if (i % every === 0 || i === ticks) {
     const { built, dug } = changed()
     const penalty = teleports * TELEPORT + stranded * STRANDED_TICK + stuck * STUCK_TICK
+    const penaltyOld = teleports * TELEPORT + stranded * STRANDED_TICK + stuckOld * STUCK_TICK
     const c = w.colony
     console.log(
       JSON.stringify({
@@ -112,12 +156,14 @@ for (let i = 1; i <= ticks; i++) {
         W,
         H,
         score: +((1000 * (built + dug - penalty)) / (W * H)).toFixed(2),
+        scoreOld: +((1000 * (built + dug - penaltyOld)) / (W * H)).toFixed(2),
         built,
         dug,
         penalty: +penalty.toFixed(1),
         teleports,
         stranded,
         stuck,
+        stuckOld,
         guys: w.guys.length,
         towers: c.towers.filter((t) => t.complete).length,
         tier: c.tier,
