@@ -26,7 +26,8 @@ The rules: anything the guys _do_ can change, but the terrain generator and the 
 | 7: into the hills       |     28.5 |             52.4 |    **16.2** |
 | 8: everyone pitches in  |     50.3 |             88.5 |        20.6 |
 | 9: the long way round   |     55.8 |             99.0 |        21.4 |
-| 10: winzes              | **64.1** |        **118.1** |    **47.8** |
+| 10: winzes              |     64.1 |            118.1 |        47.8 |
+| 11: nobody left behind  | **66.9** |        **121.5** |    **49.8** |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
@@ -114,6 +115,18 @@ _The mountain-top world that used to be the weakest: now the whole mountain is a
 ![[Assets/ant-colony/gen9-gen10-laptop-261462.png]]
 
 _A laptop world: the far shore of the lake finally gets dug, and there are levels all the way along._
+
+## Gen 11: nobody left behind
+
+A generation of bug fixes, found by hunting down where the stuck-guy penalty came from:
+
+- **A tower that cut the colony in two.** A tower's stone foundation went down right across the only path to a whole nest, and dozens of guys found themselves stranded underground and gave up. Towers were checked for this when they were planned, but nests grow, and a path that didn't matter then can matter a lot by the time the stone goes down. Now every solid block is checked as it's placed, and if it would wall off part of the colony the builders leave a doorway instead.
+- **Five guys frozen at a lake's edge.** A tower went up over the next spot on their path while they were treading water, and they flicked between "falling" and "hopping" forever, so they never stopped to think again.
+- **Swimmers who couldn't be rescued.** A guy stranded in a lake would plan a rope ladder down to the lake bed, which they couldn't reach. The ladder now stops at the water.
+
+![[Assets/ant-colony/gen10-gen11-laptop-706844.png]]
+
+_The laptop world with the five frozen guys: nobody is stuck now, and it shows._
 
 ## Little things fixed along the way
 

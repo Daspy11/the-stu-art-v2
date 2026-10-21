@@ -270,7 +270,11 @@ export function moveGuy(w: World, g: Guy) {
       g.stuck = Math.max(g.stuck, 1000)
       // drop out of a hop or climb (gravity sorts it out), so the brain gets a look in
       if (g.mode === "hop" || g.mode === "climb" || g.mode === "walk")
-        g.mode = climbAt(w, cx, cy) || supported(w, cx, cy) ? "stand" : "fall"
+        g.mode = waterAt(w, cx, cy)
+          ? "swim"
+          : climbAt(w, cx, cy) || supported(w, cx, cy)
+            ? "stand"
+            : "fall"
       posed(w, g, 0.45)
       return
     }

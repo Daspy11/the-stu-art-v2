@@ -86,7 +86,7 @@ import {
   ACT_SIT,
   ACT_PLANT,
 } from "./guys"
-import { standable, solidAt } from "./nav"
+import { standable, solidAt, BODY_H } from "./nav"
 import { isMature, fellTree, canPlant, plantTree, treeAt } from "./trees"
 import type { World } from "./world"
 
@@ -475,6 +475,12 @@ function stepDuration(s: Step): number {
 
 // --- The brain ---
 function brain(w: World, g: Guy) {
+  // a path that went bad mid-hop (and never sorted itself out): give it up
+  if (g.stuck > 1300 && g.job) {
+    endJob(w, g, 10)
+    if (g.mode === "hop") g.mode = "fall"
+    return
+  }
   if (g.mode === "fall" || g.mode === "hop") return
   if (g.wait > 0) {
     g.wait--
@@ -776,6 +782,13 @@ function applyStep(w: World, g: Guy, s: Step): "ok" | "skip" | "wait" | "need" {
         }
       }
       w.grid[k] = s.t
+      // never wall off the way to part of the colony: leave a gap (a doorway) instead
+      if (SOLID[s.t] && cutsWay(w, s.x, s.y)) {
+        w.grid[k] = cur
+        w.nav.computeSafe(w, homeNode(w))
+        c.safeT = w.tick
+        return "skip"
+      }
       pay()
       return "ok"
     }
@@ -909,7 +922,9 @@ function workEscape(w: World, g: Guy) {
       ty = Math.floor(best / w.W)
       lx = tx + (tx > cx ? -1 : 1)
       by = ty
-      while (by < w.H - 1 && !w.isSolid(lx, by + 1) && by - ty < 50) by++
+      // (down to the ground, or to the water for a swimmer to grab from)
+      while (by < w.H - 1 && !w.isSolid(lx, by + 1) && w.get(lx, by + 1) !== WATER && by - ty < 50)
+        by++
       up = !(by - ty >= 50 || w.isSolid(lx, ty) || w.noBuild[ty * w.W + lx])
     }
     if (up) {
@@ -1710,6 +1725,23 @@ function reachableFromHome(w: World, maxExpand = 40000): boolean {
 }
 
 // Would the finished structure wall off part of the walkable network?
+// With a solid cell just placed at (x, y): does it cut a real chunk of the colony
+// off from home? Only checked where people actually walk (the cell is in the body
+// of a safe node), and if it doesn't, the safe map is left up to date.
+function cutsWay(w: World, x: number, y: number): boolean {
+  let onWay = false
+  for (let d = 0; d < BODY_H && !onWay; d++)
+    if (y + d < w.H && w.nav.isSafe((y + d) * w.W + x)) onWay = true
+  if (!onWay) return false
+  const home = homeNode(w)
+  if (home < 0) return false
+  const before = w.nav.safeCount
+  w.nav.computeSafe(w, home)
+  w.colony.safeT = w.tick
+  w.colony.budget -= 3000
+  return w.nav.safeCount < before - Math.max(40, before * 0.02)
+}
+
 function cutsNetwork(w: World, steps: Step[]): boolean {
   const c = w.colony
   const home = homeNode(w)
