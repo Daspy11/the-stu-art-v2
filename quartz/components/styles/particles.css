@@ -21,6 +21,10 @@
 #quartz-root {
   position: relative;
   z-index: 1;
+}
+
+/* dragging on the landing page pours sand rather than selecting text */
+body[data-slug="index"] #quartz-root {
   user-select: none;
 }
 

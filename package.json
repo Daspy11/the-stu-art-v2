@@ -19,6 +19,7 @@
     "test": "tsx ./quartz/util/path.test.ts && tsx ./quartz/depgraph.test.ts && tsx ./quartz/components/scripts/particles.test.ts",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
     "simulate": "tsx scripts/particles-sim.mts",
+    "og-image": "tsx scripts/og-image.mts",
     "particles:video": "node scripts/particles-video/capture.mjs video-out/capture && tsx scripts/particles-video/main.ts video-out/capture video-out/particles.mp4"
   },
   "engines": {

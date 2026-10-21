@@ -95,7 +95,13 @@ The landing page runs a falling-sand world with a colony of stick-figure builder
 - `blueprints.ts` - turns towers, roofs, bridges and ladders into ordered build steps: frame and ladders first (storey by storey), then walls and windows, then the roof from the outside in through a hatch that's boarded over last
 - `guys.ts`, `trees.ts`, `furniture.ts`, `render.ts`, `save.ts`
 
-Tools: `npm test` (determinism, terrain and build-rule checks), `npm run simulate -- <seed> <ticks> --png out.png` (headless run), `npm run particles:video` (after `npx quartz build`; renders the tiled timelapse video to `video-out/`, needs ffmpeg). Add `?seed=N` to the landing page URL to load a specific world.
+Tools: `npm test` (determinism, terrain and build-rule checks), `npm run simulate -- <seed> <ticks> --png out.png` (headless run), `npm run particles:video` (after `npx quartz build`; renders the tiled timelapse video to `video-out/`, needs ffmpeg). Add `?seed=N` to the landing page URL to load a specific world. `npm run og-image` re-renders the default link-preview image (`quartz/static/og-image.png`) from a grown world.
+
+## Link Previews and Images
+
+- `Head.tsx` picks each page's preview image: frontmatter `image`/`cover`/`socialImage` (a URL, a content path like `Assets/photo.png`, or a file name), else the first non-SVG image on the page, else `static/og-image.png`. It also writes canonical URLs, article dates and JSON-LD; `author` in `quartz.config.ts` names the site's author
+- The `Description` transformer builds meta descriptions from the page's prose only (no headings, tags or footnotes)
+- `ImageLightbox` (`scripts/lightbox.inline.ts`) opens any image in an article full screen; images inside links or with class `no-lightbox` are left alone
 
 ## Styling with CSS and Tailwind
 

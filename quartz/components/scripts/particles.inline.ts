@@ -372,7 +372,8 @@ function setupInput() {
   listenersBound = true
   const down = (x: number, y: number, target: HTMLElement) => {
     mouse.down = true
-    mouse.spawning = !isContentElement(target)
+    // listeners outlive the landing page, so don't swallow touches anywhere else
+    mouse.spawning = particlesActive && !isContentElement(target)
     mouse.x = x
     mouse.y = y
   }
