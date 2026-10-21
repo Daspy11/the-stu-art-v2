@@ -391,6 +391,9 @@
 .particle-dropdown.floating {
   position: absolute;
   margin-top: 0;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100vh - 16px);
+  box-sizing: border-box;
   z-index: 200;
 }
 

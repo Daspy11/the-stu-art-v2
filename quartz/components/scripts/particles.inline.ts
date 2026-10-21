@@ -78,6 +78,15 @@ function dropOldSaves() {
   } catch {}
 }
 
+// Things on the page that aren't really there: link previews (Quartz keeps the
+// whole linked page in the DOM, hidden), our own menu, and anything not showing
+const IGNORED = "script, style, noscript, .particle-dropdown, .popover"
+function hidden(el: Element): boolean {
+  if (el.closest(IGNORED)) return true
+  const v = (el as any).checkVisibility
+  return typeof v === "function" && !v.call(el, { opacityProperty: true, visibilityProperty: true })
+}
+
 // --- Text the guys stand on and won't build against (document coordinates) ---
 function textRects(): number[][] {
   const rects: number[][] = []
@@ -92,12 +101,12 @@ function textRects(): number[][] {
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     if (!n.textContent || !n.textContent.trim()) continue
     const el = n.parentElement
-    if (!el || el.closest("script, style, noscript, .particle-dropdown")) continue
+    if (!el || hidden(el)) continue
     range.selectNodeContents(n)
     for (const r of Array.from(range.getClientRects())) add(r)
   }
   root.querySelectorAll("img, svg, button, input, li").forEach((el) => {
-    if (el.closest(".particle-dropdown")) return
+    if (hidden(el)) return
     if (el.tagName === "LI") {
       // the bullet
       const r = el.getBoundingClientRect()
@@ -649,9 +658,16 @@ function createToolbar() {
       // the page text sits under the world, so the menu floats at the top of the page
       const r = toggleBtn.getBoundingClientRect()
       dropdown.classList.add("floating")
-      dropdown.style.left = `${Math.max(8, Math.min(r.left, window.innerWidth - 200)) + window.scrollX}px`
-      dropdown.style.top = `${r.bottom + 4 + window.scrollY}px`
       document.body.appendChild(dropdown)
+      // keep it on the screen: under the button if it fits, else above it
+      const vw = document.documentElement.clientWidth || window.innerWidth
+      const dw = dropdown.offsetWidth,
+        dh = dropdown.offsetHeight
+      const left = Math.max(8, Math.min(r.left, vw - dw - 8))
+      const below = r.bottom + 4 + dh <= window.innerHeight - 8 || r.top - 4 - dh < 8
+      const top = below ? r.bottom + 4 : r.top - 4 - dh
+      dropdown.style.left = `${left + window.scrollX}px`
+      dropdown.style.top = `${top + window.scrollY}px`
     }
   })
   dropdown.addEventListener("click", (e: Event) => e.stopPropagation())
