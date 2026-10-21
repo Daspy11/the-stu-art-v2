@@ -237,9 +237,12 @@ export function moveGuy(w: World, g: Guy) {
   if (inWater && g.mode !== "hop") {
     if (g.mode !== "swim") g.mode = "swim"
     // float up to the surface, or settle back down into it after a ripple
-    if (waterAt(w, cx, Math.round(g.y) - 1)) g.y -= 0.15
-    else if (!waterAt(w, cx, Math.round(g.y))) g.y = Math.min(g.y + 0.1, Math.round(g.y) + 1)
-    else g.y += (Math.round(g.y) - g.y) * 0.3
+    const ry = Math.round(g.y)
+    if (waterAt(w, cx, ry - 1)) g.y -= 0.15
+    else if (!waterAt(w, cx, ry) && waterAt(w, cx, ry + 1)) g.y = Math.min(g.y + 0.1, ry + 1)
+    else g.y += (ry - g.y) * 0.3
+    // (and never sink into the bank)
+    if (solidAt(w, Math.round(g.x), Math.round(g.y))) g.y = Math.round(g.y) - 1
   } else if (g.mode === "swim") {
     g.mode = "stand"
     g.y = Math.round(g.y)
@@ -335,6 +338,8 @@ export function moveGuy(w: World, g: Guy) {
     g.mode = "stand"
     g.y = Math.round(g.y)
   }
+  // a swimmer stroking along the shore stays on top of the bank, not in it
+  if (g.mode === "swim" && solidAt(w, Math.round(g.x), Math.round(g.y))) g.y = Math.round(g.y) - 1
   posed(w, g, 0.45)
 }
 
