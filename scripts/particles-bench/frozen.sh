@@ -1,6 +1,6 @@
 #!/bin/bash
 # Runs the benchmark against a frozen copy of the simulation, so you can keep editing
-# while it runs. Usage: [REF=<commit>] scripts/particles-bench/frozen.sh --label genN [bench options]
+# while it runs. Usage: [REF=<commit>] [FAST=1] scripts/particles-bench/frozen.sh --label genN [options]
 set -e
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 SNAP=$(mktemp -d /tmp/particles-bench-XXXX)
@@ -15,5 +15,10 @@ cp -r "$ROOT/scripts/particles-bench" "$SNAP/scripts/"
 ln -s "$ROOT/node_modules" "$SNAP/node_modules"
 ln -s "$ROOT/bench-out" "$SNAP/bench-out"
 cp "$ROOT/package.json" "$SNAP/"
-cd "$SNAP" && npx tsx scripts/particles-bench/bench.mts "$@"
+# FAST=1 uses the worker-thread harness (fast.mts) instead of bench.mts
+if [ -n "$FAST" ]; then
+  cd "$SNAP" && npx tsx scripts/particles-bench/fast.mts "$@"
+else
+  cd "$SNAP" && npx tsx scripts/particles-bench/bench.mts "$@"
+fi
 rm -rf "$SNAP"

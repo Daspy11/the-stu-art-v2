@@ -143,7 +143,8 @@ export function killGuy(g: Guy) {
 // Advance one guy by one tick: hazards, gravity, water, path following, pose.
 export function moveGuy(w: World, g: Guy) {
   if (g.mode === "dead") {
-    ragdoll(w, g)
+    if (w.headless) g.deadT++
+    else ragdoll(w, g)
     return
   }
   const W = w.W
@@ -228,7 +229,7 @@ export function moveGuy(w: World, g: Guy) {
         killGuy(g)
         g.deadT = 1000
       }
-      pose(g, 0.5)
+      posed(w, g, 0.5)
       return
     }
   }
@@ -267,14 +268,14 @@ export function moveGuy(w: World, g: Guy) {
       // drop out of a hop or climb (gravity sorts it out), so the brain gets a look in
       if (g.mode === "hop" || g.mode === "climb" || g.mode === "walk")
         g.mode = climbAt(w, cx, cy) || supported(w, cx, cy) ? "stand" : "fall"
-      pose(g, 0.45)
+      posed(w, g, 0.45)
       return
     }
     // the surface rippled and our next spot is under water now: floating here will do
     if (wet && ty > g.y && Math.abs(g.x - tx) < 0.01 && waterAt(w, tx, ty - 1)) {
       g.pathI++
       g.stuck = 0
-      pose(g, 0.45)
+      posed(w, g, 0.45)
       return
     }
     const speed = g.mode === "swim" ? SWIM_SPEED : WALK_SPEED
@@ -334,12 +335,17 @@ export function moveGuy(w: World, g: Guy) {
     g.mode = "stand"
     g.y = Math.round(g.y)
   }
-  pose(g, 0.45)
+  posed(w, g, 0.45)
 }
 
 // On a ladder with more ladder below (or nothing else holding you up): hang on to it
 function midLadder(w: World, x: number, y: number): boolean {
   return climbAt(w, x, y) && (climbAt(w, x, y + 1) || !supported(w, x, y))
+}
+
+// The skeleton is only for looks, so headless runs (the benchmark) skip it
+function posed(w: World, g: Guy, k: number) {
+  if (!w.headless) pose(g, k)
 }
 
 // --- Pose ---

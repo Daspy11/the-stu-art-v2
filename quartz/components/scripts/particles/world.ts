@@ -53,6 +53,7 @@ export class World {
   grid: Uint8Array
   bg: Uint8Array
   updated: Uint8Array
+  rowLive: Uint8Array // rows that may hold falling/flowing cells (see stepParticles)
   noBuild: Uint8Array
   reserved: Uint16Array // project id that has claimed a cell for a structure (0 = none)
   textCells: Int32Array = new Int32Array(0)
@@ -60,6 +61,7 @@ export class World {
   trees: Tree[] = []
   nextTreeId = 1
   felled: Falling[] = [] // just for show: felled trees toppling over (not saved)
+  headless = false // nobody's watching: skip anything that's only for looks
   guys: Guy[] = []
   nextGuyId = 1
   colony!: Colony
@@ -77,6 +79,7 @@ export class World {
     this.grid = new Uint8Array(n)
     this.bg = new Uint8Array(n)
     this.updated = new Uint8Array(n)
+    this.rowLive = new Uint8Array(H).fill(1)
     this.noBuild = new Uint8Array(n)
     this.reserved = new Uint16Array(n)
     this.nav = new Nav(W, H)
@@ -90,7 +93,10 @@ export class World {
     return this.grid[y * this.W + x]
   }
   set(x: number, y: number, v: number) {
-    if (x >= 0 && x < this.W && y >= 0 && y < this.H) this.grid[y * this.W + x] = v
+    if (x >= 0 && x < this.W && y >= 0 && y < this.H) {
+      this.grid[y * this.W + x] = v
+      if (DYNAMIC[v]) this.rowLive[y] = 1
+    }
   }
   getBg(x: number, y: number): number {
     if (x < 0 || x >= this.W || y < 0 || y >= this.H) return EMPTY
@@ -176,6 +182,9 @@ export function stepParticles(w: World) {
   const { W, H, grid, bg, rng } = w
   const upd = w.updated
   upd.fill(0)
+  // rows that may hold anything loose; the rest are skipped (but still draw their coin
+  // flip, so the dice fall exactly as if every row had been looked at)
+  const live = w.rowLive
   const at = (x: number, y: number) =>
     x < 0 || x >= W || y >= H ? TEXT : y < 0 ? EMPTY : grid[y * W + x]
   const move = (k: number, x: number, y: number, v: number) => {
@@ -183,16 +192,21 @@ export function stepParticles(w: World) {
     grid[k] = EMPTY
     grid[j] = v
     upd[j] = 1
+    live[y] = 1
   }
 
   for (let y = H - 1; y >= 0; y--) {
     const ltr = rng.next() < 0.5
+    if (!live[y]) continue
+    let seen = false
     const row = y * W
     for (let i = 0; i < W; i++) {
       const x = ltr ? i : W - 1 - i
       const k = row + x
       const cell = grid[k]
-      if (!DYNAMIC[cell] || upd[k]) continue
+      if (!DYNAMIC[cell]) continue
+      seen = true
+      if (upd[k]) continue
 
       if (cell === SAND || cell === MUD || cell === GRASS || cell === SEED) {
         const below = at(x, y + 1)
@@ -202,6 +216,7 @@ export function stepParticles(w: World) {
           grid[k] = WATER
           grid[k + W] = cell
           upd[k + W] = 1
+          live[y + 1] = 1
           upd[k] = 1
         } else {
           const d = rng.next() < 0.5 ? -1 : 1
@@ -258,6 +273,7 @@ export function stepParticles(w: World) {
           }
           if (wet <= 1 && sx >= 0) {
             grid[sy * W + sx] = MUD
+            live[sy] = 1
             grid[k] = EMPTY
           }
         }
@@ -283,14 +299,17 @@ export function stepParticles(w: World) {
             if (nc === EMPTY && rng.next() < 0.5) {
               grid[nk] = FIRE
               upd[nk] = 1
+              live[ny] = 1
             }
           }
           if (FLAMMABLE[nc] && rng.next() < 0.02) {
             grid[nk] = FIRE
             upd[nk] = 1
+            live[ny] = 1
           } else if (nc === WATER && rng.next() < 0.02) {
             grid[nk] = SMOKE
             upd[nk] = 1
+            live[ny] = 1
           } else if ((nc === MUD || nc === GRASS) && rng.next() < 0.03) {
             grid[nk] = BRICK
           }
@@ -311,6 +330,8 @@ export function stepParticles(w: World) {
         if (rng.next() < 0.01) grid[k] = SMOKE
       }
     }
+    // nothing loose seen: skip this row until something lands in it
+    if (!seen) live[y] = 0
   }
 }
 
