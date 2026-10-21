@@ -628,7 +628,7 @@ function assignProject(w: World, g: Guy): Project | undefined {
     const big = p.kind === "tower" || p.kind === "raise" || p.kind === "mine"
     const room = (big ? Math.min(6, p.want + Math.floor(w.guys.length / 10)) : p.want) - p.workers
     const dist = Math.abs(p.x - g.x) + Math.abs(p.y - g.y) * 0.5
-    const score = room * 40 - dist * 0.2 - p.fails * 3 + (p.kind === "furnish" ? -10 : 0)
+    const score = room * 40 - dist * 0.5 - p.fails * 3 + (p.kind === "furnish" ? -10 : 0)
     if (room <= 0 && p.workers > 0) continue
     if (score > bestScore) {
       bestScore = score
@@ -1438,17 +1438,11 @@ function plan(w: World) {
         [c.tier >= 1 ? 3 : 0, () => tryBridge(w)],
         [c.tier >= 1 ? 0.8 : 0, () => tryBalcony(w)],
         [c.ladders < Math.floor(w.W / 80) + 1 ? 0.7 : 0, () => tryCliffLadder(w)],
-        [
-          c.mines < 1 + Math.floor(w.W / 160) ? (c.stock[R_STONE] < 300 ? 4 : 1) : 0,
-          () => tryMine(w),
-        ],
+        [c.mines < mineCap(w) ? (c.stock[R_STONE] < 300 ? 4 : 1.5) : 0, () => tryMine(w)],
         [c.gapBridges < 1 + Math.floor(w.W / 160) ? 2.5 : 0, () => tryGapBridge(w)],
         [c.nests.length ? 2 + idle : 0, () => tryTunnel(w)],
         // adits are for when there's nowhere flat enough for a mine shaft
-        [
-          c.mines < 1 + Math.floor(w.W / 160) && w.tick - (c.mineFailT ?? -1e9) < 3000 ? 3 : 0,
-          () => tryAdit(w),
-        ],
+        [c.mines < mineCap(w) && w.tick - (c.mineFailT ?? -1e9) < 3000 ? 3 : 0, () => tryAdit(w)],
       ]
       // weighted shuffle, then take the first that works
       const order: (() => boolean)[] = []
@@ -1521,6 +1515,15 @@ function completeProject(w: World, p: Project) {
   let skipped = 0
   for (const s of p.steps) if (s.tries > 3) skipped++
   if (skipped > p.steps.length * 0.25) {
+    if (p.kind === "mine" || p.kind === "adit") {
+      // an abandoned mine: free up the slot, and the ground it had kept for itself
+      c.mines = Math.max(0, c.mines - 1)
+      for (const st of p.steps)
+        if (!st.done || st.tries > 3) {
+          const k = st.y * w.W + st.x
+          if (w.reserved[k] === MINE) w.reserved[k] = 0
+        }
+    }
     if (t && p.kind === "tower") {
       c.towers.splice(c.towers.indexOf(t), 1)
       // tear down whatever got built and take the wood back
@@ -1855,6 +1858,15 @@ function tryTower(w: World): boolean {
           : -Math.min(nearGap, 200) * 0.08
       score -= dHome * 0.04
       if (aligned) score += 5
+      // or start a new hamlet by a nest that has no houses yet
+      const mid = (x0 + x1) / 2
+      for (const nest of c.nests) {
+        const nx = nestStore(nest)[0]
+        if (Math.abs(nx - mid) > 30) continue
+        if (c.towers.some((t) => Math.abs((t.x0 + t.x1) / 2 - nx) < 35)) continue
+        score += 18
+        break
+      }
     }
     sites.push({ x0, x1, base, n, score })
   }
@@ -2457,7 +2469,7 @@ function tryAdit(w: World): boolean {
       }
       // it has to actually go into the hill
       if (!covered || cols.length < 6) continue
-      const score = cols.length - Math.abs(x - c.homeX) * 0.05 + r.next()
+      const score = cols.length - depotDist(c, x) * 0.05 + r.next()
       if (!best || score > best.score) best = { x, y, dir, cols, score }
     }
   }
@@ -2489,6 +2501,18 @@ function tryAdit(w: World): boolean {
 const MINE = 65533
 const GALLERY_H = 9
 
+function mineCap(w: World): number {
+  return 2 + Math.floor(w.W / 120)
+}
+
+// Distance to the nearest store (home, a nest, or a finished tower's ground floor)
+function depotDist(c: Colony, x: number): number {
+  let d = Math.abs(x - c.homeX)
+  for (const n of c.nests) d = Math.min(d, Math.abs(nestStore(n)[0] - x))
+  for (const t of c.towers) if (t.complete) d = Math.min(d, Math.abs((t.x0 + t.x1) / 2 - x))
+  return d
+}
+
 function tryMine(w: World): boolean {
   const c = w.colony
   if (c.projects.some((p) => !p.done && p.kind === "mine")) return false
@@ -2514,9 +2538,8 @@ function tryMine(w: World): boolean {
     return true
   }
   let best: { lx: number; s: number; b: number; L: number; R: number; score: number } | null = null
-  for (let i = 0; i < 60; i++) {
-    const lx = Math.round(c.homeX + r.range(-80, 80))
-    if (lx < 8 || lx + 2 > W - 9) continue
+  for (let i = 0; i < 80; i++) {
+    const lx = 8 + r.int(W - 19)
     const s = surfaceAt(w, lx)
     if (s >= H - 20) continue
     let ok = true
@@ -2527,27 +2550,36 @@ function tryMine(w: World): boolean {
     if (!ok) continue
     // the top must be on the safe network
     if (!w.nav.isSafe((s - 1) * W + lx - 2) && !w.nav.isSafe((s - 1) * W + lx + 4)) continue
-    const b = H - 3
-    // the shaft goes through soil and stone only
-    for (let y = s; y <= b && ok; y++)
+    // the shaft goes through soil and stone only, as deep as it can, and the gallery
+    // goes at the deepest row that has room for one
+    let bottom = s - 1
+    for (let y = s; y <= H - 3 && ok; y++) {
       for (let x = lx - 1; x <= lx + 3; x++) {
         const v = cell(x, y)
         if (!free(x, y) || DYNAMIC[v] || v === WATER || v === TEXT) ok = false
       }
-    if (!ok || b - s < 16) continue
-    if (!galleryOk(lx - 1, b) || !galleryOk(lx + 3, b)) continue
-    let L = 0,
+      if (ok) bottom = y
+    }
+    ok = true
+    let b = -1,
+      L = 0,
       R = 0
     // just a short starter gallery: the nest opens sooner, and it grows from there
     const maxLen = 4
-    while (L < maxLen && galleryOk(lx - 2 - L, b)) L++
-    while (R < maxLen && galleryOk(lx + 4 + R, b)) R++
-    if (L + R < 4) continue
+    for (let y = bottom; y >= s + 16 && b < 0; y--) {
+      if (!galleryOk(lx - 1, y) || !galleryOk(lx + 3, y)) continue
+      L = R = 0
+      while (L < maxLen && galleryOk(lx - 2 - L, y)) L++
+      while (R < maxLen && galleryOk(lx + 4 + R, y)) R++
+      if (L + R >= 4) b = y
+    }
+    if (b < 0) continue
     // not right on top of another nest
     let apart = 200
-    for (const n of c.nests) apart = Math.min(apart, Math.abs(n.lx - lx))
+    for (const n of c.nests) apart = Math.min(apart, Math.abs(nestStore(n)[0] - lx))
     if (apart < 24) continue
-    const score = L + R - Math.abs(lx - c.homeX) * 0.1
+    // near a store, but spreading out: a new nest a fair way from the others
+    const score = L + R + (b - s) * 0.1 - depotDist(c, lx) * 0.06 + Math.min(apart, 90) * 0.06
     if (!best || score > best.score) best = { lx, s, b, L, R, score }
   }
   if (!best) {
