@@ -52,6 +52,7 @@ let speedMultiplier = 1
 let raf = 0
 let saveTimer = 0
 let toolbarEl: HTMLElement | null = null
+let inlineDropdown: HTMLElement | null = null
 let textTimer = 0
 
 const mouse = { x: 0, y: 0, down: false, spawning: false }
@@ -459,6 +460,7 @@ function slider(
 
 function createToolbar() {
   if (toolbarEl) toolbarEl.remove()
+  inlineDropdown?.remove()
   document.getElementById("particle-instructions-content")?.remove()
 
   toolbarEl = document.createElement("div")
@@ -610,6 +612,7 @@ function createToolbar() {
     wrapper.appendChild(inlineToggleWrap)
     instructionsEl.appendChild(wrapper)
     toolbarEl.style.display = "none"
+    inlineDropdown = dropdown
   } else {
     toolbarEl.append(toggleBtn, dropdown)
   }
@@ -618,7 +621,16 @@ function createToolbar() {
     e.stopPropagation()
     const isOpen = dropdown.classList.toggle("open")
     toggleArrow.textContent = isOpen ? "▲" : "▼"
+    if (isOpen && instructionsEl) {
+      // the page text sits under the world, so the menu floats at the top of the page
+      const r = toggleBtn.getBoundingClientRect()
+      dropdown.classList.add("floating")
+      dropdown.style.left = `${Math.max(8, Math.min(r.left, window.innerWidth - 200)) + window.scrollX}px`
+      dropdown.style.top = `${r.bottom + 4 + window.scrollY}px`
+      document.body.appendChild(dropdown)
+    }
   })
+  dropdown.addEventListener("click", (e: Event) => e.stopPropagation())
   document.addEventListener("click", () => {
     dropdown.classList.remove("open")
     toggleArrow.textContent = "▼"
@@ -670,6 +682,8 @@ function teardown() {
   world = null
   toolbarEl?.remove()
   toolbarEl = null
+  inlineDropdown?.remove()
+  inlineDropdown = null
   document.getElementById("particle-instructions-content")?.remove()
 }
 

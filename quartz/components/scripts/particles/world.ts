@@ -37,7 +37,7 @@ import {
 import { Rng, Noise } from "./rng"
 import { Nav } from "./nav"
 import type { Guy } from "./guys"
-import type { Tree } from "./trees"
+import type { Tree, Falling } from "./trees"
 import type { Colony } from "./colony"
 
 export const CELL = 3 // screen pixels per cell
@@ -59,6 +59,7 @@ export class World {
   textBottom = 0 // lowest row covered by text (0 if none)
   trees: Tree[] = []
   nextTreeId = 1
+  felled: Falling[] = [] // just for show: felled trees toppling over (not saved)
   guys: Guy[] = []
   nextGuyId = 1
   colony!: Colony

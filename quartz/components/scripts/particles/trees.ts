@@ -140,6 +140,62 @@ export function removeTree(w: World, t: Tree): number {
   return wood
 }
 
+// Felling: the wood goes to the woodcutter straight away, but the tree is shown
+// toppling over away from him and then breaking up, rather than just vanishing.
+export interface Falling {
+  tree: Tree
+  t: number
+  dir: number
+}
+export const FALL_TICKS = 26,
+  FELLED_TICKS = 70
+
+export function fellTree(w: World, t: Tree, dir: number): number {
+  const wood = removeTree(w, t)
+  w.felled.push({ tree: t, t: 0, dir: dir < 0 ? -1 : 1 })
+  return wood
+}
+
+// Draws the toppling trees into a rendered W*H buffer (over the background, under
+// anything solid)
+export function drawFelled(
+  w: World,
+  out: Uint32Array,
+  color: (type: number, x: number, y: number) => number,
+) {
+  const { W, H } = w
+  for (const f of w.felled) {
+    const t = f.tree
+    const cells = new Map<number, number>()
+    forEachTreeCell(t, (x, y, type) => cells.set((y - t.y + 64) * 128 + (x - t.x + 64), type))
+    const p = Math.min(1, f.t / FALL_TICKS)
+    const a = f.dir * (Math.PI / 2) * p * p
+    const ca = Math.cos(a),
+      sa = Math.sin(a)
+    const gone =
+      f.t > FALL_TICKS + 14 ? (f.t - FALL_TICKS - 14) / (FELLED_TICKS - FALL_TICKS - 14) : 0
+    const R = t.h + 8
+    for (let py = t.y - R; py <= t.y + 1; py++) {
+      if (py < 0 || py >= H) continue
+      for (let px = t.x - R; px <= t.x + R; px++) {
+        if (px < 0 || px >= W) continue
+        const k = py * W + px
+        if (SOLID[w.grid[k]]) continue
+        // which cell of the standing tree lands here?
+        const dx = px - t.x,
+          dy = py - t.y
+        const sx = Math.round(dx * ca + dy * sa),
+          sy = Math.round(-dx * sa + dy * ca)
+        if (sx < -64 || sx > 63 || sy < -64 || sy > 63) continue
+        const type = cells.get((sy + 64) * 128 + (sx + 64))
+        if (type === undefined) continue
+        if (gone && hash2(sx, sy, t.seed + 7) < gone) continue
+        out[k] = color(type, px, py)
+      }
+    }
+  }
+}
+
 export function treeAt(w: World, x: number, y: number): Tree | undefined {
   for (const t of w.trees) if (t.x === x && t.y === y) return t
   return undefined
@@ -219,6 +275,8 @@ function canGrow(w: World, t: Tree): boolean {
 }
 
 export function stepTrees(w: World) {
+  for (let i = w.felled.length - 1; i >= 0; i--)
+    if (++w.felled[i].t > FELLED_TICKS) w.felled.splice(i, 1)
   const rng = w.rng
   const cap = Math.max(6, Math.floor(w.W / 7))
   for (let i = w.trees.length - 1; i >= 0; i--) {

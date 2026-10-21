@@ -387,6 +387,13 @@
   z-index: 200;
 }
 
+/* opened from the page text: moved to the top of the page, over the world */
+.particle-dropdown.floating {
+  position: absolute;
+  margin-top: 0;
+  z-index: 200;
+}
+
 /* ========================================
    REDUCED MOTION
    ======================================== */

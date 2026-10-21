@@ -87,7 +87,7 @@ import {
   ACT_PLANT,
 } from "./guys"
 import { standable, solidAt } from "./nav"
-import { isMature, removeTree, canPlant, plantTree, treeAt } from "./trees"
+import { isMature, fellTree, canPlant, plantTree, treeAt } from "./trees"
 import type { World } from "./world"
 
 export interface Room {
@@ -787,7 +787,7 @@ function applyStep(w: World, g: Guy, s: Step): "ok" | "skip" | "wait" | "need" {
     case L_FELL: {
       const t = treeAt(w, s.x, s.y)
       if (!t) return "skip"
-      const wood = removeTree(w, t)
+      const wood = fellTree(w, t, t.x >= g.x ? 1 : -1)
       c.stats.felled++
       giveWood(w, g, wood)
       return "ok"
@@ -1098,7 +1098,7 @@ function workChop(w: World, g: Guy) {
   g.dir = t.x >= g.x ? 1 : -1
   g.actT++
   if (g.actT < 50) return
-  const wood = removeTree(w, t)
+  const wood = fellTree(w, t, t.x >= g.x ? 1 : -1)
   w.colony.stats.felled++
   giveWood(w, g, wood)
   // good foresters replant what they fell

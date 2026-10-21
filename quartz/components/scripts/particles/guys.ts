@@ -193,7 +193,12 @@ export function moveGuy(w: World, g: Guy) {
     }
   }
 
-  const inWater = waterAt(w, cx, cy) || waterAt(w, cx, cy - 2)
+  // a swimmer stays a swimmer while a ripple passes under him (no flicker to falling)
+  const inWater =
+    waterAt(w, cx, cy) ||
+    waterAt(w, cx, cy - 2) ||
+    (g.mode === "swim" &&
+      (waterAt(w, cx, cy + 1) || (!solidAt(w, cx, cy + 1) && waterAt(w, cx, cy + 2))))
   const onLadder = climbAt(w, cx, cy)
 
   // Gravity
@@ -230,9 +235,10 @@ export function moveGuy(w: World, g: Guy) {
 
   if (inWater && g.mode !== "hop") {
     if (g.mode !== "swim") g.mode = "swim"
-    // float up to the surface
+    // float up to the surface, or settle back down into it after a ripple
     if (waterAt(w, cx, Math.round(g.y) - 1)) g.y -= 0.15
-    else g.y = Math.round(g.y)
+    else if (!waterAt(w, cx, Math.round(g.y))) g.y = Math.min(g.y + 0.1, Math.round(g.y) + 1)
+    else g.y += (Math.round(g.y) - g.y) * 0.3
   } else if (g.mode === "swim") {
     g.mode = "stand"
     g.y = Math.round(g.y)

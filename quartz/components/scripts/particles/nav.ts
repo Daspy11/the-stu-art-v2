@@ -282,8 +282,12 @@ export class Nav {
     let expanded = 0
     let d0 = 0,
       k = 0
+    const grid = w.grid,
+      Wd = this.W
     const relax = (n: number, cost: number) => {
-      if (lim && this.safe[n] !== this.safeGen) return
+      // (water ripples faster than the safe map is redrawn, so lakes are always open)
+      if (lim && this.safe[n] !== this.safeGen && grid[n] !== WATER && grid[n + Wd] !== WATER)
+        return
       const d = d0 + cost
       if (this.seen[n] === gen) {
         if (d >= this.dist[n]) return

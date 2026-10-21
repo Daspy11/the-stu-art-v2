@@ -4,6 +4,7 @@
 import { cellColor, PAL, EMPTY } from "./cells"
 import type { World } from "./world"
 import { drawFurniture } from "./furniture"
+import { drawFelled } from "./trees"
 
 // Draw background then foreground cells (and furniture between them) into a W*H buffer.
 export function renderCells(w: World, out: Uint32Array) {
@@ -14,6 +15,7 @@ export function renderCells(w: World, out: Uint32Array) {
       out[k] = b === EMPTY ? 0 : cellColor(b, x, y)
     }
   }
+  drawFelled(w, out, cellColor)
   drawFurniture(w, out)
   for (let y = 0, k = 0; y < H; y++) {
     for (let x = 0; x < W; x++, k++) {
