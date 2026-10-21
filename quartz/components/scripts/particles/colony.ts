@@ -609,13 +609,13 @@ function think(w: World, g: Guy) {
   const cap = Math.max(6, Math.floor(w.W / 7))
   const hungry = c.projects.some((p) => !p.done && p.starved > w.tick)
   if (
-    near < Math.max(10, w.W / 14) &&
+    near < Math.max(10, w.W / 9) &&
     w.trees.length < cap &&
     w.rng.chance(hungry ? 0.8 : 0.4) &&
     startPlant(w, g)
   )
     return
-  if (c.stock[R_WOOD] < 250 && mature >= 3 && w.rng.chance(0.5) && startChop(w, g)) return
+  if (c.stock[R_WOOD] < 800 && mature >= 3 && w.rng.chance(0.6) && startChop(w, g)) return
   if (w.rng.chance(0.25) && startRelax(w, g)) return
   startWander(w, g)
 }
@@ -633,11 +633,14 @@ function assignProject(w: World, g: Guy): Project | undefined {
   for (const p of c.projects) {
     if (p.done || p.starved > w.tick) continue
     // big jobs soak up a bigger crew
-    const big = p.kind === "tower" || p.kind === "raise" || p.kind === "mine"
+    // (a mine shaft only has room for a few)
+    const big = p.kind === "tower" || p.kind === "raise"
     const room = (big ? Math.min(6, p.want + Math.floor(w.guys.length / 10)) : p.want) - p.workers
-    const dist = Math.abs(p.x - g.x) + Math.abs(p.y - g.y) * 0.5
-    const score = room * 40 - dist * 0.5 - p.fails * 3 + (p.kind === "furnish" ? -10 : 0)
     if (room <= 0 && p.workers > 0) continue
+    // the nearest job that wants hands, rather than trekking across the map for a
+    // slightly emptier one
+    const dist = Math.abs(p.x - g.x) + Math.abs(p.y - g.y) * 0.5
+    const score = Math.min(room, 3) * 10 - dist - p.fails * 3 + (p.kind === "furnish" ? -10 : 0)
     if (score <= bestScore) continue
     // no point joining if every step within sight is already being done
     if (nextStep(w, p) < 0) continue
@@ -1248,10 +1251,11 @@ function startPlant(w: World, g: Guy): boolean {
   const nav = w.nav
   nav.beginGoals()
   let any = false
-  const x0 = Math.max(3, c.homeX - 90),
-    x1 = Math.min(w.W - 4, c.homeX + 90)
-  for (let x = x0; x <= x1; x += 2) {
-    for (let y = Math.max(8, c.homeY - 40); y < Math.min(w.H - 1, c.homeY + 30); y++) {
+  // a wood lot by every store, not just at home
+  for (let x = 3; x <= w.W - 4; x += 2) {
+    if (depotDist(c, x) > 90) continue
+    const top = surfaceAt(w, x)
+    for (let y = Math.max(8, top - 3); y <= Math.min(w.H - 2, top + 1); y++) {
       if (canPlant(w, x, y, 4)) {
         nav.markGoal(x, y, y * w.W + x)
         any = true
@@ -2346,8 +2350,8 @@ function tunnelColOk(w: World, x: number, y: number): boolean {
     if (w.noBuild[k] || w.reserved[k] || BUILT_BG[w.bg[k]]) return false
     if (!SOLID[v] || BUILT[v] || DYNAMIC[v] || v === TEXT) return false
   }
-  // nothing loose or wet overhead that would pour in
-  for (let yy = 0; yy < y - GALLERY_H - 2; yy++) {
+  // nothing loose or wet just over the roof (further up, the roof holds it)
+  for (let yy = Math.max(0, y - GALLERY_H - 5); yy < y - GALLERY_H - 2; yy++) {
     const v = w.grid[yy * W + x]
     if (DYNAMIC[v] || v === WATER) return false
   }
@@ -2559,10 +2563,11 @@ function tryMine(w: World): boolean {
       if (!free(x, y)) return false
       if (y >= b - GALLERY_H + 1 && v !== EMPTY && !QUARRY[v] && !SOLID[v]) return false
       // a solid roof of natural ground (where the rock is thin, packed dirt will do)
-      if (y < b - GALLERY_H + 1 && (!SOLID[v] || BUILT[v] || v === TEXT)) return false
+      if (y < b - GALLERY_H + 1 && (!SOLID[v] || BUILT[v] || DYNAMIC[v] || v === TEXT)) return false
     }
-    // nothing loose or wet overhead that would pour in
-    for (let y = 0; y < b; y++) if (DYNAMIC[cell(x, y)]) return false
+    // nothing loose or wet just over the roof (further up, the roof holds it)
+    for (let y = Math.max(0, b - GALLERY_H - 5); y < b - GALLERY_H - 2; y++)
+      if (DYNAMIC[cell(x, y)]) return false
     return true
   }
   let best: { lx: number; s: number; b: number; L: number; R: number; score: number } | null = null

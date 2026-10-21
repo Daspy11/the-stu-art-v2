@@ -326,10 +326,13 @@ export function moveGuy(w: World, g: Guy) {
               ? "climb"
               : "walk"
       }
-      // sanity: the world may have changed under the next node
+      // sanity: the world may have changed under the next node (but a lake's
+      // surface just ripples)
       if (g.pathI < g.path.length) {
-        const n = g.path[g.pathI]
-        if (!standable(w, n % W, Math.floor(n / W))) g.stuck = 1000
+        const nx = g.path[g.pathI] % W,
+          ny = Math.floor(g.path[g.pathI] / W)
+        const wet = g.mode === "swim" || waterAt(w, nx, ny) || waterAt(w, nx, ny + 1)
+        if (!wet && !standable(w, nx, ny)) g.stuck = 1000
       }
     }
     if (g.pathI >= g.path.length && g.mode !== "swim")

@@ -24,7 +24,8 @@ The rules: anything the guys _do_ can change, but the terrain generator and the 
 | 4: stores and swimmers  |     24.7 |             44.9 |        13.3 |
 | 6: more diggers, sooner |     27.8 |             51.4 |         6.7 |
 | 7: into the hills       |     28.5 |             52.4 |    **16.2** |
-| 8: everyone pitches in  | **50.3** |         **88.5** |        20.6 |
+| 8: everyone pitches in  |     50.3 |             88.5 |        20.6 |
+| 9: the long way round   | **55.8** |         **99.0** |    **21.4** |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
@@ -82,8 +83,26 @@ _An HD world: twice the score, with the nest dug the whole way across._
 
 _A laptop world: a second village is going up on the right, over its own nest._
 
+## Gen 9: the long way round
+
+With everyone busy, the next waste was walking. A few things were sending guys the long way round:
+
+- **Lakes over the nest.** A gallery wasn't allowed anywhere with water or sand anywhere above it, even with solid ground in between, so a lake on the surface cut the nest in two. Now it only needs a solid roof, and the galleries run right under lakes.
+- **Swimmers turning back.** Every ripple on a lake made a swimming guy think the way ahead had gone, so they'd stop, rethink, swim a few strokes and stop again. Crossing a lake could take a thousand ticks.
+- **Picking the emptiest job, not the nearest.** A guy finishing up would trek across the map to a project with one more free slot, instead of joining the one next to him. Now they join the nearest job that wants hands, and mine shafts don't take more diggers than fit.
+- **Wood.** The woodpile kept running dry, so every store now gets its own wood lot planted around it.
+
+![[Assets/ant-colony/gen8-gen9-tablet-538379.png]]
+
+_A tablet world: the hill is now an ant hill, hollowed out level after level._
+
+![[Assets/ant-colony/gen8-gen9-phone-538379.png]]
+
+_A phone world: from a couple of towers to a village over two levels of nest._
+
 ## Little things fixed along the way
 
+- Swimmers stopped and turned around every time a ripple passed under the next stroke.
 - An abandoned mine kept its place on the to-do list, and its ground, forever, so that world never tried another one.
 - Stuck builds: a guy who couldn't reach the next step of a build never gave up on it, so whole projects stood still for good. One phone world planned the same unreachable tower 13 times.
 - Swimmers flickered between swimming and falling as ripples passed under them, sometimes bobbed in place for thousands of ticks, and couldn't swim across lakes to fetch wood. A swimmer trapped in a pit never asked for rescue.
@@ -94,6 +113,6 @@ _A laptop world: a second village is going up on the right, over its own nest._
 
 ## Still to do
 
-- Wood is now the bottleneck: the woodpile runs dry while stone piles up by the tonne.
+- Stone piles up by the tonne with not much to spend it on.
 - Phones are the weakest screens: there's barely any flat ground to dig a mine from.
 - Guys still walk far more than they work.
