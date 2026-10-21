@@ -12,6 +12,7 @@ let big: HTMLImageElement
 let caption: HTMLElement
 let counter: HTMLElement
 let closing = false
+let closedAt = 0
 let lastFocus: Element | null = null
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -121,7 +122,8 @@ function button(cls: string, label: string, icon: string, onClick: () => void) {
 }
 
 function open(thumb: HTMLImageElement, fromKeyboard: boolean) {
-  if (box) return
+  // one viewer at a time, even if this script has somehow been loaded twice
+  if (box || document.querySelector(".lightbox")) return
   thumbs = [...document.querySelectorAll<HTMLImageElement>(`img.${THUMB}`)]
   index = Math.max(0, thumbs.indexOf(thumb))
   // hand focus back on close only to keyboard users; a mouse click would leave a focus ring
@@ -199,6 +201,7 @@ function close() {
   window.setTimeout(() => {
     thumb.style.visibility = ""
     done.remove()
+    closedAt = performance.now()
     if (box === done) box = null
     if (lastFocus instanceof HTMLElement) lastFocus.focus({ preventScroll: true })
     else if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
@@ -235,42 +238,52 @@ function bindSwipe(el: HTMLElement) {
   })
 }
 
-document.addEventListener("click", (e) => {
-  const img = (e.target as Element | null)?.closest?.(`img.${THUMB}`)
-  if (img instanceof HTMLImageElement && !e.defaultPrevented) open(img, false)
-})
+// listen once per window: a second copy of this script would open a second viewer on top
+const win = window as Window & { lightboxBound?: boolean }
+if (!win.lightboxBound) {
+  win.lightboxBound = true
 
-document.addEventListener("keydown", (e) => {
-  if (!box) {
-    const t = e.target as Element | null
-    if (
-      (e.key === "Enter" || e.key === " ") &&
-      t instanceof HTMLImageElement &&
-      t.classList.contains(THUMB)
-    ) {
-      e.preventDefault()
-      open(t, true)
+  document.addEventListener("click", (e) => {
+    const img = (e.target as Element | null)?.closest?.(`img.${THUMB}`)
+    if (!(img instanceof HTMLImageElement) || e.defaultPrevented) return
+    // a second click to close, landing just after the image has shrunk back into the page,
+    // shouldn't open it again
+    if (performance.now() - closedAt < 400) return
+    open(img, false)
+  })
+
+  document.addEventListener("keydown", (e) => {
+    if (!box) {
+      const t = e.target as Element | null
+      if (
+        (e.key === "Enter" || e.key === " ") &&
+        t instanceof HTMLImageElement &&
+        t.classList.contains(THUMB)
+      ) {
+        e.preventDefault()
+        open(t, true)
+      }
+      return
     }
-    return
-  }
-  if (e.key === "Escape") close()
-  else if (e.key === "ArrowLeft") step(-1)
-  else if (e.key === "ArrowRight") step(1)
-  else if (e.key === "Tab") {
-    // keep focus on the viewer's buttons
-    const buttons = [...box.querySelectorAll<HTMLButtonElement>("button")]
-    const at = buttons.indexOf(document.activeElement as HTMLButtonElement)
-    buttons[(at + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length]?.focus()
-  } else return
-  e.preventDefault()
-})
+    if (e.key === "Escape") close()
+    else if (e.key === "ArrowLeft") step(-1)
+    else if (e.key === "ArrowRight") step(1)
+    else if (e.key === "Tab") {
+      // keep focus on the viewer's buttons
+      const buttons = [...box.querySelectorAll<HTMLButtonElement>("button")]
+      const at = buttons.indexOf(document.activeElement as HTMLButtonElement)
+      buttons[(at + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length]?.focus()
+    } else return
+    e.preventDefault()
+  })
 
-const refit = () => {
-  if (box && !closing) fit()
+  const refit = () => {
+    if (box && !closing) fit()
+  }
+  window.addEventListener("resize", refit)
+  window.visualViewport?.addEventListener("resize", refit)
+  window.visualViewport?.addEventListener("scroll", refit)
 }
-window.addEventListener("resize", refit)
-window.visualViewport?.addEventListener("resize", refit)
-window.visualViewport?.addEventListener("scroll", refit)
 
 document.addEventListener("nav", () => {
   // a page change while open (back button) just drops the viewer
