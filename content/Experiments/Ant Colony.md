@@ -172,6 +172,7 @@ _A tablet world: a whole town of finished towers on top of the nest._
 - After hovering a link, pressing reset made a world thousands of pixels tall, with the ground way down the page. The site keeps hidden previews of linked pages around, and the world was making room for their text.
 - On phones, the material menu ran off the edge of the screen.
 - Going to another page and back with the browser's buttons could leave the world drawn in streaks, and the world was saved under the wrong page's name on the way out, so coming back started a new one.
+- The mouse's back and forward buttons poured sand. Flipping back and forth between pages also slowed the whole browser down: the site's link graph never stopped its old copies, so each visit left another one running, and the world's menu left a listener behind every time.
 - Resizing the window regenerated the world on every pixel of the drag and filled up the browser's storage.
 - The benchmark itself got about 4× faster: the falling-sand step was checking every cell of the screen every tick, even though nearly all of it is still ground and empty sky. It now skips rows with nothing loose in them, and plays out exactly the same.
 

@@ -400,7 +400,10 @@ function setupInput() {
     mouse.spawning = false
     guySpawnedThisClick = false
   }
-  document.addEventListener("mousedown", (e) => down(e.clientX, e.clientY, e.target as HTMLElement))
+  document.addEventListener("mousedown", (e) => {
+    // only the main button: the side buttons are the browser's back and forward
+    if (e.button === 0) down(e.clientX, e.clientY, e.target as HTMLElement)
+  })
   document.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX
     mouse.y = e.clientY
@@ -690,10 +693,12 @@ function createToolbar() {
     }
   })
   dropdown.addEventListener("click", (e: Event) => e.stopPropagation())
-  document.addEventListener("click", () => {
+  // (a click anywhere else closes the menu; taken off again in teardown)
+  closeMenu = () => {
     dropdown.classList.remove("open")
     toggleArrow.textContent = "▼"
-  })
+  }
+  document.addEventListener("click", closeMenu)
   toolbarEl.addEventListener("click", (e: Event) => e.stopPropagation())
   document.body.appendChild(toolbarEl)
 }
@@ -726,6 +731,7 @@ function loop() {
 
 // --- Lifecycle ---
 let particlesActive = false
+let closeMenu: (() => void) | null = null
 
 function teardown() {
   if (!particlesActive) return
@@ -734,6 +740,13 @@ function teardown() {
   raf = 0
   if (saveTimer) clearInterval(saveTimer)
   saveTimer = 0
+  if (textTimer) clearTimeout(textTimer)
+  textTimer = 0
+  if (closeMenu) document.removeEventListener("click", closeMenu)
+  closeMenu = null
+  // a button held down as the page changed never gets its mouseup here
+  mouse.down = false
+  mouse.spawning = false
   persist()
   cellCanvas?.remove()
   guyCanvas?.remove()
