@@ -126,8 +126,8 @@ function drawStock(w: World, out: Uint32Array) {
     for (let i = 0; i < 3 - r; i++) put(c.homeX + 4 + i, c.homeY - r, ROCKS[(i + r) & 1])
   // and a smaller store at the head of each mine shaft
   for (const n of c.nests ?? []) {
-    const x = n.lx - 6,
-      y = n.s - 1
+    const x = n.store ? n.store[0] - 2 : n.lx - 6,
+      y = n.store ? n.store[1] : n.s - 1
     if (c.stock[1] > 0) for (let i = 0; i < 3; i++) put(x + i, y, i === 0 ? LOG_END : LOG)
     if (c.stock[1] > 300) for (let i = 0; i < 2; i++) put(x + i, y - 1, i === 0 ? LOG_END : LOG)
     if (c.stock[2] > 0) put(x + 3, y, ROCKS[0])

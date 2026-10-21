@@ -13,20 +13,21 @@ There's a little world under the text on this site's [front page](/): sand, wate
 
 To make "busier" something I can measure, there's a benchmark. It takes 32 random worlds (8 seeds, each laid out like the real front page at laptop, HD, tablet and phone sizes) and leaves each alone for 100,000 ticks, about 40 minutes on the page. The **score** is how much of the screen the guys have changed (built on or dug out), in thousandths of the screen, minus a penalty whenever a guy gets stuck: stranded somewhere, walking without getting anywhere, or going round in a loop. A guy who simply has nothing left to do isn't counted as stuck. The headline number averages the whole run, with the early part counting a bit more, so getting going quickly matters.
 
-The rules: anything the guys *do* can change, but the terrain generator and the materials can't.
+The rules: anything the guys _do_ can change, but the terrain generator and the materials can't.
 
 ![[Assets/ant-colony/score-chart.png]]
 
-| generation | score | after 40 minutes | worst world |
-|---|--:|--:|--:|
-| 0: where it started | 18.5 | 25.1 | -52.9 |
-| 2: the nest | 24.4 | 45.1 | 13.3 |
-| 4: stores and swimmers | 24.7 | 44.9 | 13.3 |
-| 6: more diggers, sooner | **27.8** | **51.4** | 6.7 |
+| generation              |    score | after 40 minutes | worst world |
+| ----------------------- | -------: | ---------------: | ----------: |
+| 0: where it started     |     18.5 |             25.1 |       -52.9 |
+| 2: the nest             |     24.4 |             45.1 |        13.3 |
+| 4: stores and swimmers  |     24.7 |             44.9 |        13.3 |
+| 6: more diggers, sooner |     27.8 |             51.4 |         6.7 |
+| 7: into the hills       | **28.5** |         **52.4** |    **16.2** |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
-*The same tablet world after 40 minutes, at the start and now.*
+_The same tablet world after 40 minutes, at the start and now._
 
 ## Gen 0: where it started
 
@@ -40,7 +41,7 @@ They also carry three times as much wood per trip. Before, guys spent 55% of the
 
 ![[Assets/ant-colony/gen0-gen6-phone-825701.png]]
 
-*A phone world: before, two guys standing on a hill; now towers and a furnished nest.*
+_A phone world: before, two guys standing on a hill; now towers and a furnished nest._
 
 ## Gens 3 and 4: stores and swimmers
 
@@ -52,7 +53,15 @@ The first mine was one enormous job, and the nest didn't open until about 50,000
 
 ![[Assets/ant-colony/gen0-gen6-hd-202618.png]]
 
-*An HD world: the same towers, and now three levels of rooms under the town.*
+_An HD world: the same towers, and now three levels of rooms under the town._
+
+## Gen 7: into the hills
+
+The weakest worlds were mountain tops: nowhere flat enough for a mine shaft, so nothing got dug at all. When no shaft fits, the guys now drive an **adit**, a tunnel straight into the hillside from a ledge they can stand on. It starts as an open cutting, gets roofed over and propped with timber as it goes deeper, and once it's done it becomes a nest like any other, with its own store and rooms. The worst of the 32 worlds now scores 16 instead of 7.
+
+![[Assets/ant-colony/gen6-gen7-tablet-34153.png]]
+
+_A mountain-top tablet world: before, one tower and nothing dug; now a tunnel through the hill, with a store at its mouth._
 
 ## Little things fixed along the way
 
@@ -65,10 +74,5 @@ The first mine was one enormous job, and the nest didn't open until about 50,000
 
 ## Still to do
 
-![[Assets/ant-colony/gen6-mountain.png]]
-
-*The weakest world: the colony lives on a mountain top. Nowhere is flat enough for a mine shaft, so nothing gets dug at all, and guys strand themselves on the slopes.*
-
-- Mountains: tunnelling straight into hillsides, not just down from flat ground.
 - Wide screens: everything still happens near home.
 - Guys still walk far more than they work.

@@ -130,7 +130,13 @@ export interface Nest {
   s: number // surface row at the shaft
   b: number // bottom gallery's floor row
   levels: { y: number; xl: number; xr: number }[] // galleries: floor row, dug columns
+  adit?: boolean // dug straight into a hillside: no shaft
+  store?: number[] // where its store is, if not beside the shaft
 }
+
+// where a nest's galleries are measured from (for the timber spacing)
+const nestOrigin = (n: Nest) => (n.adit && n.store ? n.store[0] : n.lx + 1)
+const nestStore = (n: Nest) => n.store ?? [n.lx - 3, n.s - 1]
 
 export interface Colony {
   homeX: number
@@ -153,6 +159,7 @@ export interface Colony {
   gapBridges: number
   nests: Nest[] // finished mines and the tunnels dug off them
   badSites: number[][] // [x0, x1, until tick]: recently abandoned, don't build there
+  mineFailT?: number // last time no site for a mine shaft could be found
   safeT: number // tick the safe set was last computed
   safeDirty: boolean
   stats: { placed: number; felled: number; arrived: number; towers: number }
@@ -1189,14 +1196,17 @@ function workQuarry(w: World, g: Guy) {
 // mine shaft, and the ground floor of every finished tower. They share one stock, so
 // a guy just uses the nearest.
 export function depots(c: Colony): number[][] {
-  return [[c.homeX, c.homeY], ...c.nests.map((n) => [n.lx - 3, n.s - 1])]
+  return [[c.homeX, c.homeY], ...c.nests.map(nestStore)]
 }
 
 function startStock(w: World, g: Guy, mode: "deposit" | "withdraw", r = 0, need = 0): boolean {
   const c = w.colony
   w.nav.beginGoals()
   w.nav.markBox(c.homeX, c.homeY, 4, -3, 3, 0)
-  for (const n of c.nests) w.nav.markBox(n.lx - 3, n.s - 1, 2, -2, 2, 0)
+  for (const n of c.nests) {
+    const [x, y] = nestStore(n)
+    w.nav.markBox(x, y, 2, -2, 2, 0)
+  }
   for (const t of c.towers)
     if (t.complete) w.nav.markBox((t.x0 + t.x1) >> 1, t.base - 1, ((t.x1 - t.x0) >> 1) - 1, 0, 0, 0)
   if (!go(w, g)) return false
@@ -1434,6 +1444,11 @@ function plan(w: World) {
         ],
         [c.gapBridges < 1 + Math.floor(w.W / 160) ? 2.5 : 0, () => tryGapBridge(w)],
         [c.nests.length ? 2 + idle : 0, () => tryTunnel(w)],
+        // adits are for when there's nowhere flat enough for a mine shaft
+        [
+          c.mines < 1 + Math.floor(w.W / 160) && w.tick - (c.mineFailT ?? -1e9) < 3000 ? 3 : 0,
+          () => tryAdit(w),
+        ],
       ]
       // weighted shuffle, then take the first that works
       const order: (() => boolean)[] = []
@@ -1549,6 +1564,17 @@ function completeProject(w: World, p: Project) {
     const d = p.data
     c.nests.push({ lx: d.lx, s: d.s, b: d.b, levels: [{ y: d.b, xl: d.xl, xr: d.xr }] })
     nestRooms(w, c.nests.length - 1, d.b, d.xl, d.xr)
+  } else if (p.kind === "adit" && p.data) {
+    const d = p.data
+    c.nests.push({
+      lx: d.x,
+      s: d.y + 1,
+      b: d.y,
+      levels: [{ y: d.y, xl: d.xl, xr: d.xr }],
+      adit: true,
+      store: [d.x, d.y],
+    })
+    nestRooms(w, c.nests.length - 1, d.y, d.xl, d.xr)
   } else if (p.kind === "tunnel" && p.data) {
     const d = p.data
     const n = c.nests[d.nest]
@@ -2268,7 +2294,7 @@ function nestRooms(w: World, nest: number, y: number, xl: number, xr: number) {
   const runs: [number, number][] = []
   let a = -1
   for (let x = xl; x <= xr + 1; x++) {
-    const ok = x <= xr && (!n || x < n.lx - 1 || x > n.lx + 3) && w.get(x, y) === EMPTY
+    const ok = x <= xr && (!n || n.adit || x < n.lx - 1 || x > n.lx + 3) && w.get(x, y) === EMPTY
     if (ok && a < 0) a = x
     if (!ok && a >= 0) {
       runs.push([a, x - 1])
@@ -2340,7 +2366,7 @@ function tryTunnel(w: World): boolean {
       }
     }
     // or open a new level off the shaft
-    for (let y = n.b - 12; y - GALLERY_H - 2 > n.s + 2; y -= 12) {
+    for (let y = n.b - 12; !n.adit && y - GALLERY_H - 2 > n.s + 2; y -= 12) {
       if (n.levels.some((l) => l.y === y)) continue
       for (const dir of [-1, 1]) {
         const cols = run(dir < 0 ? n.lx - 2 : n.lx + 4, dir, y)
@@ -2360,7 +2386,7 @@ function tryTunnel(w: World): boolean {
     }
   const n = c.nests[cand.nest]
   const steps: Step[] = []
-  for (const x of cand.cols) steps.push(...gallerySteps(x, cand.y, Math.abs(x - (n.lx + 1))))
+  for (const x of cand.cols) steps.push(...gallerySteps(x, cand.y, Math.abs(x - nestOrigin(n))))
   reserveSteps(w, steps, MINE)
   const xs = cand.cols
   addProject(w, "tunnel", steps, -1, 2, {
@@ -2369,6 +2395,90 @@ function tryTunnel(w: World): boolean {
     xl: Math.min(...xs),
     xr: Math.max(...xs),
   })
+  return true
+}
+
+// An adit: a tunnel driven straight into a hillside from the foot of a slope, for
+// worlds too steep for a mine shaft. It becomes a nest like any other.
+// Returns 0 (can't dig here), 1 (an open cutting into the slope) or 2 (a proper
+// tunnel, solid all round with a roof); once it's a tunnel it has to stay one.
+function aditCol(w: World, x: number, y: number, covered: boolean): number {
+  const { W, H } = w
+  if (x < 4 || x >= W - 4 || y + 1 >= H || y - GALLERY_H - 3 < 0) return 0
+  if (!SOLID[w.get(x, y + 1)]) return 0
+  let roofed = true
+  for (let yy = y - GALLERY_H - 2; yy <= y; yy++) {
+    const v = w.grid[yy * W + x]
+    if (!SOLID[v] || BUILT[v] || DYNAMIC[v]) roofed = false
+  }
+  if (covered && !roofed) return 0
+  const top = roofed ? y - GALLERY_H - 2 : y - GALLERY_H + 1
+  for (let yy = top; yy <= y; yy++) {
+    const k = yy * W + x
+    const v = w.grid[k]
+    if (w.noBuild[k] || w.reserved[k] || BUILT_BG[w.bg[k]] || BUILT[v] || DYNAMIC[v] || v === TEXT)
+      return 0
+    if (v === WATER) return 0
+    if (!SOLID[v] && (roofed || v !== EMPTY)) return 0
+  }
+  for (let yy = 0; yy < top; yy++) {
+    const v = w.grid[yy * W + x]
+    if (DYNAMIC[v] || v === WATER) return 0
+  }
+  return roofed ? 2 : 1
+}
+
+function tryAdit(w: World): boolean {
+  const c = w.colony
+  if (c.projects.some((p) => !p.done && (p.kind === "adit" || p.kind === "mine"))) return false
+  const { W } = w
+  const r = w.rng
+  let best: { x: number; y: number; dir: number; cols: number[]; score: number } | null = null
+  for (let i = 0; i < 80; i++) {
+    const x = 6 + r.int(W - 12)
+    const y = surfaceAt(w, x) - 1
+    if (!standable(w, x, y) || !w.nav.isSafe(y * W + x)) continue
+    if (c.nests.some((n) => Math.abs(nestStore(n)[0] - x) < 24)) continue
+    for (const dir of [-1, 1]) {
+      // a hillside right in front, solid at body height
+      let solid = 0
+      for (let d = 1; d <= 3; d++)
+        for (let yy = y - GALLERY_H + 1; yy <= y; yy++) if (SOLID[w.get(x + dir * d, yy)]) solid++
+      if (solid < 14) continue
+      const cols: number[] = []
+      let covered = false,
+        cut = 0
+      for (let d = 1; d <= 24; d++) {
+        const k = aditCol(w, x + dir * d, y, covered)
+        if (!k || (k === 1 && ++cut > 12)) break
+        if (k === 2) covered = true
+        cols.push(x + dir * d)
+        if (covered && cols.length >= 18) break
+      }
+      // it has to actually go into the hill
+      if (!covered || cols.length < 6) continue
+      const score = cols.length - Math.abs(x - c.homeX) * 0.05 + r.next()
+      if (!best || score > best.score) best = { x, y, dir, cols, score }
+    }
+  }
+  if (!best) return false
+  const { x, y, cols } = best
+  const steps: Step[] = []
+  for (const cx of cols) {
+    const d = Math.abs(cx - x)
+    for (let yy = y; yy > y - GALLERY_H; yy--)
+      if (w.get(cx, yy) !== EMPTY) steps.push(mkStep(cx, yy, EMPTY, L_CLEAR))
+    // timber once there's a roof overhead
+    if (d > 2 && SOLID[w.get(cx, y - GALLERY_H)]) {
+      steps.push(mkStep(cx, y - GALLERY_H + 1, FRAME, L_BG))
+      if (d % 4 === 0)
+        for (let yy = y; yy > y - GALLERY_H + 1; yy--) steps.push(mkStep(cx, yy, FRAME, L_BG))
+      if (d % 12 === 6) steps.push(mkStep(cx, y - GALLERY_H + 3, LANTERN, L_BG))
+    }
+  }
+  reserveSteps(w, steps, MINE)
+  c.mines++
+  addProject(w, "adit", steps, -1, 3, { x, y, xl: Math.min(...cols), xr: Math.max(...cols) })
   return true
 }
 
@@ -2440,7 +2550,10 @@ function tryMine(w: World): boolean {
     const score = L + R - Math.abs(lx - c.homeX) * 0.1
     if (!best || score > best.score) best = { lx, s, b, L, R, score }
   }
-  if (!best) return false
+  if (!best) {
+    c.mineFailT = w.tick
+    return false
+  }
   const { lx, s, b, L, R } = best
   const steps: Step[] = []
   // clear the trees off the spot first
