@@ -519,7 +519,7 @@ function think(w: World, g: Guy) {
   const c = w.colony
   // Off the safe network (fell in a hole, got walled in)? Head home, or dig out.
   const here = startNode(w, g)
-  if (here < 0 || (!w.nav.isSafe(here) && !inWater(w, here))) {
+  if (here < 0 || !w.nav.isSafe(here)) {
     // the map of safe ground may just be out of date (we're on something new)
     if (w.tick - c.safeT > 8) {
       c.safeDirty = true
@@ -2402,8 +2402,7 @@ function tryMine(w: World): boolean {
   }
   let best: { lx: number; s: number; b: number; L: number; R: number; score: number } | null = null
   for (let i = 0; i < 60; i++) {
-    // anywhere the colony can walk to, but the first one close to home
-    const lx = c.nests.length ? 8 + r.int(W - 20) : Math.round(c.homeX + r.range(-80, 80))
+    const lx = Math.round(c.homeX + r.range(-80, 80))
     if (lx < 8 || lx + 2 > W - 9) continue
     const s = surfaceAt(w, lx)
     if (s >= H - 20) continue
@@ -2430,11 +2429,11 @@ function tryMine(w: World): boolean {
     while (L < maxLen && galleryOk(lx - 2 - L, b)) L++
     while (R < maxLen && galleryOk(lx + 4 + R, b)) R++
     if (L + R < 6) continue
-    // spread out: away from the other nests (and not too far from home)
+    // not right on top of another nest
     let apart = 200
     for (const n of c.nests) apart = Math.min(apart, Math.abs(n.lx - lx))
     if (apart < 24) continue
-    const score = L + R - Math.abs(lx - c.homeX) * 0.05 + Math.min(apart, 80) * 0.2
+    const score = L + R - Math.abs(lx - c.homeX) * 0.1
     if (!best || score > best.score) best = { lx, s, b, L, R, score }
   }
   if (!best) return false
