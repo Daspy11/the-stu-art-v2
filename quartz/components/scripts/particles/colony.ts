@@ -542,17 +542,25 @@ function think(w: World, g: Guy) {
     g.carry = 0
     g.carryAmt = 0
   }
-  if (g.carry && g.carryAmt > 0) {
-    const own = g.project >= 0 ? projectById(c, g.project) : undefined
-    const list = own ? [own, ...c.projects] : c.projects
-    for (const p of list) {
+  // (hang on to it while our own project still needs it; otherwise take it to the
+  // nearest job that does, and only then put it in the store)
+  const own = g.project >= 0 ? projectById(c, g.project) : undefined
+  if (g.carry && g.carryAmt > 0 && !(own && !own.done && remainingNeed(own, g.carry) > 0)) {
+    let best: Project | undefined,
+      bestI = -1,
+      bestD = Infinity
+    for (const p of c.projects) {
       if (p.done) continue
       const i = nextStep(w, p, g)
-      if (i >= 0 && p.steps[i].r === g.carry && g.carryAmt >= p.steps[i].c) {
-        if (startBuild(w, g, p, i)) return
-        break
+      if (i < 0 || p.steps[i].r !== g.carry || g.carryAmt < p.steps[i].c) continue
+      const d = Math.abs(p.steps[i].x - g.x) + Math.abs(p.steps[i].y - g.y)
+      if (d < bestD) {
+        bestD = d
+        best = p
+        bestI = i
       }
     }
+    if (best && startBuild(w, g, best, bestI)) return
     if (startStock(w, g, "deposit")) return
   }
   // 2. Work on a project
@@ -630,10 +638,11 @@ function assignProject(w: World, g: Guy): Project | undefined {
     const dist = Math.abs(p.x - g.x) + Math.abs(p.y - g.y) * 0.5
     const score = room * 40 - dist * 0.5 - p.fails * 3 + (p.kind === "furnish" ? -10 : 0)
     if (room <= 0 && p.workers > 0) continue
-    if (score > bestScore) {
-      bestScore = score
-      best = p
-    }
+    if (score <= bestScore) continue
+    // no point joining if every step within sight is already being done
+    if (nextStep(w, p) < 0) continue
+    bestScore = score
+    best = p
   }
   if (best) {
     best.workers++
@@ -1345,7 +1354,7 @@ export function popCap(w: World): number {
   const c = w.colony
   let score = 0
   for (const f of c.furniture) score += FURN[f.kind].name === "bed" ? 2 : 1
-  const max = Math.max(c.startPop + 6, Math.min(44, Math.floor((w.W * w.H) / 3800)))
+  const max = Math.max(c.startPop + 6, Math.min(72, Math.floor((w.W * w.H) / 3000)))
   return Math.min(max, c.startPop + Math.floor(score / 2))
 }
 
@@ -1427,7 +1436,7 @@ function plan(w: World) {
     (p) => !p.done && (p.kind === "tower" || p.kind === "raise"),
   ).length
   // a few big crews make visible progress; lots of tiny ones just make scaffolding
-  const towerRoom = building < Math.max(1, Math.min(3, Math.ceil(alive.length / 9)))
+  const towerRoom = building < Math.max(1, Math.min(6, Math.ceil(alive.length / 8)))
   if ((active < limit && idle > 0) || active === 0) {
     if (c.towers.length === 0 && tryTower(w)) {
       // the first tower comes first, if there's anywhere for one
@@ -2442,7 +2451,7 @@ function aditCol(w: World, x: number, y: number, covered: boolean): number {
 
 function tryAdit(w: World): boolean {
   const c = w.colony
-  if (c.projects.some((p) => !p.done && (p.kind === "adit" || p.kind === "mine"))) return false
+  if (!mineRoom(w)) return false
   const { W } = w
   const r = w.rng
   let best: { x: number; y: number; dir: number; cols: number[]; score: number } | null = null
@@ -2450,7 +2459,7 @@ function tryAdit(w: World): boolean {
     const x = 6 + r.int(W - 12)
     const y = surfaceAt(w, x) - 1
     if (!standable(w, x, y) || !w.nav.isSafe(y * W + x)) continue
-    if (c.nests.some((n) => Math.abs(nestStore(n)[0] - x) < 24)) continue
+    if (nestSpots(c).some((nx) => Math.abs(nx - x) < 24)) continue
     for (const dir of [-1, 1]) {
       // a hillside right in front, solid at body height
       let solid = 0
@@ -2513,9 +2522,27 @@ function depotDist(c: Colony, x: number): number {
   return d
 }
 
+// where the nests are, and the mines still being dug
+function nestSpots(c: Colony): number[] {
+  const xs = c.nests.map((n) => nestStore(n)[0])
+  for (const p of c.projects)
+    if (!p.done && p.data && (p.kind === "mine" || p.kind === "adit"))
+      xs.push(p.data.lx ?? p.data.x)
+  return xs
+}
+
+// a mine on the go for every dozen guys
+function mineRoom(w: World): boolean {
+  const alive = w.guys.filter((g) => g.mode !== "dead").length
+  const digging = w.colony.projects.filter(
+    (p) => !p.done && (p.kind === "mine" || p.kind === "adit"),
+  )
+  return digging.length < 1 + Math.floor(alive / 12)
+}
+
 function tryMine(w: World): boolean {
   const c = w.colony
-  if (c.projects.some((p) => !p.done && p.kind === "mine")) return false
+  if (!mineRoom(w)) return false
   const { W, H } = w
   const r = w.rng
   const cell = (x: number, y: number) => w.grid[y * W + x]
@@ -2531,7 +2558,8 @@ function tryMine(w: World): boolean {
       const v = cell(x, y)
       if (!free(x, y)) return false
       if (y >= b - GALLERY_H + 1 && v !== EMPTY && !QUARRY[v] && !SOLID[v]) return false
-      if (y < b - GALLERY_H + 1 && !QUARRY[v]) return false // a stone roof
+      // a solid roof of natural ground (where the rock is thin, packed dirt will do)
+      if (y < b - GALLERY_H + 1 && (!SOLID[v] || BUILT[v] || v === TEXT)) return false
     }
     // nothing loose or wet overhead that would pour in
     for (let y = 0; y < b; y++) if (DYNAMIC[cell(x, y)]) return false
@@ -2576,7 +2604,7 @@ function tryMine(w: World): boolean {
     if (b < 0) continue
     // not right on top of another nest
     let apart = 200
-    for (const n of c.nests) apart = Math.min(apart, Math.abs(nestStore(n)[0] - lx))
+    for (const nx of nestSpots(c)) apart = Math.min(apart, Math.abs(nx - lx))
     if (apart < 24) continue
     // near a store, but spreading out: a new nest a fair way from the others
     const score = L + R + (b - s) * 0.1 - depotDist(c, lx) * 0.06 + Math.min(apart, 90) * 0.06

@@ -23,7 +23,8 @@ The rules: anything the guys _do_ can change, but the terrain generator and the 
 | 2: the nest             |     24.4 |             45.1 |        13.3 |
 | 4: stores and swimmers  |     24.7 |             44.9 |        13.3 |
 | 6: more diggers, sooner |     27.8 |             51.4 |         6.7 |
-| 7: into the hills       | **28.5** |         **52.4** |    **16.2** |
+| 7: into the hills       |     28.5 |             52.4 |    **16.2** |
+| 8: everyone pitches in  | **50.3** |         **88.5** |        20.6 |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
@@ -63,8 +64,27 @@ The weakest worlds were mountain tops: nowhere flat enough for a mine shaft, so 
 
 _A mountain-top tablet world: before, one tower and nothing dug; now a tunnel through the hill, with a store at its mouth._
 
+## Gen 8: everyone pitches in
+
+Watching where the guys' time actually went was eye-opening: over a third of it was spent wandering about with nothing to do, while the stores held thousands of planks and stone. Three things were holding them back:
+
+- **One mine at a time.** Mines could only go near home, the shaft had to reach the very bottom of the screen, and only one could be dug at once. Now there's a mine on the go for every dozen guys, anywhere on the screen, near a store but away from the other nests, and as deep as the ground allows. That's how the colony spreads out.
+- **Crews with nothing to do.** Guys signed up to big tower crews even when every job within sight was already taken, then wandered off. Now they only join a project that has work going.
+- **Pointless trips to the store.** A guy with an armful of wood whose next job was digging would carry it all the way back to the store, dig, then fetch it again. Or they'd run off to whichever project happened to be first on the list, often the far side of the map. Now they keep it while their own job still needs it, and otherwise takes it to the nearest job that does.
+
+With all that, there's enough work for a bigger town, so wide screens can now grow to 72 guys.
+
+![[Assets/ant-colony/gen7-gen8-hd-765688.png]]
+
+_An HD world: twice the score, with the nest dug the whole way across._
+
+![[Assets/ant-colony/gen7-gen8-laptop-202618.png]]
+
+_A laptop world: a second village is going up on the right, over its own nest._
+
 ## Little things fixed along the way
 
+- An abandoned mine kept its place on the to-do list, and its ground, forever, so that world never tried another one.
 - Stuck builds: a guy who couldn't reach the next step of a build never gave up on it, so whole projects stood still for good. One phone world planned the same unreachable tower 13 times.
 - Swimmers flickered between swimming and falling as ripples passed under them, sometimes bobbed in place for thousands of ticks, and couldn't swim across lakes to fetch wood. A swimmer trapped in a pit never asked for rescue.
 - Felled trees now topple over and break up instead of vanishing.
@@ -74,5 +94,6 @@ _A mountain-top tablet world: before, one tower and nothing dug; now a tunnel th
 
 ## Still to do
 
-- Wide screens: everything still happens near home.
+- Wood is now the bottleneck: the woodpile runs dry while stone piles up by the tonne.
+- Phones are the weakest screens: there's barely any flat ground to dig a mine from.
 - Guys still walk far more than they work.
