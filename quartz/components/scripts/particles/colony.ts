@@ -160,7 +160,7 @@ export interface Colony {
 
 export const TIER_NAMES = ["Shelter", "Carpentry", "Masonry", "Engineering"]
 const TIER_STORIES = [2, 4, 6, 9]
-const SEARCH_BUDGET = 9000
+const SEARCH_BUDGET = 13000
 const CARRY_MAX = 1200
 
 export function newColony(w: World, homeX: number, homeY: number): Colony {
@@ -1185,8 +1185,9 @@ function workQuarry(w: World, g: Guy) {
   g.carryAmt += 10
 }
 
-// The stores: the main stockpile at home, and a smaller one at the head of every
-// finished mine shaft. They share one stock, so a guy just uses the nearest.
+// The stores: the main stockpile at home, a smaller one at the head of every finished
+// mine shaft, and the ground floor of every finished tower. They share one stock, so
+// a guy just uses the nearest.
 export function depots(c: Colony): number[][] {
   return [[c.homeX, c.homeY], ...c.nests.map((n) => [n.lx - 3, n.s - 1])]
 }
@@ -1196,6 +1197,8 @@ function startStock(w: World, g: Guy, mode: "deposit" | "withdraw", r = 0, need 
   w.nav.beginGoals()
   w.nav.markBox(c.homeX, c.homeY, 4, -3, 3, 0)
   for (const n of c.nests) w.nav.markBox(n.lx - 3, n.s - 1, 2, -2, 2, 0)
+  for (const t of c.towers)
+    if (t.complete) w.nav.markBox((t.x0 + t.x1) >> 1, t.base - 1, ((t.x1 - t.x0) >> 1) - 1, 0, 0, 0)
   if (!go(w, g)) return false
   g.job = { kind: "stock", mode, r, need, phase: "go", t: 0 }
   return true
