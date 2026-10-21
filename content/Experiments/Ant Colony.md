@@ -169,6 +169,8 @@ _A tablet world: a whole town of finished towers on top of the nest._
 - Swimmers flickered between swimming and falling as ripples passed under them, sometimes bobbed in place for thousands of ticks, and couldn't swim across lakes to fetch wood. A swimmer trapped in a pit never asked for rescue.
 - Felled trees now topple over and break up instead of vanishing.
 - The material menu on the front page opened behind the world instead of on top of it.
+- After hovering a link, pressing reset made a world thousands of pixels tall, with the ground way down the page. The site keeps hidden previews of linked pages around, and the world was making room for their text.
+- On phones, the material menu ran off the edge of the screen.
 - Resizing the window regenerated the world on every pixel of the drag and filled up the browser's storage.
 - The benchmark itself got about 4× faster: the falling-sand step was checking every cell of the screen every tick, even though nearly all of it is still ground and empty sky. It now skips rows with nothing loose in them, and plays out exactly the same.
 
