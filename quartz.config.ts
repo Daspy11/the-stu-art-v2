@@ -9,12 +9,16 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "🦊 stu.art",
-    pageTitleSuffix: "",
+    pageTitleSuffix: " · stu.art",
+    author: {
+      name: "Stuart Johnson",
+      sameAs: ["https://www.linkedin.com/in/stuart-william-johnson/", "https://github.com/Daspy11"],
+    },
     enableSPA: true,
     enablePopovers: true,
     analytics: {
       provider: "umami",
-      websiteId: "1aeb32f8-db30-4a76-bfa8-86b86c06e3b0"
+      websiteId: "1aeb32f8-db30-4a76-bfa8-86b86c06e3b0",
     },
     locale: "en-US",
     baseUrl: "thestu.art",
@@ -74,10 +78,7 @@ const config: QuartzConfig = {
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest", externalLinkIcon: false }),
       Plugin.Description(),
     ],
-    filters: [
-      Plugin.RemoveDrafts(),
-      Plugin.ExplicitPublish(),
-    ],
+    filters: [Plugin.RemoveDrafts(), Plugin.ExplicitPublish()],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),

@@ -13,6 +13,8 @@ export const sharedPageComponents: SharedLayout = {
   }),
   afterBody: [
     Component.ParticleCanvas(),
+    Component.ImageLightbox(),
+    Component.RecentWriting(),
     /**
     Component.Comments({
       provider: 'giscus',

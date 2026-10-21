@@ -21,6 +21,8 @@ import RecentNotes from "./RecentNotes"
 import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import ParticleCanvas from "./ParticleCanvas"
+import ImageLightbox from "./ImageLightbox"
+import RecentWriting from "./RecentWriting"
 
 export {
   ArticleTitle,
@@ -46,4 +48,6 @@ export {
   Breadcrumbs,
   Comments,
   ParticleCanvas,
+  ImageLightbox,
+  RecentWriting,
 }
