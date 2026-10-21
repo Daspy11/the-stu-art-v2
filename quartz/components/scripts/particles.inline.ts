@@ -186,10 +186,21 @@ function startWorld(fresh: boolean) {
   if (!world) world = createWorld(W, H, fresh || urlSeed === null ? newSeed() : urlSeed, rects)
 }
 
+const MAX_SAVES = 4
+
 function persist() {
-  if (!world) return
+  // a world only a few seconds old isn't worth keeping (and resizing makes lots of them)
+  if (!world || world.tick < 1200) return
   try {
-    localStorage.setItem(storageKey(world.W, world.H), JSON.stringify(saveWorld(world)))
+    const key = storageKey(world.W, world.H)
+    localStorage.setItem(key, JSON.stringify(saveWorld(world)))
+    // keep only a few screen sizes' worlds, so saves can't fill up the storage
+    const others: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i)
+      if (k && k.startsWith(SAVE_PREFIX) && k !== key) others.push(k)
+    }
+    if (others.length >= MAX_SAVES) for (const k of others) localStorage.removeItem(k)
   } catch {}
 }
 
@@ -383,13 +394,19 @@ function setupInput() {
   )
   document.addEventListener("touchend", up)
 
+  // wait for the window to stop changing size (dragging its edge fires dozens of these)
+  let resizeTimer = 0
   window.addEventListener("resize", () => {
-    if (!particlesActive || !world) return
-    // a new width (or a much taller/shorter window) gets its own world; small height
-    // changes, like a phone's address bar sliding away, keep this one
-    const [W, H] = worldSize()
-    if (W !== world.W || Math.abs(H - world.H) > world.H * 0.25) startWorld(false)
-    else scheduleText()
+    if (resizeTimer) clearTimeout(resizeTimer)
+    resizeTimer = window.setTimeout(() => {
+      resizeTimer = 0
+      if (!particlesActive || !world) return
+      // a new width (or a much taller/shorter window) gets its own world; small height
+      // changes, like a phone's address bar sliding away, keep this one
+      const [W, H] = worldSize()
+      if (W !== world.W || Math.abs(H - world.H) > world.H * 0.25) startWorld(false)
+      else scheduleText()
+    }, 250)
   })
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") persist()
