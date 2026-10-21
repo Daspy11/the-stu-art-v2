@@ -1185,10 +1185,17 @@ function workQuarry(w: World, g: Guy) {
   g.carryAmt += 10
 }
 
+// The stores: the main stockpile at home, and a smaller one at the head of every
+// finished mine shaft. They share one stock, so a guy just uses the nearest.
+export function depots(c: Colony): number[][] {
+  return [[c.homeX, c.homeY], ...c.nests.map((n) => [n.lx - 3, n.s - 1])]
+}
+
 function startStock(w: World, g: Guy, mode: "deposit" | "withdraw", r = 0, need = 0): boolean {
   const c = w.colony
   w.nav.beginGoals()
   w.nav.markBox(c.homeX, c.homeY, 4, -3, 3, 0)
+  for (const n of c.nests) w.nav.markBox(n.lx - 3, n.s - 1, 2, -2, 2, 0)
   if (!go(w, g)) return false
   g.job = { kind: "stock", mode, r, need, phase: "go", t: 0 }
   return true
