@@ -86,8 +86,8 @@ import {
   ACT_SIT,
   ACT_PLANT,
 } from "./guys"
-import { standable, solidAt, BODY_H } from "./nav"
-import { isMature, fellTree, canPlant, plantTree, treeAt } from "./trees"
+import { standable, solidAt, BODY_H, MAX_STEP } from "./nav"
+import { isMature, fellTree, canPlant, plantTree, treeAt, type Tree } from "./trees"
 import type { World } from "./world"
 
 export interface Room {
@@ -371,14 +371,17 @@ function claimValid(w: World, p: Project, i: number): boolean {
 const WINDOW = 12
 
 // The next step this guy could take on, or -1. Of the next few steps, a guy takes one
-// he can do from where he stands, or else the nearest, so the crew isn't forever
-// walking back and forth.
+// he can do from where he stands, or else the nearest one he can pay for with what
+// he's carrying, or else the nearest, so the crew isn't forever walking back and
+// forth. A bigger crew looks further ahead, so there's something for each of them.
 function nextStep(w: World, p: Project, g?: Guy): number {
   while (p.cursor < p.steps.length && p.steps[p.cursor].done) p.cursor++
-  const end = Math.min(p.steps.length, p.cursor + WINDOW)
+  const end = Math.min(p.steps.length, p.cursor + WINDOW + 8 * Math.min(6, p.workers))
   let first = -1,
     near = -1,
-    nearD = Infinity
+    nearD = Infinity,
+    paid = -1,
+    paidD = Infinity
   for (let i = p.cursor; i < end; i++) {
     const s = p.steps[i]
     if (s.done) continue
@@ -390,17 +393,24 @@ function nextStep(w: World, p: Project, g?: Guy): number {
       s.done = true // give up on unreachable or blocked cells
       continue
     }
+    if (s.hold !== undefined && s.hold > w.tick) continue
     if (claimValid(w, p, i)) continue
     s.claim = 0
     if (!g) return i
     if (first < 0) first = i
-    if (inReach(g, s) && (s.r === R_NONE || (g.carry === s.r && g.carryAmt >= s.c))) return i
+    const afford = s.r === R_NONE || (g.carry === s.r && g.carryAmt >= s.c)
+    if (afford && inReach(g, s)) return i
     const d = Math.abs(s.x - g.x) + Math.abs(s.y - g.y) * 0.7
     if (d < nearD) {
       nearD = d
       near = i
     }
+    if (afford && d < paidD) {
+      paidD = d
+      paid = i
+    }
   }
+  if (paid >= 0) near = paid
   // (after a run of failures, go back to the first step, which may be what's stuck)
   if (first >= 0) return near >= 0 && p.fails - (p.failMark ?? 0) < 8 ? near : first
   while (p.cursor < p.steps.length && p.steps[p.cursor].done) p.cursor++
@@ -713,6 +723,21 @@ function workBuild(w: World, g: Guy) {
     g.actT = 0
     s.tries += 0.05
     if (s.tries > 3) s.done = true
+    // somebody's standing where it goes (or it's not dug out yet): rather than
+    // stand about, put it aside for a bit and get on with something else here
+    if ((j.waits = (j.waits ?? 0) + 1) >= 4) {
+      j.waits = 0
+      s.claim = 0
+      s.hold = w.tick + 300
+      const n = nextStep(w, p, g)
+      const ns = n >= 0 ? p.steps[n] : null
+      if (ns && inReach(g, ns) && (ns.r === R_NONE || (g.carry === ns.r && g.carryAmt >= ns.c))) {
+        ns.claim = g.id
+        j.s = n
+        return
+      }
+      endJob(w, g)
+    }
     return
   }
   s.done = true
@@ -1465,7 +1490,10 @@ function plan(w: World) {
         [c.tier >= 1 && towerRoom ? 2 : 0, () => tryRaise(w)],
         [c.tier >= 1 ? 3 : 0, () => tryBridge(w)],
         [c.tier >= 1 ? 0.8 : 0, () => tryBalcony(w)],
-        [c.ladders < Math.floor(w.W / 80) + 1 ? 0.7 : 0, () => tryCliffLadder(w)],
+        [
+          needWoodLadder(w) ? 6 : c.ladders < Math.floor(w.W / 80) + 1 ? 0.7 : 0,
+          () => tryCliffLadder(w),
+        ],
         [c.mines < mineCap(w) ? (c.stock[R_STONE] < 300 ? 4 : 1.5) : 0, () => tryMine(w)],
         [c.gapBridges < 1 + Math.floor(w.W / 160) ? 2.5 : 0, () => tryGapBridge(w)],
         [c.nests.length ? 2 + idle : 0, () => tryTunnel(w)],
@@ -1727,10 +1755,12 @@ function reachableFromHome(w: World, maxExpand = 40000): boolean {
 // Would the finished structure wall off part of the walkable network?
 // With a solid cell just placed at (x, y): does it cut a real chunk of the colony
 // off from home? Only checked where people actually walk (the cell is in the body
-// of a safe node), and if it doesn't, the safe map is left up to date.
+// of a safe node, or above one, where it could block a hop), and if it doesn't, the
+// safe map is left up to date.
 function cutsWay(w: World, x: number, y: number): boolean {
   let onWay = false
-  for (let d = 0; d < BODY_H && !onWay; d++)
+  // (in a body's way, or over a ledge someone hops up)
+  for (let d = 0; d < BODY_H + MAX_STEP && !onWay; d++)
     if (y + d < w.H && w.nav.isSafe((y + d) * w.W + x)) onWay = true
   if (!onWay) return false
   const home = homeNode(w)
@@ -2234,6 +2264,28 @@ function tryBalcony(w: World): boolean {
   return true
 }
 
+// Trees the colony can fell (mature, by safe ground) and ones it can't get to
+function forest(w: World): { near: number; far: Tree[] } {
+  let near = 0
+  const far: Tree[] = []
+  for (const t of w.trees) {
+    if (!isMature(t)) continue
+    const k = t.y * w.W + t.x
+    if (w.nav.isSafe(k) || w.nav.isSafe(k - 1) || w.nav.isSafe(k + 1)) near++
+    else far.push(t)
+  }
+  return { near, far }
+}
+
+// The woods within reach are running out, but there are trees down a drop the colony
+// can't climb back up: time to hang a ladder down to them (while there's wood for it)
+function needWoodLadder(w: World): boolean {
+  const c = w.colony
+  if (c.stock[R_WOOD] < 150) return false
+  const { near, far } = forest(w)
+  return near < 6 && far.length >= 3
+}
+
 function tryCliffLadder(w: World): boolean {
   const c = w.colony
   if (c.projects.some((p) => !p.done && p.kind === "ladder")) return false
@@ -2241,7 +2293,10 @@ function tryCliffLadder(w: World): boolean {
   const reach = { has: (k: number) => w.nav.isSafe(k) }
   const fs = new Int16Array(w.W)
   for (let x = 0; x < w.W; x++) fs[x] = surfaceAt(w, x)
-  const cands: [number, number, number][] = []
+  const far = needWoodLadder(w) ? forest(w).far : []
+  // [x, dir, rise, down]: up a cliff from safe ground at its foot, or down one from
+  // safe ground at its top
+  const cands: [number, number, number, boolean][] = []
   for (let x = 6; x < w.W - 6; x++) {
     for (const dir of [1, -1]) {
       const hi = x + dir
@@ -2249,19 +2304,27 @@ function tryCliffLadder(w: World): boolean {
       if (rise < 6 || rise > 36) continue
       const lowNode = (fs[x] - 1) * w.W + (x - dir)
       const highNode = (fs[hi] - 1) * w.W + hi
-      if (!reach.has(lowNode) || reach.has(highNode)) continue
       if (!standable(w, hi, fs[hi] - 1)) continue
-      // something worth reaching up there?
-      let flat = 0
-      for (let i = 1; i <= 14; i++) if (Math.abs(fs[hi + dir * i] - fs[hi]) <= 3) flat++
-      if (flat < 8) continue
-      cands.push([x, dir, rise])
+      if (reach.has(lowNode) && !reach.has(highNode)) {
+        // something worth reaching up there?
+        let flat = 0
+        for (let i = 1; i <= 14; i++) if (Math.abs(fs[hi + dir * i] - fs[hi]) <= 3) flat++
+        if (flat >= 8) cands.push([x, dir, rise, false])
+      } else if (far.length && reach.has(highNode) && !reach.has(lowNode)) {
+        // trees down there?
+        if (far.some((t) => (t.x - x) * -dir >= 0 && Math.abs(t.x - x) < 50 && t.y >= fs[x] - 6))
+          cands.push([x, dir, rise, true])
+      }
     }
   }
   if (!cands.length) return false
-  const [x, dir] = w.rng.pick(cands)
+  // when it's wood we're after, a ladder down to the trees comes first
+  const down = cands.filter((cd) => cd[3])
+  const [x, dir, , isDown] = w.rng.pick(down.length ? down : cands)
   const lx = dir === 1 ? x - 2 : x
-  const steps = ladderSteps(w, lx, fs[x + dir] - 1, 40)
+  let steps = ladderSteps(w, lx, fs[x + dir] - 1, 40)
+  // (going down, it's built from the top, a rung at a time)
+  if (steps && isDown) steps = steps.reverse()
   if (!steps || !validSteps(w, steps, 0)) return false
   for (const st of steps) if (w.isSolid(st.x, st.y)) return false
   c.ladders++

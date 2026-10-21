@@ -208,44 +208,75 @@ export class Nav {
   safeGoalsOnly = false // goals only count if they're in the safe set
   safeGen = 0
   safeCount = 0
+  // scratch for computeSafe
+  idx: Int32Array = new Int32Array(0)
+  edgeFrom: Int32Array = new Int32Array(1 << 14)
+  edgeTo: Int32Array = new Int32Array(1 << 14)
   computeSafe(w: World, home: number) {
     const n = this.W * this.H
     if (this.safe.length !== n) this.safe = new Uint32Array(n)
+    if (this.idx.length !== n) this.idx = new Int32Array(n)
     this.safeGen++
     this.safeCount = 0
     if (home < 0) return
-    // forward flood, recording edges reversed
-    this.search(w, home, n, false, false)
-    const nodes = this.visited.slice()
-    const index = new Map<number, number>()
-    for (let i = 0; i < nodes.length; i++) index.set(nodes[i], i)
-    const head = new Int32Array(nodes.length).fill(-1)
-    const next: number[] = []
-    const from: number[] = []
-    for (let i = 0; i < nodes.length; i++) {
-      this.edges(w, nodes[i], (m) => {
-        const j = index.get(m)
-        if (j === undefined) return
-        from.push(i)
-        next.push(head[j])
-        head[j] = from.length - 1
-      })
+    // forward flood from home (plain reachability, so a queue will do), numbering the
+    // nodes as they're found and recording every edge between them
+    this.gen++
+    if (this.gen === 0xffffffff) {
+      this.seen.fill(0)
+      this.gen = 1
     }
-    // walk the reversed edges from home
-    const seen = new Uint8Array(nodes.length)
-    const h = index.get(home)
-    if (h === undefined) return
-    const q = [h]
-    seen[h] = 1
-    while (q.length) {
-      const j = q.pop()!
+    const gen = this.gen,
+      seen = this.seen,
+      idx = this.idx
+    const nodes: number[] = [home]
+    seen[home] = gen
+    idx[home] = 0
+    let from = this.edgeFrom,
+      to = this.edgeTo,
+      ne = 0
+    let cur = 0
+    const add = (m: number) => {
+      if (seen[m] !== gen) {
+        seen[m] = gen
+        idx[m] = nodes.length
+        nodes.push(m)
+      }
+      if (ne >= from.length) {
+        const f2 = new Int32Array(from.length * 2)
+        f2.set(from)
+        const t2 = new Int32Array(to.length * 2)
+        t2.set(to)
+        from = this.edgeFrom = f2
+        to = this.edgeTo = t2
+      }
+      from[ne] = cur
+      to[ne] = idx[m]
+      ne++
+    }
+    for (; cur < nodes.length; cur++) this.edges(w, nodes[cur], add)
+    // then walk the edges backwards from home: what can get back
+    const N = nodes.length
+    const head = new Int32Array(N).fill(-1)
+    const next = new Int32Array(ne)
+    for (let e = 0; e < ne; e++) {
+      next[e] = head[to[e]]
+      head[to[e]] = e
+    }
+    const back = new Uint8Array(N)
+    const q = new Int32Array(N)
+    let qn = 0
+    q[qn++] = 0
+    back[0] = 1
+    while (qn) {
+      const j = q[--qn]
       this.safe[nodes[j]] = this.safeGen
       this.safeCount++
       for (let e = head[j]; e >= 0; e = next[e]) {
         const i = from[e]
-        if (!seen[i]) {
-          seen[i] = 1
-          q.push(i)
+        if (!back[i]) {
+          back[i] = 1
+          q[qn++] = i
         }
       }
     }

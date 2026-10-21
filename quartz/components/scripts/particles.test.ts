@@ -155,4 +155,20 @@ describe("particle world", () => {
     assert.strictEqual(r.guys.length, w.guys.filter((g) => g.mode !== "dead").length)
     for (let i = 0; i < 2000; i++) step(r)
   })
+
+  test("a reloaded world carries on exactly where it left off", () => {
+    for (const seed of [9, 21]) {
+      const w = run(seed, 6000)
+      const r = restoreWorld(JSON.parse(JSON.stringify(saveWorld(w))), TEXT_RECTS)!
+      for (let i = 0; i < 3000; i++) {
+        step(w)
+        step(r)
+      }
+      assert.strictEqual(
+        checksum(r),
+        checksum(w),
+        `seed ${seed}: the reloaded world went its own way`,
+      )
+    }
+  })
 })

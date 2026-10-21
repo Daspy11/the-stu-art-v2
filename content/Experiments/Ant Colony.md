@@ -28,7 +28,8 @@ The rules: anything the guys _do_ can change, but the terrain generator and the 
 | 9: the long way round   |     55.8 |             99.0 |        21.4 |
 | 10: winzes              |     64.1 |            118.1 |        47.8 |
 | 11: nobody left behind  |     66.9 |        **121.5** |        49.8 |
-| 12: many hands          | **71.0** |            120.6 |    **53.7** |
+| 12: many hands          |     71.0 |            120.6 |    **53.7** |
+| 13: up the scaffolding  | **96.0** |        **158.3** |        45.1 |
 
 ![[Assets/ant-colony/gen0-gen6-tablet-706844.png]]
 
@@ -137,8 +138,31 @@ Early on, a third of the guys had nothing to do: every project already had a ful
 
 _The same tablet world 12 minutes in: twice as much nest._
 
+## Gen 13: up the scaffolding
+
+Towers were being started and not finished: guys would climb all the way up, put in a plank or two, and come back down. Counting every trip showed why:
+
+- **Too many cooks.** A guy only looks a dozen steps ahead in the blueprint, so a crew of six would use them all up and the next climber found nothing left to do. Now the bigger the crew, the further ahead they look.
+- **The wrong armful.** A guy carrying stone would pick the nearest step even if it needed wood, then go back down to swap it. Now they pick a step they can pay for with what he's carrying first.
+- **Waiting on a guy in the way.** If someone was standing where a block had to go, the builder waited, and waited, then gave up and left. Now the builder sets that one aside and carries on with the next.
+
+That made the colony so much quicker that some worlds ran out of trees they could reach. Two fixes:
+
+- A balcony plank could block the gap a guy hops up through, which the doorway check from gen 11 missed, and that cut off a whole forest. The check now covers ledges as well.
+- When the woods within reach run low and there are trees down a drop the guys can't climb back up, they hang a ladder down to them.
+
+![[Assets/ant-colony/gen12-gen13-laptop-765688.png]]
+
+_A laptop world: twice the score, and the towers actually get finished._
+
+![[Assets/ant-colony/gen12-gen13-tablet-538379.png]]
+
+_A tablet world: a whole town of finished towers on top of the nest._
+
 ## Little things fixed along the way
 
+- Reloading the page lost track of what everyone was doing, and a big world's save could quietly fail once the browser's storage filled up, so a reload brought back an old world. Saves now keep everything (each guy's job and route included) in half the space, a reloaded world carries on exactly as if it had never stopped, and a full store makes room for the current world.
+- Working out where the guys can safely walk was most of the simulation's running time. It's now twice as fast, with exactly the same answers.
 - Swimmers stopped and turned around every time a ripple passed under the next stroke.
 - An abandoned mine kept its place on the to-do list, and its ground, forever, so that world never tried another one.
 - Stuck builds: a guy who couldn't reach the next step of a build never gave up on it, so whole projects stood still for good. One phone world planned the same unreachable tower 13 times.
@@ -151,6 +175,6 @@ _The same tablet world 12 minutes in: twice as much nest._
 ## Still to do
 
 - Stone piles up by the tonne with not much to spend it on.
-- Some towers stand as bare frames for a long time; crews start more than they finish.
+- Trees grow back slowly, and colonies that use up their woods slow right down.
 - Phones are still the weakest screens: there's barely any flat ground to dig a mine from.
 - Guys still walk far more than they work.

@@ -58,6 +58,7 @@ export interface Step {
   flip?: boolean
   room?: number
   seal?: number[] // [x0, y0, x1, y1]: don't place while anyone's in here (they'd be shut in)
+  hold?: number // put aside until this tick (somebody was in the way)
 }
 
 export const STORY = 12 // rows from floor to floor (11 clear)

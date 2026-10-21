@@ -193,7 +193,7 @@ function persist() {
   if (!world || world.tick < 1200) return
   try {
     const key = storageKey(world.W, world.H)
-    localStorage.setItem(key, JSON.stringify(saveWorld(world)))
+    const data = JSON.stringify(saveWorld(world))
     // keep only a few screen sizes' worlds, so saves can't fill up the storage
     const others: string[] = []
     for (let i = 0; i < localStorage.length; i++) {
@@ -201,6 +201,13 @@ function persist() {
       if (k && k.startsWith(SAVE_PREFIX) && k !== key) others.push(k)
     }
     if (others.length >= MAX_SAVES) for (const k of others) localStorage.removeItem(k)
+    try {
+      localStorage.setItem(key, data)
+    } catch {
+      // out of room: this screen's world matters most, so make way for it
+      for (const k of others) localStorage.removeItem(k)
+      localStorage.setItem(key, data)
+    }
   } catch {}
 }
 
