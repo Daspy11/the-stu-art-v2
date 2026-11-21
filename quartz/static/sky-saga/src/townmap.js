@@ -191,171 +191,199 @@ export function rimProfile(g) {
 
 export function drawUnderside(p, g, prof) {
   const r = rng(31)
-  const x0 = prof.minX + 6,
-    x1 = prof.maxX - 6
+  const x0 = prof.minX + 4,
+    x1 = prof.maxX - 4
   const W = x1 - x0
   const cx = (x0 + x1) / 2
   const yAt = (x) => {
-    for (let d = 0; d < 12; d++) {
+    for (let d = 0; d < 14; d++) {
       const v = prof.y(x + d) ?? prof.y(x - d)
       if (v != null) return v
     }
-    return 0
+    return prof.y(x0 + 10) ?? 0
   }
-  // depth profile
   const depth = (x) => {
     const u = (x - cx) / (W / 2)
-    return Math.max(0, Math.pow(Math.max(0, 1 - u * u), 0.75)) * 300
+    return Math.pow(Math.max(0, 1 - u * u), 0.62) * 330
   }
-  // columns of facets
-  const cols = []
-  let x = x0
-  while (x < x1) {
-    cols.push(x)
-    x += 22 + r() * 30
+  // silhouette points along the rim
+  const rim = []
+  for (let x = x0; x <= x1; x += 6) rim.push([x, yAt(x) - 1])
+  rim.push([x1, yAt(x1) - 1])
+  // major lobes (tips) and valleys between them
+  const NT = 8
+  const tips = []
+  for (let k = 0; k < NT; k++) {
+    const u = (k + 0.5) / NT
+    const x = x0 + W * u + (r() - 0.5) * 30
+    const d = depth(x) * (0.82 + r() * 0.3) + 16
+    tips.push([x, yAt(x) + d])
   }
-  cols.push(x1)
-  const top = cols.map((x) => yAt(x) - 1)
-  const mid = cols.map((x, k) => top[k] + 12 + depth(x) * (0.32 + r() * 0.12))
-  const bot = cols.map((x, k) => top[k] + 16 + depth(x) * (0.72 + r() * 0.3) * (k % 2 ? 0.86 : 1))
-  // upper band (cool, top tone): rim to mid
-  for (let k = 0; k < cols.length - 1; k++) {
-    const a = [cols[k], top[k]],
-      b = [cols[k + 1], top[k + 1]]
-    const m0 = [cols[k], mid[k]],
-      m1 = [cols[k + 1], mid[k + 1]]
-    const mx = (cols[k] + cols[k + 1]) / 2
-    const mm = [mx + (r() - 0.5) * 10, (mid[k] + mid[k + 1]) / 2 + 6 + r() * 10]
-    p.poly([...a, ...b, ...m1, ...mm, ...m0], C.rockTop)
-    // facet split for a crisp cut
-    p.poly([...a, ...mm, ...m0], mix(C.rockTop, C.rockShade, 0.45))
+  const valleys = [[x0, yAt(x0) + 2]]
+  for (let k = 0; k < NT - 1; k++) {
+    const x = (tips[k][0] + tips[k + 1][0]) / 2 + (r() - 0.5) * 16
+    const d = Math.min(tips[k][1] - yAt(tips[k][0]), tips[k + 1][1] - yAt(tips[k + 1][0])) * (0.5 + r() * 0.12)
+    valleys.push([x, yAt(x) + d])
   }
-  // lower mass: warm lit facets alternating with shade
-  for (let k = 0; k < cols.length - 1; k++) {
-    const mx = (cols[k] + cols[k + 1]) / 2
-    const m0 = [cols[k], mid[k] - 2],
-      m1 = [cols[k + 1], mid[k + 1] - 2]
-    const tip = [mx + (r() - 0.5) * 14, Math.max(bot[k], bot[k + 1]) + 4 + r() * 16]
-    p.poly([...m0, ...m1, ...tip], C.rockShade)
-    // lit facet on the left (light comes up from below-left)
-    p.poly([...m0, mx + (r() - 0.5) * 6, (mid[k] + mid[k + 1]) / 2 + 2, ...tip], C.rockLit)
-    // warm underside near the tip
-    const tt = 0.62
-    const lx = m0[0] + (tip[0] - m0[0]) * tt,
-      ly = m0[1] + (tip[1] - m0[1]) * tt
-    const rx2 = m1[0] + (tip[0] - m1[0]) * tt,
-      ry2 = m1[1] + (tip[1] - m1[1]) * tt
-    p.poly([lx, ly, rx2, ry2, ...tip], C.rockWarm, 0.75)
+  valleys.push([x1, yAt(x1) + 2])
+  // whole mass in shade tone
+  const outline = []
+  for (const [x, y] of rim) outline.push(x, y)
+  for (let k = NT - 1; k >= 0; k--) {
+    outline.push(valleys[k + 1][0], valleys[k + 1][1])
+    outline.push(tips[k][0], tips[k][1])
   }
-  // root-like tapers hanging from the deepest part
-  const roots = []
-  for (let k = 0; k < 9; k++) {
-    const u = (k / 8 - 0.5) * 1.3
-    const rx0 = cx + u * W * 0.42 + (r() - 0.5) * 30
-    const base = yAt(rx0) + depth(rx0) * 0.78
-    const len = 50 + depth(rx0) * (0.35 + r() * 0.55)
-    roots.push([rx0, base, len])
+  outline.push(valleys[0][0], valleys[0][1])
+  p.poly(outline, C.rockShade)
+  // lit facets: left side of each lobe catches the light from below-left
+  for (let k = 0; k < NT; k++) {
+    const [tx, ty] = tips[k]
+    const [vx, vy] = valleys[k]
+    const [wx, wy] = valleys[k + 1]
+    const ridge = [tx + (r() - 0.5) * 10, yAt(tx) + (ty - yAt(tx)) * 0.3]
+    p.poly([vx, vy, ...ridge, tx, ty], C.rockLit)
+    // a second, darker break on the right face
+    const mid = [(tx + wx) / 2 + 4, (ty + wy) / 2 - 10]
+    p.poly([...ridge, wx, wy, ...mid], mix(C.rockShade, C.rockTop, 0.4))
+    // warm light on the lowest planes
+    const t = 0.6
+    p.poly([vx + (tx - vx) * t, vy + (ty - vy) * t, ridge[0] + (tx - ridge[0]) * t, ridge[1] + (ty - ridge[1]) * t, tx, ty], C.rockWarm)
   }
-  for (const [rx0, base, len] of roots) {
-    const w = 10 + r() * 12
-    const bend = (r() - 0.5) * 18
-    const tipx = rx0 + bend,
-      tipy = base + len
-    p.poly([rx0 - w, base - 6, rx0 + bend * 0.4, base + len * 0.5, tipx, tipy, rx0 - w * 0.2, base + len * 0.35], C.rockLit)
-    p.poly([rx0 + w, base - 6, rx0 - w * 0.2, base + len * 0.35, tipx, tipy, rx0 + bend * 0.4 + w * 0.3, base + len * 0.55], C.rockShade)
-    p.poly([rx0 - w * 0.2, base + len * 0.55, rx0 + bend * 0.5 + 2, base + len * 0.62, tipx, tipy], C.rockWarm)
+  // a cool upper band of rock just under the rim, cut in a zigzag
+  const band = []
+  for (const [x, y] of rim) band.push(x, y)
+  let x = x1
+  let up = true
+  while (x > x0) {
+    const d = Math.min(depth(x) * 0.22 + 6, 60)
+    band.push(x, yAt(x) + d * (up ? 1 : 0.55))
+    up = !up
+    x -= 18 + r() * 22
   }
-  return { cx, x0, x1, depth, yAt }
+  band.push(x0, yAt(x0) + 2)
+  p.poly(band, C.rockTop)
+  // soil seam with hanging roots right under the deck
+  for (let k = 0; k < 26; k++) {
+    const rx = x0 + 20 + r() * (W - 40)
+    const ry = yAt(rx)
+    const len = 8 + r() * 22
+    p.line([rx, ry, rx + (r() - 0.5) * 6, ry + len * 0.6, rx + (r() - 0.5) * 8, ry + len], 0.9, C.soilShade, 0.9)
+  }
+  // root-like tapers from the deepest lobes
+  const order = tips.map((t, i) => [t[1], i]).sort((a, b) => b[0] - a[0])
+  for (const [, i] of order.slice(0, 4)) {
+    const [tx, ty] = tips[i]
+    const len = 50 + r() * 90
+    const bend = (r() - 0.5) * 22
+    const w = 7 + r() * 5
+    const ex = tx + bend,
+      ey = ty + len
+    p.poly([tx - w, ty - 14, tx + bend * 0.5, ty + len * 0.55, ex, ey, tx - w * 0.15, ty + len * 0.3], C.rockLit)
+    p.poly([tx + w, ty - 14, tx - w * 0.15, ty + len * 0.3, ex, ey], C.rockShade)
+    p.poly([tx - w * 0.15, ty + len * 0.6, tx + bend * 0.55 + 2, ty + len * 0.68, ex, ey], C.rockWarm)
+  }
+  return { cx, x0, x1, depth, yAt, tips }
 }
 
-// the built keel: tarred timbers slung under the middle of the island
+// the built keel: a tarred timber frame slung under the middle, with the
+// keel-walk hanging beneath it
 export function drawKeelFrame(p, u) {
-  const { cx, yAt, depth } = u
-  const ribs = []
-  for (let k = -5; k <= 5; k++) ribs.push(cx + k * 46)
-  const keelY = (x) => yAt(x) + depth(x) * 0.6 + 24
-  // longitudinal keel beam following a gentle hull curve
-  const pts = ribs.map((x) => [x, keelY(x)])
-  for (let k = 0; k < pts.length - 1; k++) {
-    const [ax, ay] = pts[k],
-      [bx, by] = pts[k + 1]
-    p.poly([ax, ay, bx, by, bx, by + 9, ax, ay + 9], C.tar2)
-    p.poly([ax, ay + 6, bx, by + 6, bx, by + 9, ax, ay + 9], mix(C.tar2, C.wax, 0.25))
+  const { cx, yAt } = u
+  const span = 250
+  const base = yAt(cx)
+  const keelY = (x) => base + 120 + Math.pow(Math.abs(x - cx) / span, 2) * -46
+  const xs = []
+  for (let k = -5; k <= 5; k++) xs.push(cx + (k * span) / 5)
+  // ribs from rock to beam
+  for (const x of xs) {
+    const y0 = yAt(x) + 20
+    const y1 = keelY(x) + 4
+    p.poly([x - 4, y0, x + 4, y0, x + 4, y1, x - 4, y1], C.tar)
+    p.poly([x - 4, y0, x - 1.2, y0, x - 1.2, y1, x - 4, y1], C.tar2)
   }
-  // ribs: posts from the rock down to the keel beam
-  for (const x of ribs) {
-    const y0 = yAt(x) + depth(x) * 0.25
-    const y1 = keelY(x) + 9
-    p.poly([x - 3.5, y0, x + 3.5, y0, x + 3.5, y1, x - 3.5, y1], C.tar)
-    p.poly([x - 3.5, y0, x - 1, y0, x - 1, y1, x - 3.5, y1], C.tar2)
-    p.rect(x - 3.5, y1 - 2.5, 7, 2.5, mix(C.tar2, C.wax, 0.3))
+  // diagonal braces
+  for (let k = 0; k < xs.length - 1; k++) {
+    const a = xs[k],
+      b = xs[k + 1]
+    const ya = (yAt(a) + keelY(a)) / 2,
+      yb = keelY(b) - 4
+    if (k % 2 === 0) p.line([a, ya, b, yb], 3, C.tar2)
+    else p.line([a, keelY(a) - 4, b, (yAt(b) + keelY(b)) / 2], 3, C.tar)
   }
-  // a lower stringer
-  const sy = (x) => yAt(x) + depth(x) * 0.42 + 12
-  for (let k = 0; k < ribs.length - 1; k++) {
-    const ax = ribs[k],
-      bx = ribs[k + 1]
-    p.poly([ax, sy(ax), bx, sy(bx), bx, sy(bx) + 5, ax, sy(ax) + 5], C.tar)
+  // the keel beam
+  const top = [],
+    bot = []
+  for (let x = xs[0] - 14; x <= xs[xs.length - 1] + 14; x += 10) {
+    top.push(x, keelY(x))
+    bot.unshift(x, keelY(x) + 11)
   }
-  return { ribs, keelY }
+  p.poly([...top, ...bot], C.tar2)
+  const lit = []
+  for (let x = xs[0] - 14; x <= xs[xs.length - 1] + 14; x += 10) lit.push(x, keelY(x) + 8)
+  for (let x = xs[xs.length - 1] + 14; x >= xs[0] - 14; x -= 10) lit.push(x, keelY(x) + 11)
+  p.poly(lit, mix(C.tar2, C.wax, 0.42))
+  // the keel-walk: a narrow plank walkway slung on ropes below the beam
+  const wy = base + 186
+  const w0 = cx - 210,
+    w1 = cx + 210
+  for (let x = w0 + 10; x <= w1 - 10; x += 42) p.line([x, keelY(x) + 10, x, wy], 0.9, C.rope, 0.9)
+  p.rect(w0, wy, w1 - w0, 3, C.plankShade)
+  p.rect(w0, wy + 3, w1 - w0, 3, mix(C.plankLit, C.glow, 0.35))
+  rope(p, w0, wy - 9, w1, wy - 9, 3, 0.8, C.rope, 0.9)
+  // tiny figures? no: the walk is empty at dawn. A lantern at each end.
+  return { keelY, xs, walk: { y: wy, x0: w0, x1: w1 } }
 }
 
 // tells, graves, net-bags hanging beneath
 export function drawHangings(p, u, kf, g, prof) {
   const r = rng(77)
   const lanterns = []
-  const { ribs, keelY } = kf
-  // the forty-one tells hanging from the keel beam
-  const x0 = ribs[0] + 6,
-    x1 = ribs[ribs.length - 1] - 6
+  const { walk } = kf
+  // the forty-one tells: waxed lines through the deck, each with a slate weight
   for (let k = 0; k < 41; k++) {
-    const x = x0 + ((x1 - x0) * (k + 0.5)) / 41
-    const y = keelY(x) + 8
-    const len = 70 + r() * 90 + (k % 3) * 20
-    const lean = (r() - 0.5) * 0.12
+    const x = walk.x0 + 8 + ((walk.x1 - walk.x0 - 16) * (k + 0.5)) / 41
+    const y = walk.y + 6
+    const len = 46 + ((k * 37) % 11) * 6 + r() * 26
+    const lean = (r() - 0.5) * 0.1
     const ex = x + lean * len,
       ey = y + len
-    p.line([x, y, ex, ey], 0.7, C.rope, 0.85)
-    // slate weight: small faceted drop
-    p.poly([ex - 2.4, ey, ex, ey - 1.4, ex, ey + 5.5], C.slateLit)
-    p.poly([ex + 2.4, ey, ex, ey - 1.4, ex, ey + 5.5], C.slateShade)
+    p.line([x, y, ex, ey], 0.7, C.rope, 0.9)
+    p.poly([ex - 2.6, ey, ex, ey - 1.6, ex, ey + 6], C.slateLit)
+    p.poly([ex + 2.6, ey, ex, ey - 1.6, ex, ey + 6], C.slateShade)
   }
-  // graves: slate slabs in rope cradles, with tiny lanterns
+  // graves: slate slabs in rope cradles, each with a tiny lantern
   const graves = [
-    [ribs[1] - 10, 120],
-    [ribs[3] + 8, 210],
-    [ribs[6] - 6, 150],
-    [ribs[8] + 14, 250],
-    [ribs[9] + 4, 110],
+    [walk.x0 - 50, 130],
+    [walk.x0 + 40, 205],
+    [u.cx - 70, 250],
+    [u.cx + 60, 168],
+    [walk.x1 - 30, 232],
+    [walk.x1 + 60, 120],
   ]
   for (const [gx, drop] of graves) {
-    const top = keelY(gx) + 8
+    const top = kf.keelY(Math.max(kf.xs[0], Math.min(kf.xs[kf.xs.length - 1], gx))) + 10
     const sy = top + drop
-    const w = 26,
-      h = 7
-    // cradle ropes converge to a point on the beam
+    const w = 30,
+      h = 6
     p.line([gx, top, gx - w / 2, sy - 2], 0.8, C.rope)
     p.line([gx, top, gx + w / 2, sy - 2], 0.8, C.rope)
-    p.line([gx, top, gx - w / 4, sy - 4], 0.6, C.rope, 0.7)
-    // slab (iso-ish thick slab)
-    p.poly([gx - w / 2, sy - 2, gx, sy - 6, gx + w / 2, sy - 2, gx, sy + 2], C.slateTop)
-    p.poly([gx - w / 2, sy - 2, gx, sy + 2, gx, sy + 2 + h, gx - w / 2, sy - 2 + h], C.slateLit)
-    p.poly([gx + w / 2, sy - 2, gx, sy + 2, gx, sy + 2 + h, gx + w / 2, sy - 2 + h], C.slateShade)
-    // rope under the slab
-    p.line([gx - w / 2, sy + h - 2, gx, sy + h + 2.4, gx + w / 2, sy + h - 2], 1, C.rope)
-    // lantern hanging at the corner
-    const lx = gx + w / 2 + 2,
-      ly = sy + 12
-    p.line([gx + w / 2 - 1, sy - 1, lx, ly - 3], 0.6, C.rope)
-    p.rect(lx - 1.6, ly - 3, 3.2, 4.4, C.wax)
-    p.rect(lx - 1.8, ly - 3.8, 3.6, 1, C.tar)
+    p.poly([gx - w / 2, sy - 2, gx, sy - 7, gx + w / 2, sy - 2, gx, sy + 3], C.slateTop)
+    p.poly([gx - w / 2, sy - 2, gx, sy + 3, gx, sy + 3 + h, gx - w / 2, sy - 2 + h], C.slateLit)
+    p.poly([gx + w / 2, sy - 2, gx, sy + 3, gx, sy + 3 + h, gx + w / 2, sy - 2 + h], C.slateShade)
+    p.line([gx - w / 2, sy + h - 2, gx, sy + h + 3, gx + w / 2, sy + h - 2], 1, C.rope)
+    const lx = gx + w / 2 + 3,
+      ly = sy + 13
+    p.line([gx + w / 2 - 1, sy - 1, lx, ly - 4], 0.6, C.rope)
+    p.rect(lx - 2, ly - 4, 4, 5.5, C.wax)
+    p.rect(lx - 2, ly - 4, 1.4, 5.5, C.glow)
+    p.rect(lx - 2.4, ly - 5, 4.8, 1.2, C.tar)
     lanterns.push([lx, ly - 1])
   }
-  // net-bags of soil down the flanks
-  const bagXs = [prof.minX + 40, prof.minX + 70, prof.minX + 115, prof.minX + 160, prof.maxX - 40, prof.maxX - 78, prof.maxX - 120, prof.maxX - 170]
+  // net-bags of soil down the flanks, where the rock is thin
+  const bagXs = [prof.minX + 34, prof.minX + 62, prof.minX + 98, prof.minX + 140, prof.minX + 190, prof.maxX - 30, prof.maxX - 64, prof.maxX - 104, prof.maxX - 150, prof.maxX - 200]
   for (const bx of bagXs) {
-    const top = u.yAt(bx) + 4
-    const len = 30 + r() * 70
+    const top = u.yAt(bx) + Math.min(40, u.depth(bx) * 0.2) - 2
+    const len = 26 + r() * 60
     bag(p, bx + (r() - 0.5) * 6, top, len, r)
   }
   return { lanterns }
